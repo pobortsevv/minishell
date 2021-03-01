@@ -54,7 +54,7 @@ SRCS	=	ft_memset.c \
 
 OBJS			= $(SRCS:.c=.o)
 
-.SILENT: all $(NAME) compile clean fclean re
+.SILENT: all $(NAME) compile clean fclean re bonus
 
 BONUS			=	ft_lstnew.c \
 					ft_lstadd_front.c \
@@ -76,11 +76,11 @@ CFLAGS			= -Wall -Wextra -Werror -g
 all:			$(NAME)
 
 $(NAME):		$(OBJS)
-				ar rcs $(NAME) $(OBJS)
+				@ar rcs $(NAME) $(OBJS)
 				echo libft compiled succesfully!
 
 compile:		$(OBJS)
-				$(CC) $(CFLAGS) $(SRCS)
+				@$(CC) $(CFLAGS) $(SRCS)
 				./a.out
 
 clean:
@@ -94,4 +94,4 @@ fclean:			clean
 re:				fclean $(NAME)
 
 bonus:			$(OBJS) $(BONUS_OBJS)
-				ar rcs $(NAME) $(OBJS) $(BONUS_OBJS)
+				@ar rcs $(NAME) $(OBJS) $(BONUS_OBJS)

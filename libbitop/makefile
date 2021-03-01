@@ -20,21 +20,20 @@ FLAGS		?= -Wall -Wextra -Werror
 all: $(OBJECTS) $(NAME)
 
 %.o: %.c $(HEADER)
-	gcc $(FLAGS) -c $< -o $@ -I $(HEADER_DIR) -MD
+	@gcc $(FLAGS) -c $< -o $@ -I $(HEADER_DIR) -MD
 
 -include  *.d
 
 $(NAME): $(OBJECTS)
-	ar rc $(NAME) $(OBJECTS) $?
-	ranlib $(NAME)
+	@ar rc $(NAME) $(OBJECTS) $?
+	@ranlib $(NAME)
 
 clean:
-	rm -f $(OBJECTS) *.d
+	@rm -f $(OBJECTS) *.d
 
 fclean: clean
-	rm -f $(NAME)
+	@rm -f $(NAME)
 
 re: fclean all
 
 .PHONY: all clean fclean re
-
