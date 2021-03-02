@@ -6,13 +6,15 @@
 #    By: sabra <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/01 12:26:01 by sabra             #+#    #+#              #
-#    Updated: 2021/03/01 15:08:00 by sabra            ###   ########.fr        #
+#    Updated: 2021/03/02 07:01:17 by mlaureen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME 	= ./minishell
 
-SRCS	= srcs/main.c \
+#Списки включаемых файлов (файл.mak содержит переменную SABRA или  MLAUREEN) 
+-include  mlaureen.mak sabra.mak
+SRCS	= $(SABRA)
 
 
 OBJS	= $(SRCS:.c=.o)
