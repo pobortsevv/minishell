@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   setbit.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lana <LanaLebedeva2020@gmail.com>          +#+  +:+       +#+        */
+/*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/11 13:15:17 by lana              #+#    #+#             */
-/*   Updated: 2020/10/11 13:15:41 by lana             ###   ########.fr       */
+/*   Created: 2021/03/02 11:16:02 by mlaureen          #+#    #+#             */
+/*   Updated: 2021/03/02 11:16:06 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 int	setbit(const int value, const int position)
 {
-    return (value | (1 << position));
+	return (value | (1 << position));
 }

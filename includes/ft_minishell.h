@@ -6,16 +6,17 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/02 09:48:26 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/03/02 10:35:45 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/03/02 11:19:46 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_MINISHELL_H
-# define FT_MINISHELL
+# define FT_MINISHELL_H
+
 enum			e_parser
 {
-	NOTHING	=0,
-	SEMICOLON    		// ;
+	NOTHING = 0,
+	SEMICOLON,    		// ;
 	PIPE,				// |
 	REDIRECTING_OUT, 	// >
 	REDIRECTING_IN,	 	// <
@@ -27,9 +28,9 @@ enum			e_parser
 };
 typedef struct
 {
-	char	*comand;
-	char	**arg;
-	int		flag; // устанавливаю биты - e_parser,  если найду, в начале обязательно занулить
-}			t_command;
-
+	char		*comand;
+	char		**arg;
+	int			flag; // устанавливаю биты - e_parser,  если найду, в начале обязательно занулить
+}				t_command;
+void			ft_parser(t_command *sh, char **envp, char *str);
 #endif
