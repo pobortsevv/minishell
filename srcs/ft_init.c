@@ -20,7 +20,7 @@ static void		ft_copy_envp(char **envp, char **w_envp)
 	return ;
 }
 
- void			ft_set_sh(t_command *sh)
+ void			ft_set_sh(t_sh *sh)
 {
 	sh->inst = NULL;
 	sh->arg = NULL;
@@ -28,7 +28,7 @@ static void		ft_copy_envp(char **envp, char **w_envp)
 	return ;
 }
 
-void			ft_init(t_command *sh, char **envp, char **w_envp)
+void			ft_init(t_sh *sh, char **envp, char **w_envp)
 {
 	ft_copy_envp(envp, w_envp);
 	ft_set_sh(sh);

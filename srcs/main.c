@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 12:47:01 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/03 16:01:31 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/03/03 21:31:12 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,22 @@ static int		error_message(int error)
 	return (error);
 }
 
-int				main(int argc, char **argv, char **envp)
+void			exec_cmd(t_sh *sh, char **envp)
+{
+	//size_t	cmds_len;
+	//size_t	i;
+	
+	if ((ft_strncmp(sh->inst, "pwd", ft_strlen(sh->inst))) == 0)
+		pwd(sh, envp);
+
+}
+
+int			main(int argc, char **argv, char **envp)
 {
 	char		*str;
-	t_command	sh;
+	t_sh		sh;
 	char		**w_envp=NULL;
-	t_list		*t;
+	//t_list		*t;
 
 	ft_init(&sh, envp, w_envp);
 	while (1)
@@ -46,7 +56,7 @@ int				main(int argc, char **argv, char **envp)
 //		}
 
 		// TODO вызов реализации команды со структурой sh
-
+		exec_cmd(&sh, envp);
 		// TODO  кейс: export qwe=1234; echo $qwe
 		//  если парсер создат "листы комманд", то надо заново парсить, 
 		//  для раскрытия - соответсвенно на этапе парсинга не имеет смысла раскрывать? .

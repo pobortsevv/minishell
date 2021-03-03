@@ -48,7 +48,7 @@ static int	ft_isntend (char *s, int *flag, int *post)
 	return (1);
 }
 
-static char	*ft_get_word (t_command *sh, char *str, int *post)
+static char	*ft_get_word (t_sh *sh, char *str, int *post)
 {
 	char	*res;
 	char	*temp;
@@ -82,7 +82,7 @@ static char	*ft_get_word (t_command *sh, char *str, int *post)
 }
 
 
-void		ft_pars_arg(t_command *sh, char *str, int *post)
+void		ft_pars_arg(t_sh *sh, char *str, int *post)
 {
 	char	*arg;
 	t_list	*alist;
@@ -102,7 +102,7 @@ void		ft_pars_arg(t_command *sh, char *str, int *post)
 	return ;
 }
 
-void		ft_parser_inst(t_command *sh, char **w_envp, char *str, int *post)
+void		ft_parser_inst(t_sh *sh, char **w_envp, char *str, int *post)
 {
 	char	*temp;
 	char	c[2];
@@ -149,7 +149,7 @@ void		ft_parser_inst(t_command *sh, char **w_envp, char *str, int *post)
 	return ;
 }
 
-void		ft_parser(t_command *sh, char **w_envp, char *str)
+void		ft_parser(t_sh *sh, char **w_envp, char *str)
 {
 	int		post;
 

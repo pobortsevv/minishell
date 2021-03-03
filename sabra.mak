@@ -1,1 +1,2 @@
-SABRA	=srcs/main.c\
+SABRA	=	srcs/main.c \
+		srcs/build_in/pwd.c \
