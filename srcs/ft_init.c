@@ -1,16 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   switchbit.c                                        :+:      :+:    :+:   */
+/*   ft_init.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/02 11:16:15 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/03/03 10:45:15 by mlaureen         ###   ########.fr       */
+/*   Created: 2021/03/03 07:47:52 by mlaureen          #+#    #+#             */
+/*   Updated: 2021/03/03 11:03:19 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	switchbit(const int value, const int position)
+#include "ft_minishell.h"
+
+// TODO сделать копирование в новый массив
+static void		ft_copy_envp(char **envp, char **w_envp)
 {
-	return (value ^ (1 << position));
+	if (envp && w_envp)
+		;
+	return ;
 }
+
+ void			ft_set_sh(t_command *sh)
+{
+	sh->inst = NULL;
+	sh->arg = NULL;
+	sh->flag = 0;
+	return ;
+}
+
+void			ft_init(t_command *sh, char **envp, char **w_envp)
+{
+	ft_copy_envp(envp, w_envp);
+	ft_set_sh(sh);
+	return ;
+}
+
