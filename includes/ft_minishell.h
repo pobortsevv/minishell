@@ -6,7 +6,7 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/02 09:48:26 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/03/04 08:40:57 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/03/04 15:13:06 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void			ft_read(char **str);
 /*
  * Parsing str into sh structure
  */
-void			ft_parser(t_cmd *sh, char **envp, char *str);
+t_list			*ft_parser(t_cmd *sh, char **envp, char *str);
 
 /*
  * Commands funcs :)

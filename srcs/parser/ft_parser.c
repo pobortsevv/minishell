@@ -6,7 +6,7 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/03 08:48:50 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/03/04 10:52:37 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/03/04 11:22:32 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,16 +147,26 @@ void		ft_parser_inst(t_cmd *sh, char **w_envp, char *str, int *post)
 	return ;
 }
 
-void		ft_parser(t_cmd *sh, char **w_envp, char *str)
+t_list 		*ft_parser(t_cmd *sh, char **w_envp, char *str)
 {
 	int		post;
+	t_list	*first;
+	t_list	*instr;
 
 	post = 0;
+	if (str[post] != '\0')
+	{
+		ft_parser_inst(sh, w_envp, str, &post);
+		instr = ft_lstnew((void *)sh);
+		first = instr;
+	}
 	while (str[post] != '\0')
 	{
-	// TODO  лист команд
+		ft_bzero(sh, sizeof(sh));
 		ft_parser_inst(sh, w_envp, str, &post);
+		instr = ft_lstnew((void *)sh);
+		ft_lstadd_back(&first, instr);
 	}
 	(void)(w_envp);
-	return ;
+	return (first);
 }

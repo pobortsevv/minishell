@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 12:47:01 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/04 10:51:37 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/03/04 15:11:43 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,38 @@ static int		error_message(int error)
 		ft_putendl_fd("Problem with memeory (malloc)", FD_ERR);
 	return (error);
 }
+// тест-функция: печать из "списка команд"
+/*
+static void		ft_test_pr(t_list *first)
+{
+	t_list	*t;
+	t_cmd	*ex;
+	int		i;
+
+	t=first;
+	while (t != NULL)
+	{
+		i = 0;
+		printf("инструкция:\n");
+		ex = (t_cmd *)(t->content);
+		printf("id = %d\n", ex->id);
+		while (ex->args[i] != NULL)
+		{
+			printf("%s\n", (char *)(ex->args[i]));
+			i++;
+		}
+		t = t->next;
+	}
+	return ;
+}
+*/
+
 
 void			exec_cmd(t_sh *sh, char **envp)
 {
 	//size_t	cmds_len;
 	//size_t	i;
-	
+
 	if ((ft_strncmp(sh->inst, "pwd", ft_strlen(sh->inst))) == 0)
 		pwd(sh, envp);
 
@@ -35,8 +61,8 @@ int			main(int argc, char **argv, char **envp)
 {
 	char		*str;
 	t_cmd		sh;
+	t_list		*first;
 	char		**w_envp=NULL;
-//	int			i = 0;
 
 	ft_init(&sh, envp, w_envp);
 	while (1)
@@ -47,25 +73,21 @@ int			main(int argc, char **argv, char **envp)
 		//TODO заменить envp  на w_envp, когда реализуем копирование
 		//	printf("before parser str =<%s>\n", str);
 
-		ft_parser(&sh, envp, str);
+		first = ft_parser(&sh, envp, str);
+		// тестовая печать списка команд
+		//ft_test_pr(first);
 
-//		printf("id = %d\n", sh.id); 
-//		while (sh.args[i] != NULL)
-//		{
-//			printf("%s\n", sh.args[i]);
-//			i++;
-//		}
 
 		// TODO вызов реализации команды со структурой sh
 
 		//exec_cmd(&sh, envp);
 
 		// TODO  кейс: export qwe=1234; echo $qwe
-		//  если парсер создат "листы комманд", то надо заново парсить, 
+		//  если парсер создат "листы комманд", то надо заново парсить,
 		//  для раскрытия - соответсвенно на этапе парсинга не имеет смысла раскрывать? .
-		//  надо парсить по  PIPE  кейс: cat | ls    
+		//  надо парсить по  PIPE  кейс: cat | ls
 		//  	начнут одновременно но ls закроет stdin, и cat получит 1 строчку
-		//  - у каждой команды свой stdin, stdout - это надо прописать 
+		//  - у каждой команды свой stdin, stdout - это надо прописать
 
 	}
 	//TODO очистка массива sh.array
