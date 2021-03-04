@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 12:47:01 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/03 21:31:12 by sabra            ###   ########.fr       */
+/*   Updated: 2021/03/04 10:51:37 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ void			exec_cmd(t_sh *sh, char **envp)
 int			main(int argc, char **argv, char **envp)
 {
 	char		*str;
-	t_sh		sh;
+	t_cmd		sh;
 	char		**w_envp=NULL;
-	//t_list		*t;
+//	int			i = 0;
 
 	ft_init(&sh, envp, w_envp);
 	while (1)
@@ -45,18 +45,21 @@ int			main(int argc, char **argv, char **envp)
 		if (str == NULL)
 			return (error_message(PROBLEM_WITH_MALLOC));
 		//TODO заменить envp  на w_envp, когда реализуем копирование
-	//	printf("before parser str =<%s>\n", str); 
+		//	printf("before parser str =<%s>\n", str);
+
 		ft_parser(&sh, envp, str);
-//		printf("str =<%s>, flag =%d\n", sh.inst, sh.flag); 
-//		t = sh.arg;
-//		while (t != NULL)
+
+//		printf("id = %d\n", sh.id); 
+//		while (sh.args[i] != NULL)
 //		{
-//			printf("%s\n", (char *)(t->content));
-//			t = t->next;
+//			printf("%s\n", sh.args[i]);
+//			i++;
 //		}
 
 		// TODO вызов реализации команды со структурой sh
-		exec_cmd(&sh, envp);
+
+		//exec_cmd(&sh, envp);
+
 		// TODO  кейс: export qwe=1234; echo $qwe
 		//  если парсер создат "листы комманд", то надо заново парсить, 
 		//  для раскрытия - соответсвенно на этапе парсинга не имеет смысла раскрывать? .
@@ -65,6 +68,7 @@ int			main(int argc, char **argv, char **envp)
 		//  - у каждой команды свой stdin, stdout - это надо прописать 
 
 	}
+	//TODO очистка массива sh.array
 	free(str);
 	if (argc && argv[0] && envp[0])
 		;

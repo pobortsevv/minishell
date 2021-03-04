@@ -6,7 +6,7 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/02 09:48:26 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/03/03 21:15:23 by sabra            ###   ########.fr       */
+/*   Updated: 2021/03/04 08:40:57 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,8 @@ typedef struct		s_cmd
 /*
 * Initialization. Create a copy: envp, declare null and void in the structures
 */
-void			ft_init(t_sh *sh, char **argp, char **w_argp);
-void			ft_set_sh(t_sh *sh);
+void			ft_init(t_cmd *sh, char **argp, char **w_argp);
+void			ft_set_sh(t_cmd *sh);
 
 /*
  * Reading from std0 to str
@@ -76,7 +76,7 @@ void			ft_read(char **str);
 /*
  * Parsing str into sh structure
  */
-void			ft_parser(t_sh *sh, char **envp, char *str);
+void			ft_parser(t_cmd *sh, char **envp, char *str);
 
 /*
  * Commands funcs :)

@@ -6,7 +6,7 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/03 08:48:50 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/03/03 15:53:07 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/03/04 10:52:37 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,21 @@ static int	ft_isspace(int c)
 	return (0);
 }
 
+static void ft_check_path(t_cmd *sh, char *str, int *post)
+{
+	if ((str[*post] != '\0') && (str[*post] == '/' ||
+				(str[*post] == '~' && str[*post + 1] == '/') ||
+				(str[*post] == '.' && str[*post + 1] == '/')))
+			sh->id = setbit(sh->id, PATH);
+	return ;
+}
+
 static int	ft_isntend (char *s, int *flag, int *post)
 {
 	if (s[*post] == ';' && (*flag = setbit(*flag, SEMICOLON)) && (*post)++)
 		return (0);
 	else if (s[*post] == '|' && s[*post + 1] != '|' &&
-			(*flag = setbit(*flag, PIPE)) && (*post)++)
+		(*flag = setbit(*flag, PIPE)) && (*post)++)
 		return (0);
 	else if (s[*post] == '>' && s[*post + 1] != '>' &&
 		(*flag = setbit(*flag, REDIRECTING_OUT)) && (*post)++)
@@ -48,7 +57,7 @@ static int	ft_isntend (char *s, int *flag, int *post)
 	return (1);
 }
 
-static char	*ft_get_word (t_sh *sh, char *str, int *post)
+static char	*ft_get_word (t_cmd *sh, char *str, int *post)
 {
 	char	*res;
 	char	*temp;
@@ -62,112 +71,92 @@ static char	*ft_get_word (t_sh *sh, char *str, int *post)
 	{
 		res = (char *)malloc(1);
 		res[0] = '\0';
-		while (ft_isntend(str, &(sh->flag), post) && !(ft_isspace(str[*post])
-					&& str[*post] != '\0'))
+		while (str[*post] != '\0' && ft_isntend(str, &(sh->id), post)
+				&& !(ft_isspace(str[*post])))
 		{
-			if (str[*post] != ' ')
-			{
-				temp = res;
-				c[0] = str[*post];
-				res = ft_strjoin(res, c);
-				if (temp)
-					free(temp);
-				(*post)++;
-			}
-			while (ft_isspace(str[*post]) && ft_isspace(str[*post + 1]))
+			temp = res;
+			c[0] = str[*post];
+			res = ft_strjoin(res, c);
+			if (temp)
+				free(temp);
+			(*post)++;
+			while (str[*post] != '\0' && ft_isspace(str[*post])
+					&& ft_isspace(str[*post + 1]))
 				(*post)++;
 		}
 	}
 	return (res);
 }
 
-
-void		ft_pars_arg(t_sh *sh, char *str, int *post)
+static t_list	*ft_make_lst(t_cmd *sh, char *str, int *post)
 {
-	char	*arg;
-	t_list	*alist;
+	t_list	*cmd;
+	t_list	*first;
+	char	*temp;
 
-	arg = ft_get_word(sh, str, post);
-	if (arg != NULL)
+	temp = ft_get_word(sh, str, post);
+	cmd = ft_lstnew((void*)temp);
+	first = cmd;
+	while ((temp = ft_get_word(sh, str, post)) != NULL &&
+			ft_isntend(str, &(sh->id), post))
 	{
-		sh->arg = ft_lstnew((void *)arg);
-	}
-	if (str[*post] != '\0' && ft_isntend(str, &(sh->flag), post))
-		while ((arg =ft_get_word(sh, str,post)) != NULL)
+		if (temp[0] != 0)
 		{
-			alist = ft_lstnew((void *)arg);
-			ft_lstadd_back(&(sh->arg), alist);
+			cmd = ft_lstnew((void *)temp);
+			ft_lstadd_back(&first, cmd);
 		}
-
-	return ;
+	}
+	return (first);
 }
 
-void		ft_parser_inst(t_sh *sh, char **w_envp, char *str, int *post)
+static char **ft_make_array(t_list **first)
 {
-	char	*temp;
-	char	c[2];
+	int		size;
+	char	**array;
+	int		i;
+	t_list	*t;
 
-	c[1] = '\0';
+	i = 0;
+	size = ft_lstsize(*first);
+	array = malloc(sizeof(char *)* size +1);
+	array[size] = NULL;
+	t = *first;
+	while (t != NULL)
+	{
+		array[i] = ft_strdup((char *)t->content);
+		t=t->next;
+		i++;
+	}
+	ft_lstclear(first, free);
+	return (array);
+}
+
+void		ft_parser_inst(t_cmd *sh, char **w_envp, char *str, int *post)
+{
+	t_list	*first;
+
 	while (str[*post] != '\0' && ft_isspace(str[*post]))
 		(*post)++;
-	if ((str[*post] != '\0') && (str[*post] == '/' ||
-				(str[*post] == '~' && str[*post + 1] == '/') ||
-				(str[*post] == '.' && str[*post + 1] == '/')))
-			sh->flag = setbit(sh->flag, PATH);
 	if (str[*post] != '\0')
 	{
-		sh->inst = (char *)malloc(1);
-		sh->inst[0] = '\0';
-		while (ft_isntend(str, &(sh->flag), post)  && !(ft_isspace(str[*post]))
-					&& str[*post] != '\0')
-		{
-			if (str[*post] != ' ')
-			{
-				temp = sh->inst;
-				c[0] = str[*post];
-				sh->inst = ft_strjoin(sh->inst, c);
-				if (temp)
-					free(temp);
-
-			}
-			while (ft_isspace(str[*post]) && ft_isspace(str[*post + 1]))
-				(*post)++;
-			(*post)++;
-		}
-		if (ft_isspace(str[*post]))
-			(*post)++;
-		while (ft_isntend(str, &sh->flag, post) && str[*post] != '\0')
-		{
-			ft_pars_arg(sh, str, post);
-		//	if (sh->arg->content !=NULL)
-		//		printf("%s\n", (char *)(sh->arg->content));
-		}
-
+		ft_check_path(sh, str, post);
+		first = ft_make_lst(sh, str, post);
+		sh->args = ft_make_array(&first);
 	}
-	if (w_envp)
-		;
+	 (void)(w_envp);
 	return ;
 }
 
-void		ft_parser(t_sh *sh, char **w_envp, char *str)
+void		ft_parser(t_cmd *sh, char **w_envp, char *str)
 {
 	int		post;
 
 	post = 0;
-	if (str[post] != '\0')
+	while (str[post] != '\0')
 	{
-		//TODO парсер инструкции
+	// TODO  лист команд
 		ft_parser_inst(sh, w_envp, str, &post);
-		//TODO парсер инструкции
-		while (str[post] != '\0')
-		{
-			// TODO парсер аргументов
-			//ft_parser_arg(sh, w_envp, str);
-			;
-		}
-		//TODO парсер инструкции
 	}
-	if (w_envp)
-		;
+	(void)(w_envp);
 	return ;
 }
