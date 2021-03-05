@@ -6,7 +6,7 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/03 08:48:50 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/03/05 13:44:26 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/03/05 14:08:22 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,17 @@ static int	ft_isntend_b (char *s, int *flag, int *post)
 			ret = 1;
 		else
 			ret = 0;
-	} else if (!(checkbit(*flag, SINGLE_QUOTE)))
+	}
+	else if (!(checkbit(*flag, SINGLE_QUOTE)) && s[*post] == '"')
+	{
+		*flag = switchbit(*flag, DOUBLE_QUOTE);
+		(*post)++;
+		if (s[*post] != '\0')
+			ret = 1;
+		else
+			ret = 0;
+	}
+	else if (!(checkbit(*flag, SINGLE_QUOTE)) && !(checkbit(*flag, DOUBLE_QUOTE)))
 		ret = ft_isntend(s, flag, post);
 	return(ret);
 }
@@ -100,7 +110,9 @@ static char	*ft_get_word (t_cmd *sh, char *str, int *post)
 		res = (char *)malloc(1);
 		res[0] = '\0';
 		while (str[*post] != '\0' && ft_isntend_b(str, &(sh->id), post)
-				&& (checkbit(sh->id, SINGLE_QUOTE) || !(ft_isspace(str[*post]))))
+				&& (checkbit(sh->id, SINGLE_QUOTE) ||
+				checkbit(sh->id, DOUBLE_QUOTE) ||
+				!(ft_isspace(str[*post]))))
 		{
 			temp = res;
 			c[0] = str[*post];
