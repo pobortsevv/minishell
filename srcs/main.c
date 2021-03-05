@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 12:47:01 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/04 15:11:43 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/03/05 07:32:32 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,6 @@ static void		ft_test_pr(t_list *first)
 	return ;
 }
 */
-
-
 void			exec_cmd(t_sh *sh, char **envp)
 {
 	//size_t	cmds_len;

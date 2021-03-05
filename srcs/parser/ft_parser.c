@@ -6,7 +6,7 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/03 08:48:50 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/03/04 11:22:32 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/03/05 07:30:24 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static char	*ft_get_word (t_cmd *sh, char *str, int *post)
 	c[1] = '\0';
 	while (str[*post] != '\0' && ft_isspace(str[*post]))
 		(*post)++;
-	if (str[*post] != '\0')
+	if (str[*post] != '\0' && (sh->id == 0 || sh->id == 128))
 	{
 		res = (char *)malloc(1);
 		res[0] = '\0';
@@ -98,9 +98,11 @@ static t_list	*ft_make_lst(t_cmd *sh, char *str, int *post)
 	cmd = ft_lstnew((void*)temp);
 	first = cmd;
 	while ((temp = ft_get_word(sh, str, post)) != NULL &&
-			ft_isntend(str, &(sh->id), post))
+		ft_isntend(str, &(sh->id), post))
 	{
 		if (temp[0] != 0)
+//		if ((temp = ft_get_word(sh, str, post)) != NULL && temp[0] != 0)
+
 		{
 			cmd = ft_lstnew((void *)temp);
 			ft_lstadd_back(&first, cmd);
@@ -137,7 +139,7 @@ void		ft_parser_inst(t_cmd *sh, char **w_envp, char *str, int *post)
 
 	while (str[*post] != '\0' && ft_isspace(str[*post]))
 		(*post)++;
-	if (str[*post] != '\0')
+	if (str[*post] != '\0' && (sh->id == 0 || sh->id == 128))
 	{
 		ft_check_path(sh, str, post);
 		first = ft_make_lst(sh, str, post);
@@ -160,9 +162,11 @@ t_list 		*ft_parser(t_cmd *sh, char **w_envp, char *str)
 		instr = ft_lstnew((void *)sh);
 		first = instr;
 	}
-	while (str[post] != '\0')
+	while (str[post] != '\0' && (sh->id == 0 || sh->id == 128))
 	{
-		ft_bzero(sh, sizeof(sh));
+//		ft_bzero(sh, sizeof(sh));
+//
+		printf ("sh->id = %d\n", sh->id);  
 		ft_parser_inst(sh, w_envp, str, &post);
 		instr = ft_lstnew((void *)sh);
 		ft_lstadd_back(&first, instr);
