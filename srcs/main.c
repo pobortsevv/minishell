@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 12:47:01 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/05 09:46:59 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/03/05 12:57:59 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int			main(int argc, char **argv, char **envp)
 
 		first = ft_parser(envp, str);
 		// тестовая печать списка команд
-		//ft_test_pr(&first);
+		ft_test_pr(&first);
 
 
 		// TODO вызов реализации команды со структурой sh

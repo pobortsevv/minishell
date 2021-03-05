@@ -6,7 +6,7 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/03 08:48:50 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/03/05 09:42:59 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/03/05 13:44:26 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,34 @@ static int	ft_isntend (char *s, int *flag, int *post)
 	return (1);
 }
 
+
+static int	ft_isntend_b (char *s, int *flag, int *post)
+{
+	int 	ret;
+
+	ret = 1;
+	if (!(checkbit(*flag, SINGLE_QUOTE)) && s[*post] == '\\')
+	{
+		(*post)++;
+		if (s[*post] != '\0')
+			ret = 1;
+		else
+			ret = 0;
+	}
+	else if (s[*post] == 39)
+	{
+		*flag = switchbit(*flag, SINGLE_QUOTE);
+		(*post)++;
+		if (s[*post] != '\0')
+			ret = 1;
+		else
+			ret = 0;
+	} else if (!(checkbit(*flag, SINGLE_QUOTE)))
+		ret = ft_isntend(s, flag, post);
+	return(ret);
+}
+
+
 static char	*ft_get_word (t_cmd *sh, char *str, int *post)
 {
 	char	*res;
@@ -67,12 +95,12 @@ static char	*ft_get_word (t_cmd *sh, char *str, int *post)
 	c[1] = '\0';
 	while (str[*post] != '\0' && ft_isspace(str[*post]))
 		(*post)++;
-	if (str[*post] != '\0' && (sh->id == 0 || sh->id == 128))
+	if (str[*post] != '\0' && (sh->id == 0 || sh->id >= 128))
 	{
 		res = (char *)malloc(1);
 		res[0] = '\0';
-		while (str[*post] != '\0' && ft_isntend(str, &(sh->id), post)
-				&& !(ft_isspace(str[*post])))
+		while (str[*post] != '\0' && ft_isntend_b(str, &(sh->id), post)
+				&& (checkbit(sh->id, SINGLE_QUOTE) || !(ft_isspace(str[*post]))))
 		{
 			temp = res;
 			c[0] = str[*post];
