@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 12:47:01 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/05 07:32:32 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/03/05 09:46:59 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ static int		error_message(int error)
 	return (error);
 }
 // тест-функция: печать из "списка команд"
-/*
-static void		ft_test_pr(t_list *first)
+
+void		ft_test_pr(t_list *first)
 {
 	t_list	*t;
 	t_cmd	*ex;
@@ -44,7 +44,7 @@ static void		ft_test_pr(t_list *first)
 	}
 	return ;
 }
-*/
+
 void			exec_cmd(t_sh *sh, char **envp)
 {
 	//size_t	cmds_len;
@@ -58,11 +58,11 @@ void			exec_cmd(t_sh *sh, char **envp)
 int			main(int argc, char **argv, char **envp)
 {
 	char		*str;
-	t_cmd		sh;
-	t_list		*first;
+//	t_cmd		sh;
+	t_list		first;
 	char		**w_envp=NULL;
 
-	ft_init(&sh, envp, w_envp);
+	ft_init(envp, w_envp);
 	while (1)
 	{
 		ft_read(&str);
@@ -71,9 +71,9 @@ int			main(int argc, char **argv, char **envp)
 		//TODO заменить envp  на w_envp, когда реализуем копирование
 		//	printf("before parser str =<%s>\n", str);
 
-		first = ft_parser(&sh, envp, str);
+		first = ft_parser(envp, str);
 		// тестовая печать списка команд
-		//ft_test_pr(first);
+		//ft_test_pr(&first);
 
 
 		// TODO вызов реализации команды со структурой sh

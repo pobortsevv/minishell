@@ -6,7 +6,7 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/03 07:47:52 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/03/04 08:42:03 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/03/05 07:50:49 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ static void		ft_copy_envp(char **envp, char **w_envp)
 	return ;
 }
 
-void			ft_init(t_cmd *sh, char **envp, char **w_envp)
+void			ft_init(char **envp, char **w_envp)
 {
 	ft_copy_envp(envp, w_envp);
-	ft_set_sh(sh);
+//	ft_set_sh(sh);
 	return ;
 }
 

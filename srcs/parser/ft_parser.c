@@ -6,7 +6,7 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/03 08:48:50 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/03/05 07:30:24 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/03/05 09:42:59 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,8 +101,6 @@ static t_list	*ft_make_lst(t_cmd *sh, char *str, int *post)
 		ft_isntend(str, &(sh->id), post))
 	{
 		if (temp[0] != 0)
-//		if ((temp = ft_get_word(sh, str, post)) != NULL && temp[0] != 0)
-
 		{
 			cmd = ft_lstnew((void *)temp);
 			ft_lstadd_back(&first, cmd);
@@ -133,44 +131,46 @@ static char **ft_make_array(t_list **first)
 	return (array);
 }
 
-void		ft_parser_inst(t_cmd *sh, char **w_envp, char *str, int *post)
+t_cmd		ft_parser_inst(char **w_envp, char *str, int *post)
 {
 	t_list	*first;
+	t_cmd	shh;
 
+	ft_bzero(&shh, sizeof(shh));
 	while (str[*post] != '\0' && ft_isspace(str[*post]))
 		(*post)++;
-	if (str[*post] != '\0' && (sh->id == 0 || sh->id == 128))
+	if (str[*post] != '\0')
 	{
-		ft_check_path(sh, str, post);
-		first = ft_make_lst(sh, str, post);
-		sh->args = ft_make_array(&first);
+		ft_check_path(&shh, str, post);
+		first = ft_make_lst(&shh, str, post);
+		shh.args = ft_make_array(&first);
 	}
 	 (void)(w_envp);
-	return ;
+	return (shh);
 }
 
-t_list 		*ft_parser(t_cmd *sh, char **w_envp, char *str)
+t_list 		ft_parser(char **w_envp, char *str)
 {
 	int		post;
+	int 	i;
 	t_list	*first;
 	t_list	*instr;
+	t_cmd	shh[100];
 
 	post = 0;
+	i = 1;
 	if (str[post] != '\0')
 	{
-		ft_parser_inst(sh, w_envp, str, &post);
-		instr = ft_lstnew((void *)sh);
-		first = instr;
+		shh[0] = ft_parser_inst(w_envp, str, &post);
+		first = ft_lstnew((void *)(&shh[0]));
 	}
-	while (str[post] != '\0' && (sh->id == 0 || sh->id == 128))
+	while (str[post] != '\0')
 	{
-//		ft_bzero(sh, sizeof(sh));
-//
-		printf ("sh->id = %d\n", sh->id);  
-		ft_parser_inst(sh, w_envp, str, &post);
-		instr = ft_lstnew((void *)sh);
-		ft_lstadd_back(&first, instr);
+		shh[i] = ft_parser_inst(w_envp, str, &post);
+		instr = ft_lstnew((void *)(&shh[i]));
+		ft_lstadd_back(&(first), instr);
+		i++;
 	}
 	(void)(w_envp);
-	return (first);
+	return (*first);
 }
