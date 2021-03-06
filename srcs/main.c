@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 12:47:01 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/05 12:57:59 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/03/06 12:24:33 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,26 @@ void		ft_test_pr(t_list *first)
 	return ;
 }
 
-void			exec_cmd(t_sh *sh, char **envp)
+void			init_command(t_cmd *cmd, char **envp)
 {
-	//size_t	cmds_len;
-	//size_t	i;
+	if ((ft_strncmp(cmd->args[0], "pwd", ft_strlen(cmd->args[0]))) == 0)
+		pwd(cmd, envp);
+	//if ((ft_strncmp(cmd->args[0], "env", ft_strlen(cmd->args[0]))) == 0)
+		//env(cmd, envp);
+}
 
-	if ((ft_strncmp(sh->inst, "pwd", ft_strlen(sh->inst))) == 0)
-		pwd(sh, envp);
+void			exec_cmd(t_list *first, char **envp)
+{
+	t_list	*list;
+	t_cmd	*cmd;
+
+	list = first;
+	while (list)
+	{
+		cmd = (t_cmd *)(list->content);
+		init_command(cmd, envp);
+		list = list->next;
+	}
 
 }
 
@@ -78,7 +91,7 @@ int			main(int argc, char **argv, char **envp)
 
 		// TODO вызов реализации команды со структурой sh
 
-		//exec_cmd(&sh, envp);
+		exec_cmd(&first, envp);
 
 		// TODO  кейс: export qwe=1234; echo $qwe
 		//  если парсер создат "листы комманд", то надо заново парсить,

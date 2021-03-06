@@ -6,19 +6,19 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/03 20:16:32 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/03 21:49:16 by sabra            ###   ########.fr       */
+/*   Updated: 2021/03/06 12:02:48 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_minishell.h"
 
-void	pwd(t_sh *sh, char **env)
+void	pwd(t_cmd *cmd, char **env)
 {
 	size_t	i;
 	size_t	len;
 
 	i = 4;
-	(void)sh; // Пока основная структура не нужна
+	(void)cmd; // Пока основная структура не нужна
 	len = ft_strlen(env[7]);
 	while (i < len)
 	{

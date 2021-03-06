@@ -6,7 +6,7 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/02 09:48:26 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/03/05 13:57:47 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/03/06 12:03:09 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ t_list			ft_parser(char **envp, char *str);
 /*
  * Commands funcs :)
  */
-void			pwd(t_sh *sh, char **env);
+void			pwd(t_cmd *cmd, char **env);
 
 
 /*
