@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 12:47:01 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/06 12:24:33 by sabra            ###   ########.fr       */
+/*   Updated: 2021/03/06 21:54:29 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,13 @@ void		ft_test_pr(t_list *first)
 	return ;
 }
 
-void			init_command(t_cmd *cmd, char **envp)
+int			init_command(t_cmd *cmd, char **envp)
 {
 	if ((ft_strncmp(cmd->args[0], "pwd", ft_strlen(cmd->args[0]))) == 0)
-		pwd(cmd, envp);
-	//if ((ft_strncmp(cmd->args[0], "env", ft_strlen(cmd->args[0]))) == 0)
-		//env(cmd, envp);
+		return (pwd());
+	if ((ft_strncmp(cmd->args[0], "env", ft_strlen(cmd->args[0]))) == 0)
+		env(cmd, envp);
+	return (1);
 }
 
 void			exec_cmd(t_list *first, char **envp)
@@ -86,7 +87,7 @@ int			main(int argc, char **argv, char **envp)
 
 		first = ft_parser(envp, str);
 		// тестовая печать списка команд
-		ft_test_pr(&first);
+		//ft_test_pr(&first);
 
 
 		// TODO вызов реализации команды со структурой sh

@@ -43,7 +43,7 @@ SRCS	=	ft_memset.c \
 			ft_putnbr16_fd.c \
 			../printf/ft_printf.c \
  			../printf/parser/ft_flags.c \
-			../printf/parser/ft_parser.c \
+			../printf/parser/ft_pars.c \
 			../printf/process/ft_type_init.c \
 			../printf/process/ft_cs_type.c \
 			../printf/process/ft_di_type.c \

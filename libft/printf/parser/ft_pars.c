@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_parser.c                                        :+:      :+:    :+:   */
+/*   ft_pars.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sabra <sabra@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/26 20:23:05 by sabra             #+#    #+#             */
-/*   Updated: 2021/01/04 19:02:09 by sabra            ###   ########.fr       */
+/*   Created: 2021/03/06 16:31:25 by sabra             #+#    #+#             */
+/*   Updated: 2021/03/06 16:33:37 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_struct	struct_init(void)
 	return (flgs);
 }
 
-int			ft_parser(const char *str, int i, va_list args, int *count)
+static int	ft_pars(const char *str, int i, va_list args, int *count)
 {
 	t_struct flgs;
 
@@ -52,7 +52,7 @@ int			ft_parser(const char *str, int i, va_list args, int *count)
 	return (i);
 }
 
-int			ft_write_common(const char *str, va_list args, int i)
+int		ft_write_common(const char *str, va_list args, int i)
 {
 	int		count;
 
@@ -60,7 +60,7 @@ int			ft_write_common(const char *str, va_list args, int i)
 	while (str[i] != '\0')
 	{
 		if (str[i] == '%')
-			i = ft_parser(str, i + 1, args, &count) - 1;
+			i = ft_pars(str, i + 1, args, &count) - 1;
 		else
 		{
 			ft_putchar_fd(str[i], 1);

@@ -1,12 +1,10 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_minishell.h                                     :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
+/*                                                        :::      ::::::::   */ /*   ft_minishell.h                                     :+:      :+:    :+:   */ /*                                                    +:+ +:+         +:+     */
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/02 09:48:26 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/03/06 12:03:09 by sabra            ###   ########.fr       */
+/*   Updated: 2021/03/06 20:17:59 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +20,7 @@
 # define FD_ERR 2
 # include <unistd.h>
 # include <stdlib.h>
+# include <stdio.h>
 # include "../libft/libft/libft.h"
 # include "../libbitop/libbitop.h"
 
@@ -83,7 +82,8 @@ t_list			ft_parser(char **envp, char *str);
 /*
  * Commands funcs :)
  */
-void			pwd(t_cmd *cmd, char **env);
+int			pwd(void);
+void			env(t_cmd *cmd, char **env);
 
 
 /*

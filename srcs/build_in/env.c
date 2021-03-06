@@ -1,23 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/03 20:16:32 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/06 21:42:39 by sabra            ###   ########.fr       */
+/*   Created: 2021/03/06 12:27:31 by sabra             #+#    #+#             */
+/*   Updated: 2021/03/06 21:55:21 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_minishell.h"
 
-int	pwd(void)
+void	env(t_cmd *cmd, char **ev)
 {
-	char path[FILENAME_MAX];
+	size_t i;
 	
-	if (!getcwd(path, sizeof(path)))
-		return (0);
-	ft_printf("%s\n", path);
-	return (1);
+	i = 0;
+	(void)cmd;
+	while(ev[i])
+	{
+		ft_printf("%s\n", ev[i]);
+		i++;
+	}
 }
