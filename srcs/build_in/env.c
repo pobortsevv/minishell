@@ -6,21 +6,23 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/06 12:27:31 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/06 21:55:21 by sabra            ###   ########.fr       */
+/*   Updated: 2021/03/07 17:52:10 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_minishell.h"
 
-void	env(t_cmd *cmd, char **ev)
+int	env(char **ev)
 {
 	size_t i;
 	
 	i = 0;
-	(void)cmd;
+	if (!ev)
+		return (0);
 	while(ev[i])
 	{
 		ft_printf("%s\n", ev[i]);
 		i++;
 	}
+	return (1);
 }
