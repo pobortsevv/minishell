@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 17:51:39 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/07 17:51:56 by sabra            ###   ########.fr       */
+/*   Updated: 2021/03/08 01:21:51 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,9 @@ t_list			ft_parser(char **envp, char *str);
 /*
  * Commands funcs :)
  */
-int			pwd(void);
-int			env(char **env);
+int			ft_pwd(void);
+int			ft_env(char **env);
+int			ft_export(t_cmd *cmd, char **env);
 
 
 /*

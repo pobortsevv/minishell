@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 12:47:01 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/07 17:50:24 by sabra            ###   ########.fr       */
+/*   Updated: 2021/03/08 01:15:48 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,11 @@ void		ft_test_pr(t_list *first)
 int			init_command(t_cmd *cmd, char **envp)
 {
 	if ((ft_strncmp(cmd->args[0], "pwd", ft_strlen(cmd->args[0]))) == 0)
-		return (pwd());
+		return (ft_pwd());
 	if ((ft_strncmp(cmd->args[0], "env", ft_strlen(cmd->args[0]))) == 0)
-		return (env(envp));
+		return (ft_env(envp));
+	if ((ft_strncmp(cmd->args[0], "export", ft_strlen(cmd->args[0]))) == 0)
+		return (ft_export(cmd, envp));
 	return (1);
 }
 
