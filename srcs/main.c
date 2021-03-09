@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 12:47:01 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/09 13:01:22 by sabra            ###   ########.fr       */
+/*   Updated: 2021/03/09 17:09:59 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void		ft_test_pr(t_list *first)
 	return ;
 }
 
-int			init_command(t_cmd *cmd, char **envp)
+int			init_command(t_cmd *cmd, char **envp, t_list *list)
 {
 	if ((ft_strncmp(cmd->args[0], "pwd", ft_strlen(cmd->args[0]))) == 0)
 		return (ft_pwd());
@@ -55,6 +55,8 @@ int			init_command(t_cmd *cmd, char **envp)
 		return (ft_export(cmd, envp));
 	if ((ft_strncmp(cmd->args[0], "cd", ft_strlen(cmd->args[0]))) == 0)
 		return (ft_cd(cmd));
+	if ((ft_strncmp(cmd->args[0], "exit", ft_strlen(cmd->args[0]))) == 0)
+		return (ft_exit(cmd, list));
 	return (1);
 }
 
@@ -67,7 +69,7 @@ void			exec_cmd(t_list *first, char **envp)
 	while (list)
 	{
 		cmd = (t_cmd *)(list->content);
-		init_command(cmd, envp);
+		init_command(cmd, envp, first);
 		list = list->next;
 	}
 
@@ -94,7 +96,7 @@ int			main(int argc, char **argv, char **envp)
 		//ft_test_pr(&first);
 
 
-		// TODO вызов реализации команды со структурой sh
+		// вызов реализации команды со структурой sh
 
 		exec_cmd(&first, envp);
 

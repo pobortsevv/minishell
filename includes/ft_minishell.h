@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 17:51:39 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/09 13:06:44 by sabra            ###   ########.fr       */
+/*   Updated: 2021/03/09 14:58:04 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ int			ft_pwd(void);
 int			ft_env(char **env);
 int			ft_export(t_cmd *cmd, char **env);
 int			ft_cd(t_cmd *cmd);
+int			ft_exit(t_cmd *cmd, t_list *list);
 
 
 /*
