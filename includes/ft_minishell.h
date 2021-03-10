@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 17:51:39 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/09 14:58:04 by sabra            ###   ########.fr       */
+/*   Updated: 2021/03/10 16:25:31 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ enum			e_parser
 	PATH,				// у команды есть путь - не надо использовать $PATH 		
 	SINGLE_QUOTE, 		// '
 	DOUBLE_QUOTE, 		// "
-	ERROR = 10,
+	SLASH_1 = 10,
+	SLASH_2 = 11,
 };
 
 enum			e_error
@@ -81,7 +82,10 @@ void			ft_read(char **str);
 /*
  * Parsing str into sh structure
  */
-t_list			ft_parser(char **envp, char *str);
+t_cmd			**ft_parser_cmd(char **envp, char *str);
+char			**ft_split_cmd(char const *s, char c);
+int				ft_lenarray(char **cmd);
+t_cmd			*ft_make_array_t_cmd(char ***cmd_pipe);
 
 /*
  * Commands funcs :)
@@ -96,5 +100,6 @@ int			ft_exit(t_cmd *cmd, t_list *list);
 /*
  * test funcs :)
  */
-void	ft_test_pr(t_list *first);
+void	ft_m_test_pr(t_list *first);
+void	ft_print_array_2(char ** arr);
 #endif

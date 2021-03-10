@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 12:47:01 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/09 17:09:59 by sabra            ###   ########.fr       */
+/*   Updated: 2021/03/10 16:27:42 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,9 @@ int			main(int argc, char **argv, char **envp)
 {
 	char		*str;
 //	t_cmd		sh;
-	t_list		first;
+//	t_list		first;
 	char		**w_envp=NULL;
+	t_cmd		**ar_cmd;
 
 	ft_init(envp, w_envp);
 	while (1)
@@ -91,14 +92,24 @@ int			main(int argc, char **argv, char **envp)
 		//TODO заменить envp  на w_envp, когда реализуем копирование
 		//	printf("before parser str =<%s>\n", str);
 
-		first = ft_parser(envp, str);
+		ar_cmd = ft_parser_cmd(envp, str);
 		// тестовая печать списка команд
 		//ft_test_pr(&first);
-
+		int	i=0;
+		while (ar_cmd[i] != NULL)
+		{
+			int	j=0;
+			while (ar_cmd[i]->args[j] != NULL)
+			{
+				printf("ar_cmd[%d]->args[%d]\n = %s\n",i, j, ar_cmd[i]->args[j]);
+				j++;
+			}
+			i++;
+		}
 
 		// вызов реализации команды со структурой sh
 
-		exec_cmd(&first, envp);
+		//exec_cmd(&first, envp);
 
 		// TODO  кейс: export qwe=1234; echo $qwe
 		//  если парсер создат "листы комманд", то надо заново парсить,
