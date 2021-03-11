@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 12:47:01 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/11 12:05:52 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/03/11 14:55:09 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,17 +86,19 @@ int			main(int argc, char **argv, char **envp)
 	ft_init(envp, w_envp);
 	while (1)
 	{
+		printf("читаю строку\n");
 		ft_read(&str);
 		if (str == NULL)
 			return (error_message(PROBLEM_WITH_MALLOC));
 		//TODO заменить envp  на w_envp, когда реализуем копирование
 		//	printf("before parser str =<%s>\n", str);
-
+		printf("начинаю парсер\n");
 		ar_cmd = ft_parser_cmd(envp, str);
 		// тестовая печать списка команд
 		//ft_test_pr(&first);
-		int	i=0;
+//		int	i=0;
 		printf("пеечатаю спарсенную строку:\n");
+		/*
 		while (ar_cmd[i] != NULL)
 		{
 			int f = 0;
@@ -112,6 +114,8 @@ int			main(int argc, char **argv, char **envp)
 			}
 			i++;
 		}
+		*/
+
 		// вызов реализации команды со структурой sh
 
 		//exec_cmd(&first, envp);

@@ -6,7 +6,7 @@
 #    By: sabra <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/01 12:26:01 by sabra             #+#    #+#              #
-#    Updated: 2021/03/02 12:30:29 by mlaureen         ###   ########.fr        #
+#    Updated: 2021/03/11 14:00:14 by mlaureen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,8 @@ OBJS	= $(SRCS:.c=.o)
 
 CC		= gcc
 RM 		= rm -rf
-CFLAGS	= -Wall -Werror -Wextra -g
+CFLAGS	= -Wall -Werror -Wextra 
+#CFLAGS	= -g -fsanitize=address -fno-omit-frame-pointer
 LIBFT_DIR = ./libft/libft/
 LIBBIT_DIR = ./libbitop/
 LIBS	= -L$(LIBFT_DIR) -lft -L$(LIBBIT_DIR) -lbitop
