@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 12:47:01 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/10 16:27:42 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/03/11 12:05:52 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,17 +96,22 @@ int			main(int argc, char **argv, char **envp)
 		// тестовая печать списка команд
 		//ft_test_pr(&first);
 		int	i=0;
+		printf("пеечатаю спарсенную строку:\n");
 		while (ar_cmd[i] != NULL)
 		{
-			int	j=0;
-			while (ar_cmd[i]->args[j] != NULL)
+			int f = 0;
+			while (!(checkbit(ar_cmd[i][f].id, END_ARRAY)))
 			{
-				printf("ar_cmd[%d]->args[%d]\n = %s\n",i, j, ar_cmd[i]->args[j]);
-				j++;
+				int	j=0;
+				while (ar_cmd[i][f].args[j] != NULL)
+				{
+					printf("ar_cmd[%d][%d].args[%d]\n = %s\n",i, f, j, ar_cmd[i][f].args[j]);
+					j++;
+				}
+				f++;
 			}
 			i++;
 		}
-
 		// вызов реализации команды со структурой sh
 
 		//exec_cmd(&first, envp);

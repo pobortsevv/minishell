@@ -6,7 +6,7 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/10 11:08:05 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/03/10 16:20:55 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/03/11 12:07:58 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,8 +110,10 @@ char	*ft_get_word (t_cmd *sh, char *str, int *post)
 
 	res = NULL;
 	c[1] = '\0';
+//	printf("1111\n");
 	while (str[*post] != '\0' && ft_isspace(str[*post]))
 		(*post)++;
+//	printf("12\n");
 	if (str[*post] != '\0')  //&& (sh->id = )
 	{
 		res = (char *)ft_calloc(4, 3);
@@ -141,10 +143,10 @@ char	*ft_get_word (t_cmd *sh, char *str, int *post)
 			while (str[*post] != '\0' && ft_isspace(str[*post]))
 				(*post)++;
 		}
+//		printf("13\n");
 		while (str[*post] != '\0' && (ft_isntend_b(str, &(sh->id), post)) &&
 				(!checkbit(sh->id, 2) && !checkbit(sh->id, 3) &&
 				!checkbit(sh->id, 4)) && !(ft_isspace(str[*post])))
-				
 				//&& (checkbit(sh->id, SINGLE_QUOTE) || checkbit(sh->id, DOUBLE_QUOTE) || !(ft_isspace(str[*post]))))
 		{
 			temp = res;
@@ -154,11 +156,11 @@ char	*ft_get_word (t_cmd *sh, char *str, int *post)
 				free(temp);
 			(*post)++;
 			while (str[*post] != '\0' && ft_isspace(str[*post])
-					&& ft_isspace(str[*(post + 1)]))
+					&& ft_isspace(str[*post + 1]))
 				(*post)++;
 		}
-
 	}
+//	printf("ВАЖНО: %s\n", res);
 	return (res);
 }
 
@@ -168,14 +170,16 @@ char	*ft_get_word (t_cmd *sh, char *str, int *post)
 	t_list	*first;
 	char	*temp;
 
+//	printf("str =%s, post = %d\n", str, *post);
 	temp = ft_get_word(sh, str, post);
+//	printf("wwww\n");
 	cmd = ft_lstnew((void*)temp);
 	first = cmd;
 //	printf("first temp@@@@@@ = %s\n", temp);
 	ft_pass_space(str, post);
-//while ((temp = ft_get_word(sh, str, post)) != NULL 
-//			&& (ft_isntend(str, &(sh->id), post) != 2))
-	while((temp = ft_get_word(sh, str, post)) != NULL) 
+	while ((temp = ft_get_word(sh, str, post)) != NULL 
+			&& (ft_isntend(str, &(sh->id), post) != 2))
+//	while((temp = ft_get_word(sh, str, post)) != NULL) 
 	{
 //		printf("в цикле temp = <%s>\n", temp);
 //		read(0,0,1);
@@ -203,6 +207,7 @@ char **ft_make_array(t_list **first)
 	t = *first;
 	while (t != NULL)
 	{
+//		printf("лист команд %s\n", t->content);
 		array[i] = ft_strdup((char *)t->content);
 		t=t->next;
 		i++;
@@ -211,7 +216,7 @@ char **ft_make_array(t_list **first)
 	return (array);
 }
 
-t_cmd		ft_parser_inst(char *str)
+t_cmd	ft_parser_inst(char *str)
 {
 	t_list	*first;
 	t_cmd	shh;
@@ -219,43 +224,125 @@ t_cmd		ft_parser_inst(char *str)
 
 	post = 0;
 	ft_bzero(&shh, sizeof(shh));
+//	printf("1sssss\n");
 	while (str[post] != '\0' && ft_isspace(str[post]))
 		(post)++;
 	if (str[post] != '\0')
 	{
 		ft_check_path(&shh, str, &post);
+//		printf("1dddd\n");
+//		printf("str =%s, post = %d\n", str, post);
 		first = ft_make_lst(&shh, str, &post);
+//		printf("1fffff\n");
+//		printf("str =%s, post = %d\n", str, post);
 		shh.args = ft_make_array(&first);
+//		printf("1aaaa\n");
 	}
 //	 (void)(w_envp);
 	return (shh);
 }
-
-t_cmd	*ft_make_array_t_cmd(char ***cmd_pipe)
+/*
+t_cmd	*ft_make_array_t_cmd(char **cmd_pipe)
 {
 	int		len;
 	t_cmd	*res;
 	int		i;
+	t_cmd	temp;
 
 	i = 0;
-	len = ft_lenarray(*cmd_pipe);
-//	printf("len=%d\n", len);
-//	printf("массив:\n");
-//	ft_print_array_2(cmd_pipe);
-	res = (t_cmd *)malloc(sizeof(t_cmd) * len);
-//	res[len] = NULL;
-	while (i < len)
+	len = ft_lenarray(cmd_pipe);
+	res = (t_cmd *)malloc(sizeof(t_cmd) * len + 1);
+	ft_bzero(&temp, sizeof(temp));
+	temp.id = setbit(temp.id, END_ARRAY);
+	res[len] = temp;
+	while (!(checkbit(res[i].id, END_ARRAY)))
 	{
-		res[i] = ft_parser_inst(*cmd_pipe[i]);
-		/*
+		res[i] = ft_parser_inst(cmd_pipe[i]);
 		int	j=0;
+		printf("check = %zu", checkbit(res[0].id, END_ARRAY));
+		printf("check len  = %zu\n", checkbit(res[len].id, END_ARRAY));
 		while (res[i].args[j] != NULL)
 		{
-			printf("res[%d].args[%d]\n = %s\n",i, j, res[i].args[j]);
+			printf("@@@@res[%d].args[%d]\n = %s\n",i, j, res[i].args[j]);
 			j++;
+			read(0, 0, 1);
 		}
-		*/
 		i++;
 	}
+	printf("##### END###");
+	return (res);
+}
+*/
+
+t_cmd	*ft_make_array_t_cmd(char **cmd_pipe)
+{
+	int		len;
+	t_cmd	*res;
+	int		i;
+	t_cmd	temp;
+
+
+	i = 0;
+	len = ft_lenarray(cmd_pipe);
+	res = (t_cmd *)malloc(sizeof(t_cmd) * len + 1);
+	ft_bzero(&temp, sizeof(temp));
+	temp.id = setbit(temp.id, END_ARRAY);
+	res[len] = temp;
+	while (!(checkbit(res[i].id, END_ARRAY)))
+	{
+		res[i] = ft_parser_inst(cmd_pipe[i]);
+//		int	j=0;
+//		printf("check i = %zu", checkbit(res[i].id, END_ARRAY));
+//		printf("check len  = %zu\n", checkbit(res[len].id, END_ARRAY));
+//		while (res[i].args[j] != NULL)
+//		{
+//			printf("WWWWW reis[%d].args[%d]\n = %s\n",i, j, res[i].args[j]);
+//			j++;
+//			read(0, 0, 1);
+//		}
+		i++;
+	}
+//	printf("##### END###");
+	return (res);
+}
+
+t_cmd		*ft_make_2_array_t_cmd(char **cmd_pipe)
+{
+	int		i;
+	int		len;
+	t_cmd	*res;
+
+	i = 0;
+	res = NULL;
+	len = ft_lenarray(cmd_pipe);
+//	printf("len=%d\n", len);
+//	printf("dfgdgddg\n");
+//	while (cmd_pipe[i] != NULL)
+//	{
+//		printf("cmd_pipe[%d]\n = %s\n",i, cmd_pipe[i]);
+//		i++;
+//	}
+//	res = (t_cmd *)malloc(sizeof(t_cmd) * len + 1);
+//	res[len] = NULL;
+	i = 0;
+//	while (cmd_pipe[i] != NULL)
+//	{
+		res = ft_make_array_t_cmd(cmd_pipe);
+//		i++;
+//	}
+//	printf("END\n");
+//	i = 0;
+//	while (!(checkbit(res[i].id, END_ARRAY)))
+//	{
+//		int	j=0;
+//		while (res[i].args[j] != NULL)
+//		{
+//		printf("@@@@res[%d]->args[%d]\n = %s\n",i, j, res[i].args[j]);
+//			j++;
+//			read(0, 0, 1);
+//		}
+//		i++;
+//	}
+//	printf("WOWWW !\n");
 	return (res);
 }
