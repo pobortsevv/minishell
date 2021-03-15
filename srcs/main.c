@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 12:47:01 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/12 14:13:55 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/03/15 11:19:05 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,9 +82,9 @@ int			main(int argc, char **argv, char **envp)
 //	t_list		first;
 	char		**w_envp=NULL;
 //	t_cmd		**ar_cmd;
-	t_cmd		*ar_cmd;
-	char		**cmd;
-	int			i;
+//	t_cmd		*ar_cmd;
+//	char		**cmd;
+//	int			i;
 
 	str = NULL;
 	ft_init(envp, w_envp);
@@ -97,43 +97,13 @@ int			main(int argc, char **argv, char **envp)
 			return (error_message(PROBLEM_WITH_MALLOC));
 		//TODO заменить envp  на w_envp, когда реализуем копирование
 		//	printf("before parser str =<%s>\n", str);
-		// TODO парсер будет  присылать массив структур t_cmd -  
-		// 			это 'токен' ограниченный ;, который  разбит на массив по pipe 
+		// TODO из парсера вызывается исполнение команд 
 		printf("начинаю парсер\n");
-		cmd = ft_split_cmd(str, ';');
-		i = 0;
-		while (cmd[i] != NULL)
+		if (ft_parser_shell(w_envp, str))
 		{
-			ar_cmd = ft_new_parser_cmd(cmd[i]);
-		//	printf("___;____%s\n", cmd[i]);i // работает проверила
-			i++;
-
-			// TODO вызов функции исполнения команд, разделенных  pipe
-
+			printf("Error with shell\n");
+			break ;
 		}
-		//ar_cmd = ft_parser_cmd(envp, str);
-		// тестовая печать списка команд
-		//ft_test_pr(&first);
-	//	printf("пеечатаю спарсенную строку:\n");
-	//	int	i=0;
-	//	printf("!!!!%s\n", ar_cmd[0][0].args[0]);
-	//	while (ar_cmd[i] != NULL)
-	//	{
-	//		int f = 0;
-	//		while (!(checkbit(ar_cmd[i][f].id, END_ARRAY)))
-	//		{
-	//			int	j=0;
-	//			while (ar_cmd[i][f].args[j] != NULL)
-	//			{
-//
-//					printf("ar_cmd[%d][%d].args[%d]\n = %s\n",i, f, j, ar_cmd[i][f].args[j]);
-//					j++;
-//				}
-//				f++;
-//			}
-//			i++;
-//		}
-//	
 
 		// вызов реализации команды со структурой sh
 
@@ -145,7 +115,8 @@ int			main(int argc, char **argv, char **envp)
 		//  надо парсить по  PIPE  кейс: cat | ls
 		//  	начнут одновременно но ls закроет stdin, и cat получит 1 строчку
 		//  - у каждой команды свой stdin, stdout - это надо прописать
-
+		if (str)
+			free(str);
 	}
 	//TODO очистка массива sh.array
 	free(str);

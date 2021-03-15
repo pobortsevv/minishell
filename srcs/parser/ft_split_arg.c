@@ -6,7 +6,7 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 14:42:54 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/03/15 09:46:19 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/03/15 11:33:48 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,6 +178,7 @@ char		**ft_split_arg(char const *s, char *c)
 	}
 	result[i] = NULL;
 	//TODO убрать тестовою печать
+/*
 	i = 0;
 	printf("result = = \n");
 	while (result[i] != NULL)
@@ -185,5 +186,6 @@ char		**ft_split_arg(char const *s, char *c)
 		printf("%s\n", result[i]);
 		i++;
 	}
+	*/
 	return (result);
 }

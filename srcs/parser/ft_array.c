@@ -6,7 +6,7 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/10 11:08:05 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/03/12 14:23:31 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/03/15 10:05:34 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	ft_isspace(int c)
 		return (1);
 	return (0);
 }
-
+/*
  void ft_check_path(t_cmd *sh, char *str, int *post)
 {
 	if ((str[*post] != '\0') && (str[*post] == '/' ||
@@ -235,7 +235,7 @@ t_cmd	ft_parser_inst(char *str)
 //	 (void)(w_envp);
 	return (shh);
 }
-/*
+
 t_cmd	*ft_make_array_t_cmd(char **cmd_pipe)
 {
 	int		len;
@@ -267,7 +267,7 @@ t_cmd	*ft_make_array_t_cmd(char **cmd_pipe)
 	return (res);
 }
 */
-
+/*
 t_cmd	*ft_make_array_t_cmd(char **cmd_pipe)
 {
 	int		len;
@@ -318,3 +318,4 @@ t_cmd	*ft_make_array_t_cmd(char **cmd_pipe)
 	}
 	return (res);
 }
+*/
