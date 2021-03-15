@@ -6,7 +6,7 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 12:07:24 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/03/15 15:16:01 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/03/15 21:09:43 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ t_cmd	ft_make_tcmd(char **a)
 {
 	t_cmd	res;
 
+	// Скорее всего проблема здесь - указатель присвается, но получить значения массива нельзя	
 	res.args = a;
 	res.id = 0;
 	res.in = 0;
@@ -104,18 +105,19 @@ t_cmd	ft_make_tcmd(char **a)
 
 t_cmd	*ft_make_ar_cmd(char ***arg_pipe, int len)
 {
-	t_cmd	temp;
+	//t_cmd	temp;
 	t_cmd	*ar_cmd;
 	int		i;
 
-	i = 0;
-	ar_cmd = (t_cmd *)malloc(sizeof(t_cmd) * len + 1);
+	i = 1;
+	ar_cmd = (t_cmd *)malloc(sizeof(t_cmd) * len);
 	if (arg_pipe[0] != NULL)
 		ar_cmd[0] = ft_make_tcmd(arg_pipe[0]);
-	ft_bzero(&temp, sizeof(temp));
-	temp.id = setbit(temp.id, END_ARRAY);
-	(ar_cmd)[len] = temp;
-	while (!(checkbit((ar_cmd)[i].id, END_ARRAY)))
+	//ft_bzero(&temp, sizeof(temp));
+	//temp.id = setbit(temp.id, END_ARRAY);
+	//(ar_cmd)[len] = temp;
+	//while (!(checkbit((ar_cmd)[i].id, END_ARRAY)))
+	while(i < len)	
 	{
 		(ar_cmd)[i] = ft_make_tcmd(arg_pipe[i]);
 		i++;
@@ -147,7 +149,7 @@ char	 	***ft_new_parser_cmd(char *cmd, int *len)
 int		ft_parser_shell(char **envp, char *str)
 {
 	char	**cmd;
-//	t_cmd	*ar_t_cmd;
+	t_cmd	*ar_t_cmd;
 	int		i;
 	char	***ar_pipe;
 	int		len;
@@ -165,25 +167,24 @@ int		ft_parser_shell(char **envp, char *str)
 		free_array_shell_2(ar_pipe);
 
 		// проблемная функция - создает из ar_pipe массив структур 
-		//	ar_t_cmd = ft_make_ar_cmd(ar_pipe, len);
+		ar_t_cmd = ft_make_ar_cmd(ar_pipe, len);
 		
 		//TODO  вызов функций для выполнения массива t_cmd
 		// а пока печать массива t_cmd
-		/*
 		int u = 0;
-		while (!(checkbit(ar_t_cmd[u].id, END_ARRAY)))
+		while (u < len)
 		{	
 			int		j=0;
-			while(ar_t_cmd[u].args[j] != NULL)
+			// здесь условие надо тоже поменять, в цикл не заходит
+			while(ar_t_cmd[u].args[j])
 			{
 				printf("ar_cmd[%d].args[%d]\n = %s\n",u, j, ar_t_cmd[u].args[j]);
 				j++;
 			}
 			u++;
 		}
-		*/
 		// free массив ar_t_cmd, то есть список аргументов  
-		//	free_t_cmd(ar_t_cmd);
+		free_t_cmd(ar_t_cmd);
 		i++;
 	}
 	// free массив - массив команд разделенных ; 
@@ -194,4 +195,3 @@ int		ft_parser_shell(char **envp, char *str)
 	
 	return (0);
 }
-
