@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 17:51:39 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/15 10:33:46 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/03/15 14:28:34 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,8 @@ void			ft_read(char **str);
  * Parsing str into sh structure
  */
 int				ft_parser_shell(char **envp, char *str);
-t_cmd			*ft_new_parser_cmd(char *cmd); //!!!!
+//t_cmd			*ft_new_parser_cmd(char *cmd); //!!!!
+char			***ft_new_parser_cmd(char *cmd, int *len); //!!!!
 char			**ft_split_cmd(char const *s, char c);
 char			**ft_split_arg(char const *s, char *c);
 int				ft_lenarray(char **cmd);
