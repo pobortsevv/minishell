@@ -6,7 +6,7 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/10 11:08:05 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/03/12 14:23:31 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/03/12 08:26:40 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,6 @@ char	*ft_get_word (t_cmd *sh, char *str, int *post)
 	char	*temp;
 	char	c[2];
 
-//	printf("я в ft_get_word\n");
 	res_get = NULL;
 	c[1] = '\0';
 	while (str[*post] != '\0' && ft_isspace(str[*post]))
@@ -117,9 +116,9 @@ char	*ft_get_word (t_cmd *sh, char *str, int *post)
 			printf("error\n");
 			return (NULL);
 		}
-		res_get[0] = '\0';
-		res_get[1] = '\0';
-		res_get[2] = '\0';
+		//res_get[0] = '\0';
+		//res_get[1] = '\0';
+		//res_get[2] = '\0';
 		ft_bzero(res_get, sizeof(res_get));
 		if (checkbit(sh->id, 2))
 		{
@@ -214,21 +213,19 @@ t_cmd	ft_parser_inst(char *str)
 
 	post = 0;
 	ft_bzero(&shh, sizeof(shh));
-	if (str == NULL)
-		return (shh);
-//	printf("OK2\n");
-//	printf("len=%zu\n", ft_strlen(str));
-//	printf("%s\n", str);
+	printf("OK2\n");
+	printf("len=%zu\n", ft_strlen(str));
+	printf("%s\n", str);
 //	while (str[post] != '\0' && ft_isspace(str[post]))
 //		(post)++;
-//	printf("OK3\n");
+	printf("OK3\n");
 	if (str[post] != '\0')
 	{
-//	printf("OK4\n");
+	printf("OK4\n");
 		ft_check_path(&shh, str, &post);
-//	printf("OK5\n");
+	printf("OK5\n");
 		first = ft_make_lst(&shh, str, &post);
-//	printf("OK6\n");
+	printf("OK6\n");
 		shh.args = ft_make_array(&first);
 	}
 	printf("OK7\n");
@@ -286,19 +283,16 @@ t_cmd	*ft_make_array_t_cmd(char **cmd_pipe)
 		return(NULL);
 	}
 	test = (char *)malloc(3);
-	ft_bzero(test, 3);
 //	test[0] = 'g';
-//	test[1] = 'o';
-//	test[2] = '\0';
 	ft_bzero(&temp, sizeof(temp));
 	temp.id = setbit(temp.id, END_ARRAY);
 	res[len] = temp;
 	while (!(checkbit(res[i].id, END_ARRAY)))
 	{
-//	printf ("±±±±±\n");
-//	printf("len=%zu\n", ft_strlen(cmd_pipe[i]));
-//	printf("%s\n", cmd_pipe[i]);
-//	res[i] = ft_parser_inst(cmd_pipe[i]);
+	printf ("±±±±±\n");
+	printf("len=%zu\n", ft_strlen(cmd_pipe[i]));
+	printf("%s\n", cmd_pipe[i]);
+		res[i] = ft_parser_inst(cmd_pipe[i]);
 //		int	j=0;
 //		printf("check i = %zu", checkbit(res[i].id, END_ARRAY));
 //		printf("check len  = %zu\n", checkbit(res[len].id, END_ARRAY));
@@ -310,11 +304,22 @@ t_cmd	*ft_make_array_t_cmd(char **cmd_pipe)
 //		}
 		i++;
 	}
-	i=0;
-	while (cmd_pipe[i] != NULL)
-	{
-		printf("-------%s\n", cmd_pipe[i]);
-		i++;
-	}
+	return (res);
+}
+
+t_cmd		*ft_make_2_array_t_cmd(char **cmd_pipe)
+{
+	int		i;
+	t_cmd	*res;
+
+	i = 0;
+	res = NULL;
+	i = 0;
+	printf("пришел массив:\n");
+	ft_print_array_2(cmd_pipe);
+	printf("ОК1\n");
+	res = ft_make_array_t_cmd(cmd_pipe);
+	printf("нулевой элемент:\n");
+	printf("%s\n", res[0].args[0]);
 	return (res);
 }

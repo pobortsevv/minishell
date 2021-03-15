@@ -6,7 +6,7 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/09 12:46:17 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/03/10 10:56:34 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/03/15 09:47:01 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,5 +132,6 @@ char		**ft_split_cmd(char const *s, char c)
 		}
 	}
 	result[i] = NULL;
+	i = 0;
 	return (result);
 }
