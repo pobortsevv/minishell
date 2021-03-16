@@ -6,11 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 12:47:01 by sabra             #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2021/03/15 22:12:15 by sabra            ###   ########.fr       */
-=======
-/*   Updated: 2021/03/16 12:11:25 by sabra            ###   ########.fr       */
->>>>>>> master
+/*   Updated: 2021/03/12 07:32:06 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,45 +79,47 @@ int			main(int argc, char **argv, char **envp)
 {
 	char		*str;
 //	t_cmd		sh;
-<<<<<<< HEAD
-	t_list		first;
-	char		**evc=NULL;
-
-=======
 //	t_list		first;
-	char		**evc=NULL;
-//	t_cmd		**ar_cmd;
-//	t_cmd		*ar_cmd;
-//	char		**cmd;
-//	int			i;
+	char		**w_envp=NULL;
+	t_cmd		**ar_cmd;
 
-	str = NULL;
->>>>>>> master
-	evc = ft_init(envp);
+	ft_init(envp, w_envp);
 	while (1)
 	{
 		printf("читаю строку\n");
-		get_next_line(0, &str);
-		//ft_read(&str);
+		ft_read(&str);
 		if (str == NULL)
 			return (error_message(PROBLEM_WITH_MALLOC));
 		//TODO заменить envp  на w_envp, когда реализуем копирование
 		//	printf("before parser str =<%s>\n", str);
-		// TODO из парсера вызывается исполнение команд 
 		printf("начинаю парсер\n");
-		if (ft_parser_shell(evc, str))
+		ar_cmd = ft_parser_cmd(envp, str);
+		// тестовая печать списка команд
+		//ft_test_pr(&first);
+		printf("пеечатаю спарсенную строку:\n");
+		int	i=0;
+		printf("!!!!%s\n", ar_cmd[0][0].args[0]);
+		while (ar_cmd[i] != NULL)
 		{
-			printf("Error with shell\n");
-			break ;
+			int f = 0;
+			while (!(checkbit(ar_cmd[i][f].id, END_ARRAY)))
+			{
+				int	j=0;
+				while (ar_cmd[i][f].args[j] != NULL)
+				{
+
+					printf("ar_cmd[%d][%d].args[%d]\n = %s\n",i, f, j, ar_cmd[i][f].args[j]);
+					j++;
+				}
+				f++;
+			}
+			i++;
 		}
+	
 
 		// вызов реализации команды со структурой sh
 
-<<<<<<< HEAD
-		exec_cmd(&first, evc);
-=======
 		//exec_cmd(&first, envp);
->>>>>>> master
 
 		// TODO  кейс: export qwe=1234; echo $qwe
 		//  если парсер создат "листы комманд", то надо заново парсить,
@@ -129,13 +127,10 @@ int			main(int argc, char **argv, char **envp)
 		//  надо парсить по  PIPE  кейс: cat | ls
 		//  	начнут одновременно но ls закроет stdin, и cat получит 1 строчку
 		//  - у каждой команды свой stdin, stdout - это надо прописать
-		if (str)
-			free(str);
+
 	}
-	ft_free_mat(evc);
 	//TODO очистка массива sh.array
 	free(str);
-	ft_free_mat(evc);
 	if (argc && argv[0] && envp[0])
 		;
 	return (0);

@@ -6,13 +6,20 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/03 07:47:52 by mlaureen          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2021/03/15 22:13:29 by sabra            ###   ########.fr       */
+=======
+/*   Updated: 2021/03/16 12:01:12 by sabra            ###   ########.fr       */
+>>>>>>> master
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_minishell.h"
 
+<<<<<<< HEAD
 // TODO сделать копирование в новый массив
+=======
+>>>>>>> master
 static char		**ft_copy_envp(char **ev)
 {
 	size_t	env_count;
@@ -50,4 +57,3 @@ char			**ft_init(char **ev)
 	return (ft_copy_envp(ev));
 //	ft_set_sh(sh);
 }
-

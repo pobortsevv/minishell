@@ -1,27 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                       :+:      :+:    :+:   */
+/*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sabra <sabra@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/07/19 09:28:00 by sabra             #+#    #+#             */
-/*   Updated: 2020/11/04 14:48:39 by sabra            ###   ########.fr       */
+/*   Created: 2021/03/08 01:17:53 by sabra             #+#    #+#             */
+/*   Updated: 2021/03/08 01:17:55 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int		ft_strncmp(char *s1, char *s2, unsigned int n)
-{
-	unsigned char	*str1;
-	unsigned char	*str2;
-	unsigned int	i;
+#include "ft_minishell.h"
 
-	str1 = (unsigned char *)s1;
-	str2 = (unsigned char *)s2;
+int	ft_env(char **ev)
+{
+	size_t i;
+	
 	i = 0;
-	if (!n)
+	if (!ev)
 		return (0);
-	while (str1[i] == str2[i] && str1[i] && i < (n - 1))
+	while(ev[i])
+	{
+		ft_printf("%s\n", ev[i]);
 		i++;
-	return (str1[i] - str2[i]);
+	}
+	return (1);
 }

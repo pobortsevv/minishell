@@ -1,25 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sabra <sabra@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/07/20 09:50:35 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/08 01:29:27 by sabra            ###   ########.fr       */
+/*   Created: 2021/03/09 12:55:10 by sabra             #+#    #+#             */
+/*   Updated: 2021/03/09 13:01:57 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_minishell.h"
 
-size_t	ft_strlen(const char *str)
+int	ft_cd(t_cmd *cmd)
 {
-	size_t	i;
+	int	res;
 
-	i = 0;
-	while (str[i] != '\0')
+	errno = 0;
+	res = chdir(cmd->args[1]);
+	if (res == -1)
 	{
-		i++;
+		ft_printf("%s\n", strerror(errno));
+		return (0);
 	}
-	return (i);
+	return (1);
 }

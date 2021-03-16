@@ -6,11 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 17:51:39 by sabra             #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2021/03/15 22:12:50 by sabra            ###   ########.fr       */
-=======
-/*   Updated: 2021/03/16 11:57:45 by sabra            ###   ########.fr       */
->>>>>>> master
+/*   Updated: 2021/03/12 15:19:32 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +44,6 @@ enum			e_parser
 	SLASH_1 = 10,
 	SLASH_2 = 11,
 	END_ARRAY = 12,
-	TAIL = 13,
 };
 
 enum			e_error
@@ -71,7 +66,6 @@ typedef struct		s_cmd
 {
 	int	id;
 	char	**args;
-	int		len_args;
 	int	in;
 	int	out;
 }			t_cmd;
@@ -79,7 +73,7 @@ typedef struct		s_cmd
 /*
 * Initialization. Create a copy: envp, declare null and void in the structures
 */
-char			**ft_init(char **ev);
+void			ft_init(char **argp, char **w_argp);
 void			ft_set_sh(t_cmd *sh);
 
 /*
@@ -90,9 +84,8 @@ void			ft_read(char **str);
 /*
  * Parsing str into sh structure
  */
-int				ft_parser_shell(char **envp, char *str);
-//t_cmd			*ft_new_parser_cmd(char *cmd); //!!!!
-char			***ft_new_parser_cmd(char *cmd, int *len); //!!!!
+//t_cmd			**ft_parser_cmd(char **envp, char *str);
+t_cmd			*ft_new_parser_cmd(char *cmd); //!!!!
 char			**ft_split_cmd(char const *s, char c);
 char			**ft_split_arg(char const *s, char *c);
 int				ft_lenarray(char **cmd);
