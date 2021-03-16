@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 12:47:01 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/15 15:34:20 by sabra            ###   ########.fr       */
+/*   Updated: 2021/03/16 12:11:25 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,14 +80,14 @@ int			main(int argc, char **argv, char **envp)
 	char		*str;
 //	t_cmd		sh;
 //	t_list		first;
-	char		**w_envp=NULL;
+	char		**evc=NULL;
 //	t_cmd		**ar_cmd;
 //	t_cmd		*ar_cmd;
 //	char		**cmd;
 //	int			i;
 
 	str = NULL;
-	ft_init(envp, w_envp);
+	evc = ft_init(envp);
 	while (1)
 	{
 		printf("читаю строку\n");
@@ -99,7 +99,7 @@ int			main(int argc, char **argv, char **envp)
 		//	printf("before parser str =<%s>\n", str);
 		// TODO из парсера вызывается исполнение команд 
 		printf("начинаю парсер\n");
-		if (ft_parser_shell(w_envp, str))
+		if (ft_parser_shell(evc, str))
 		{
 			printf("Error with shell\n");
 			break ;
@@ -118,6 +118,7 @@ int			main(int argc, char **argv, char **envp)
 		if (str)
 			free(str);
 	}
+	ft_free_mat(evc);
 	//TODO очистка массива sh.array
 	free(str);
 	if (argc && argv[0] && envp[0])

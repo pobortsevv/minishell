@@ -6,18 +6,33 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/03 07:47:52 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/03/05 07:50:49 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/03/16 12:01:12 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_minishell.h"
 
-// TODO сделать копирование в новый массив
-static void		ft_copy_envp(char **envp, char **w_envp)
+static char		**ft_copy_envp(char **ev)
 {
-	if (envp && w_envp)
-		;
-	return ;
+	size_t	env_count;
+	size_t	i;
+	char	**evc;
+
+	if (!ev)
+		return (NULL);
+	env_count = 0;
+	i = 0;
+	while (ev[env_count])
+		env_count++;
+	evc = (char **)malloc(env_count);
+	if (!evc)
+		return (NULL);
+	while (i < env_count)
+	{
+		evc[i] = ft_strdup(ev[i]);
+		i++;
+	}
+	return (evc);
 }
 
  void			ft_set_sh(t_cmd *sh)
@@ -29,10 +44,8 @@ static void		ft_copy_envp(char **envp, char **w_envp)
 	return ;
 }
 
-void			ft_init(char **envp, char **w_envp)
+char			**ft_init(char **ev)
 {
-	ft_copy_envp(envp, w_envp);
+	return (ft_copy_envp(ev));
 //	ft_set_sh(sh);
-	return ;
 }
-
