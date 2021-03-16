@@ -6,7 +6,11 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 17:51:39 by sabra             #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2021/03/16 11:57:45 by sabra            ###   ########.fr       */
+=======
+/*   Updated: 2021/03/16 14:09:01 by mlaureen         ###   ########.fr       */
+>>>>>>> parser_norm
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +43,8 @@ enum			e_parser
 	AND,				// &&
 	OR,					// ||
 	PATH,				// у команды есть путь - не надо использовать $PATH 		
-	SINGLE_QUOTE, 		// '
-	DOUBLE_QUOTE, 		// "
+	SINGLE_Q, 		// '
+	DOUBLE_Q, 		// "
 	SLASH_1 = 10,
 	SLASH_2 = 11,
 	END_ARRAY = 12,
@@ -87,13 +91,15 @@ void			ft_read(char **str);
  * Parsing str into sh structure
  */
 int				ft_parser_shell(char **envp, char *str);
-//t_cmd			*ft_new_parser_cmd(char *cmd); //!!!!
-char			***ft_new_parser_cmd(char *cmd, int *len); //!!!!
-char			**ft_split_cmd(char const *s, char c);
+char			**ft_split_cmd(char const *s, char c, size_t i, int flag);
 char			**ft_split_arg(char const *s, char *c);
+int				ft_isntend_split(char const *s, int *flag);
+void			ft_free_split(char **result, size_t last);
 int				ft_lenarray(char **cmd);
-t_cmd			*ft_make_array_t_cmd(char **cmd_pipe);
-//char			***ft_make_array_cmd(char **cmd_pipe);
+void			free_array_shell(char **ar);
+void			free_array_shell_2(char ***ar);
+void			free_t_cmd(t_cmd *ar_t_cmd, int len);
+
 
 /*
  * Commands funcs :)
@@ -108,6 +114,8 @@ int			ft_exit(t_cmd *cmd, t_list *list);
 /*
  * test funcs :)
  */
-void	ft_m_test_pr(t_list *first);
-void	ft_print_array_2(char ** arr);
+void		ft_m_test_pr(t_list *first);
+void		ft_print_array_2(char **arr);
+void		ft_print_array_3(char ***arr);
+void		ft_print_array_t_cmd(t_cmd *ar_t_cmd, int len);
 #endif

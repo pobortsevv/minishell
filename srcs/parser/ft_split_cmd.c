@@ -5,50 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/09 12:46:17 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/03/15 09:47:01 by mlaureen         ###   ########.fr       */
+/*   Created: 2021/03/16 14:02:21 by mlaureen          #+#    #+#             */
+/*   Updated: 2021/03/16 14:13:07 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_minishell.h"
-#include <stdio.h>
-
-static int	ft_isntend_split(char const *s, int *flag)
-{
-	int		ret;
-
-	ret = 1;
-	if ((checkbit(*flag, SLASH_1) && checkbit(*flag, SLASH_2)) || !checkbit(*flag, SLASH_1))
-	{
-		if (checkbit(*flag, SLASH_2))
-		{
-			*flag = switchbit(*flag, SLASH_1);
-			*flag = switchbit(*flag, SLASH_2);
-		}
-		if (!(checkbit(*flag, SINGLE_QUOTE)) && s[0] == '\\')
-			* flag = setbit(*flag, SLASH_1);
-		else if (s[0] == 39)
-			*flag = switchbit(*flag, SINGLE_QUOTE);
-		else if (!(checkbit(*flag, SINGLE_QUOTE)) && s[0] == '"')
-			*flag = switchbit(*flag, DOUBLE_QUOTE);
-	}
-	else if (checkbit(*flag, SLASH_1))
-		*flag = setbit(*flag, SLASH_2);
-	return (ret);
-}
-
-void		ft_free_split(char **result, size_t last)
-{
-	size_t i;
-
-	i = 0;
-	while (i < last)
-	{
-		free(result[i]);
-		i++;
-	}
-	free(result);
-}
 
 size_t		ft_count(char const *s, char c)
 {
@@ -60,16 +22,17 @@ size_t		ft_count(char const *s, char c)
 	while (*s)
 	{
 		while (*s && ft_isntend_split(s, &flag) && (s[0] == c &&
-			(!checkbit(flag, SINGLE_QUOTE) || !checkbit(flag, DOUBLE_QUOTE) || !checkbit(flag, SLASH_2))))
+			(!checkbit(flag, SINGLE_Q) || !checkbit(flag, DOUBLE_Q) ||
+			!checkbit(flag, SLASH_2))))
 			s++;
 		if (*s && ft_isntend_split(s, &flag) && (s[0] != c ||
-				(s[0] == c && (checkbit(flag, SINGLE_QUOTE)
-					|| checkbit(flag, DOUBLE_QUOTE) || checkbit(flag, SLASH_2)))))
+				(s[0] == c && (checkbit(flag, SINGLE_Q)
+					|| checkbit(flag, DOUBLE_Q) || checkbit(flag, SLASH_2)))))
 		{
 			count++;
 			while (*s && ft_isntend_split(s, &flag) && (s[0] != c ||
-				(s[0] == c && (checkbit(flag, SINGLE_QUOTE)
-					|| checkbit(flag, DOUBLE_QUOTE) || checkbit(flag, SLASH_2)))))
+				(s[0] == c && (checkbit(flag, SINGLE_Q)
+					|| checkbit(flag, DOUBLE_Q) || checkbit(flag, SLASH_2)))))
 				s++;
 		}
 	}
@@ -85,14 +48,16 @@ char		*ft_create_word(char const *s, char c)
 	i = 0;
 	flag = 0;
 	while (s[i] && ft_isntend_split(&s[i], &flag) && (s[i] != c || (s[i] == c &&
-			(checkbit(flag, SINGLE_QUOTE) || checkbit(flag, DOUBLE_QUOTE) || checkbit(flag, SLASH_2)))))
+			(checkbit(flag, SINGLE_Q) || checkbit(flag, DOUBLE_Q) ||
+			checkbit(flag, SLASH_2)))))
 		i++;
 	if (!(word = (char *)malloc(sizeof(char) * (i + 1))))
 		return (NULL);
 	i = 0;
 	flag = 0;
 	while (s[i] && ft_isntend_split(&s[i], &flag) && (s[i] != c || (s[i] == c &&
-			(checkbit(flag, SINGLE_QUOTE) || checkbit(flag, DOUBLE_QUOTE) || checkbit(flag, SLASH_2)))))
+			(checkbit(flag, SINGLE_Q) || checkbit(flag, DOUBLE_Q) ||
+			checkbit(flag, SLASH_2)))))
 	{
 		word[i] = s[i];
 		i++;
@@ -101,11 +66,29 @@ char		*ft_create_word(char const *s, char c)
 	return (word);
 }
 
-char		**ft_split_cmd(char const *s, char c)
+static void	ft_skip(char const **s, int *flag, char c)
 {
-	size_t	i;
+	*flag = 0;
+	while (**s && ft_isntend_split(*s, flag) && ((*s)[0] != c || ((*s)[0] == c
+			&& (checkbit(*flag, SINGLE_Q) || checkbit(*flag, DOUBLE_Q) ||
+				checkbit(*flag, SLASH_2)))))
+		(*s)++;
+	return ;
+}
+
+static int	ft_check_flag(int flag)
+{
+	int		res;
+
+	res = 0;
+	res = (checkbit(flag, SINGLE_Q) || checkbit(flag, DOUBLE_Q) ||
+			checkbit(flag, SLASH_2));
+	return (res);
+}
+
+char		**ft_split_cmd(char const *s, char c, size_t i, int flag)
+{
 	char	**result;
-	int		flag;
 
 	i = 0;
 	flag = 0;
@@ -117,7 +100,7 @@ char		**ft_split_cmd(char const *s, char c)
 		while (*s && s[0] == c && ft_isntend_split(s, &flag))
 			s++;
 		if (*s && ft_isntend_split(s, &flag) && (s[0] != c || (s[0] == c &&
-			(checkbit(flag, SINGLE_QUOTE) || checkbit(flag, DOUBLE_QUOTE) || checkbit(flag, SLASH_2)))))
+			(ft_check_flag(flag)))))
 		{
 			if (!(result[i] = ft_create_word(s, c)))
 			{
@@ -125,13 +108,9 @@ char		**ft_split_cmd(char const *s, char c)
 				return (NULL);
 			}
 			i++;
-			flag = 0;
-			while (*s && ft_isntend_split(s, &flag) && (s[0] != c || (s[0] == c
-			&& (checkbit(flag, SINGLE_QUOTE) || checkbit(flag, DOUBLE_QUOTE) || checkbit(flag, SLASH_2)))))
-				s++;
+			ft_skip(&s, &flag, c);
 		}
 	}
 	result[i] = NULL;
-	i = 0;
 	return (result);
 }

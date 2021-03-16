@@ -6,12 +6,31 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/09 08:35:33 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/03/10 16:00:15 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/03/16 11:14:17 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_minishell.h"
 #include <stdio.h>
+
+void		ft_print_array_3(char ***ar)
+{
+	int		i;
+	int		j;
+
+	i = 0;
+	while (ar[i] != NULL)
+	{
+		j = 0;
+		while (ar[i][j] != NULL)
+		{
+			printf("array[%d][%d]=%s\n", i, j, ar[i][j]);
+			j++;
+		}
+		i++;
+	}
+	return ;
+}
 
 // тест-функция: печать из "списка команд"
 
@@ -50,5 +69,26 @@ void	ft_print_array_2(char ** arr)
 		printf("%s \n",arr[i]);
 		i++;
 	}
+	return ;
+}
+
+void	ft_print_array_t_cmd(t_cmd *ar_t_cmd, int len)
+{
+	int		u;
+	int		j;
+
+	u = 0;
+	printf("печать результата - массива t_cmd\n");
+	while (u < len)
+	{
+		j = 0;
+		while(j < ar_t_cmd[u].len_args)
+		{
+			printf("ar_cmd[%d].args[%d]\n = %s\n", u, j, ar_t_cmd[u].args[j]);
+			j++;
+		}
+		u++;
+	}
+	printf("массив напечатан\n");
 	return ;
 }
