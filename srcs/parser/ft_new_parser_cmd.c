@@ -6,7 +6,7 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 12:07:24 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/03/15 21:09:43 by sabra            ###   ########.fr       */
+/*   Updated: 2021/03/16 09:54:47 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,32 +71,70 @@ void	free_array_shell_2(char ***ar)
 	return ;
 }
 
-void	free_t_cmd(t_cmd *ar_t_cmd)
+void	free_t_cmd(t_cmd *ar_t_cmd, int len)
 {
 	int 	u;
 	int		j;
-		
+
 	u = 0;
-	while (!(checkbit(ar_t_cmd[u].id, END_ARRAY)))
+	while (u < len)
 	{
-		j=0;	
-		while(ar_t_cmd[u].args[j] != NULL)
+		j=0;
+		while(j < ar_t_cmd[u].len_args)
+		{
+			if (ar_t_cmd[u].args[j] != NULL)
 			{
-				//printf("free(ar_cmd[%d].args[%d])\n = %s\n",u, j, ar_t_cmd[u].args[j]);
 				free(ar_t_cmd[u].args[j]);
-				j++;
+				ar_t_cmd[u].args[j] = NULL;
 			}
-			u++;
+			j++;
+		}
+		if (ar_t_cmd[u].args != NULL)
+		{
+			free(ar_t_cmd[u].args);
+			ar_t_cmd[u].args = NULL;
+		}
+		u++;
 	}
+	free(ar_t_cmd);
 	return ;
+}
+
+char	**ft_copy_array_shell(char **r_a,  char **a)
+{
+	int		i;
+	int		len;
+	int		res;
+
+	i = 0;
+	len = ft_lenarray(a);
+	r_a = (char **)malloc(sizeof(char *) * len + 1);
+	if (r_a == NULL)
+	{
+		// TODO обработку ошибок
+		return (NULL);
+	}
+	while (a[i] != NULL)
+	{
+		r_a[i] = (char *)malloc(sizeof(char) * ft_strlen(a[i]) + 1);
+		res = ft_strlcpy(r_a[i], a[i], ft_strlen(a[i]) + 1);
+		if (res != (int)ft_strlen(a[i]))
+		{
+			// TODO обработку ошибок
+			printf("ERROR with copy\n");
+			return (NULL);
+		}
+		i++;
+	}
+	return (r_a);
 }
 
 t_cmd	ft_make_tcmd(char **a)
 {
 	t_cmd	res;
 
-	// Скорее всего проблема здесь - указатель присвается, но получить значения массива нельзя	
-	res.args = a;
+	res.args=ft_copy_array_shell(res.args, a);
+	res.len_args = ft_lenarray(a);
 	res.id = 0;
 	res.in = 0;
 	res.out	= 1;
@@ -105,18 +143,11 @@ t_cmd	ft_make_tcmd(char **a)
 
 t_cmd	*ft_make_ar_cmd(char ***arg_pipe, int len)
 {
-	//t_cmd	temp;
 	t_cmd	*ar_cmd;
 	int		i;
 
-	i = 1;
+	i = 0;
 	ar_cmd = (t_cmd *)malloc(sizeof(t_cmd) * len);
-	if (arg_pipe[0] != NULL)
-		ar_cmd[0] = ft_make_tcmd(arg_pipe[0]);
-	//ft_bzero(&temp, sizeof(temp));
-	//temp.id = setbit(temp.id, END_ARRAY);
-	//(ar_cmd)[len] = temp;
-	//while (!(checkbit((ar_cmd)[i].id, END_ARRAY)))
 	while(i < len)	
 	{
 		(ar_cmd)[i] = ft_make_tcmd(arg_pipe[i]);
@@ -155,36 +186,32 @@ int		ft_parser_shell(char **envp, char *str)
 	int		len;
 
 	i = 0;
-	
 	cmd = ft_split_cmd(str, ';');
 	while (cmd[i] != NULL)
 	{
 		// здесь получаем массив *** - массив аргументов по pipe
 		ar_pipe = ft_new_parser_cmd(cmd[i], &len);
-		// печать массива
-		print_3_arr(ar_pipe);
-		// free массива *** 
+	 	ar_t_cmd = ft_make_ar_cmd(ar_pipe, len);
 		free_array_shell_2(ar_pipe);
-
-		// проблемная функция - создает из ar_pipe массив структур 
-		ar_t_cmd = ft_make_ar_cmd(ar_pipe, len);
-		
 		//TODO  вызов функций для выполнения массива t_cmd
 		// а пока печать массива t_cmd
+
+		printf("печать результата - массива t_cmd\n"); 
 		int u = 0;
 		while (u < len)
-		{	
+		{
 			int		j=0;
-			// здесь условие надо тоже поменять, в цикл не заходит
-			while(ar_t_cmd[u].args[j])
+			while(j < ar_t_cmd[u].len_args)
 			{
 				printf("ar_cmd[%d].args[%d]\n = %s\n",u, j, ar_t_cmd[u].args[j]);
 				j++;
 			}
 			u++;
 		}
+		printf("массив напечатан\n");
+
 		// free массив ar_t_cmd, то есть список аргументов  
-		free_t_cmd(ar_t_cmd);
+		free_t_cmd(ar_t_cmd, len);
 		i++;
 	}
 	// free массив - массив команд разделенных ; 
@@ -192,6 +219,5 @@ int		ft_parser_shell(char **envp, char *str)
 	//TODO убрать эту проверку в дальнейшем, когда будем использовать envp
 	if (envp != NULL)
 		printf("OK");
-	
 	return (0);
 }

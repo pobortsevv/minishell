@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 17:51:39 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/15 14:28:34 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/03/16 07:18:50 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ typedef struct		s_cmd
 {
 	int	id;
 	char	**args;
+	int		len_args;
 	int	in;
 	int	out;
 }			t_cmd;
