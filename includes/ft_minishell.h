@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 17:51:39 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/07 17:51:56 by sabra            ###   ########.fr       */
+/*   Updated: 2021/03/15 22:12:50 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ typedef struct		s_cmd
 /*
 * Initialization. Create a copy: envp, declare null and void in the structures
 */
-void			ft_init(char **argp, char **w_argp);
+char			**ft_init(char **ev);
 void			ft_set_sh(t_cmd *sh);
 
 /*

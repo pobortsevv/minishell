@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 12:47:01 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/07 17:50:24 by sabra            ###   ########.fr       */
+/*   Updated: 2021/03/15 22:12:15 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,9 @@ int			main(int argc, char **argv, char **envp)
 	char		*str;
 //	t_cmd		sh;
 	t_list		first;
-	char		**w_envp=NULL;
+	char		**evc=NULL;
 
-	ft_init(envp, w_envp);
+	evc = ft_init(envp);
 	while (1)
 	{
 		ft_read(&str);
@@ -92,7 +92,7 @@ int			main(int argc, char **argv, char **envp)
 
 		// TODO вызов реализации команды со структурой sh
 
-		exec_cmd(&first, envp);
+		exec_cmd(&first, evc);
 
 		// TODO  кейс: export qwe=1234; echo $qwe
 		//  если парсер создат "листы комманд", то надо заново парсить,
@@ -104,6 +104,7 @@ int			main(int argc, char **argv, char **envp)
 	}
 	//TODO очистка массива sh.array
 	free(str);
+	ft_free_mat(evc);
 	if (argc && argv[0] && envp[0])
 		;
 	return (0);
