@@ -6,7 +6,7 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 12:07:24 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/03/17 08:18:02 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/03/17 11:16:45 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,19 +23,19 @@ static char		**ft_copy_array_shell(char **r_a, char **a)
 	len = ft_lenarray(a);
 	r_a = (char **)malloc(sizeof(char *) * len + 1);
 	if (r_a == NULL)
-	{
-		/* TODO обработку ошибок*/
-		return (NULL);
-	}
+		return (ft_parser_er2(strerror(errno)));
+	r_a[len] = NULL;
 	while (a[i] != NULL)
 	{
-		r_a[i] = (char *)malloc(sizeof(char) * ft_strlen(a[i]) + 1);
+		if ((r_a[i] = (char *)malloc(ft_strlen(a[i]) + 1)) == NULL)
+			return (ft_parser_er2(strerror(errno)));
 		res = ft_strlcpy(r_a[i], a[i], ft_strlen(a[i]) + 1);
 		if (res != (int)ft_strlen(a[i]))
 		{
-			/*  TODO обработку ошибок */
-			printf("ERROR with copy\n");
-			return (NULL);
+			free(r_a[i]);
+			r_a[i] = NULL;
+			free_array_shell(r_a);
+			return (ft_parser_er2(strerror(errno)));
 		}
 		i++;
 	}
@@ -98,11 +98,16 @@ int				ft_parser_shell(char **envp, char *str)
 	int		len;
 
 	i = 0;
-	cmd = ft_split_cmd(str, ';', 0, 0);
-	while (cmd[i] != NULL)
+	if ((cmd = ft_split_cmd(str, ';', 0, 0)) == NULL)
+		ft_printf("%s\n", strerror(errno));
+	while (cmd != 0 && cmd[i] != NULL)
 	{
 		/* здесь получаем массив *** - массив аргументов по pipe*/
-		ar_pipe = ft_new_parser_cmd(cmd[i], &len);
+		if ((ar_pipe = ft_new_parser_cmd(cmd[i], &len)) == NULL)
+		{
+			ft_printf("%s\n", strerror(errno));
+			continue ; // TODO или break - завершить обработку строки?
+		}
 		ar_t_cmd = ft_make_ar_cmd(ar_pipe, len);
 		free_array_shell_2(ar_pipe);
 		/*TODO  вызов функций для выполнения массива t_cmd */

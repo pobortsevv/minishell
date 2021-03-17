@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 17:51:39 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/17 09:21:32 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/03/17 11:13:10 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,11 @@ void			free_array_shell(char **ar);
 void			free_array_shell_2(char ***ar);
 void			free_t_cmd(t_cmd *ar_t_cmd, int len);
 
+/*
+ * Error
+ */
+char			**ft_parser_er2(char *error);
+char			*ft_parser_er1(char *error);
 
 /*
  * Commands funcs :)
