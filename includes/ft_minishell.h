@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 17:51:39 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/16 15:16:46 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/03/17 09:21:32 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,13 +84,17 @@ void			ft_set_sh(t_cmd *sh);
 void			ft_read(char **str);
 
 /*
- * Parsing str into sh structure
+ * Parsing str into t_cmd structure
  */
 int				ft_parser_shell(char **envp, char *str);
 char			**ft_split_cmd(char const *s, char c, size_t i, int flag);
-char			**ft_split_arg(char const *s, char *c);
+char			**ft_split_arg(char *s, char *c, size_t i, int flag);
 int				ft_isntend_split(char const *s, int *flag);
-void			ft_free_split(char **result, size_t last);
+int				ft_free_split(char **result, size_t last);
+void			ft_check_d(const char *s, int *d, int *flag, int *i);
+void			ft_check_d_v1(const char *s, int *d, int *flag);
+void			ft_check_d_less(const char s, char *c,  int *d, int *flag);
+int				ft_check_tail(int flag);
 int				ft_lenarray(char **cmd);
 void			free_array_shell(char **ar);
 void			free_array_shell_2(char ***ar);

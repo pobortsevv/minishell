@@ -6,7 +6,7 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 12:07:24 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/03/16 15:11:55 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/03/17 08:18:02 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ static char		***ft_new_parser_cmd(char *cmd, int *len)
 	arg_pipe[*len] = NULL;
 	while (i < *len)
 	{
-		arg_pipe[i] = ft_split_arg(cmd_pipe[i], SYM);
+		arg_pipe[i] = ft_split_arg(cmd_pipe[i], SYM, 0, 0);
 		i++;
 	}
 	free_array_shell(cmd_pipe);

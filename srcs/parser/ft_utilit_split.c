@@ -6,7 +6,7 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/16 11:23:55 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/03/16 13:33:41 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/03/17 09:38:32 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int			ft_isntend_split(char const *s, int *flag)
 	return (ret);
 }
 
-void		ft_free_split(char **result, size_t last)
+int			ft_free_split(char **result, size_t last)
 {
 	size_t	i;
 
@@ -49,4 +49,5 @@ void		ft_free_split(char **result, size_t last)
 		i++;
 	}
 	free(result);
+	return (1);
 }
