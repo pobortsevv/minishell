@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 12:47:01 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/16 12:11:25 by sabra            ###   ########.fr       */
+/*   Updated: 2021/03/18 10:41:11 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,19 +60,15 @@ int			init_command(t_cmd *cmd, char **envp, t_list *list)
 	return (1);
 }
 
-void			exec_cmd(t_list *first, char **envp)
+void			exec_cmd(t_cmd *ar_cmd, char **env, int cmd_count)
 {
-	t_list	*list;
-	t_cmd	*cmd;
+	size_t i;
 
-	list = first;
-	while (list)
+	i = 0;
+	while (i < cmd_count)
 	{
-		cmd = (t_cmd *)(list->content);
-		init_command(cmd, envp, first);
-		list = list->next;
-	}
 
+	}
 }
 
 int			main(int argc, char **argv, char **envp)
@@ -87,7 +83,7 @@ int			main(int argc, char **argv, char **envp)
 //	int			i;
 
 	str = NULL;
-	evc = ft_init(envp);
+	evc = ft_copy_envp(envp);
 	while (1)
 	{
 		printf("читаю строку\n");
@@ -120,7 +116,8 @@ int			main(int argc, char **argv, char **envp)
 	}
 	ft_free_mat(evc);
 	//TODO очистка массива sh.array
-	free(str);
+	if (str)	
+		free(str);
 	if (argc && argv[0] && envp[0])
 		;
 	return (0);
