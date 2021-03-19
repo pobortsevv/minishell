@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 17:51:39 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/18 10:32:15 by sabra            ###   ########.fr       */
+/*   Updated: 2021/03/20 00:03:29 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,9 @@
 # define ENV 6
 # define EXIT 7
 # define FD_ERR 2
+# define MAX_NAME 500
+# define TABLE_SIZE 215
+# define DELETED (t_env *)(0xFFFFFFFFFFFFFFFFUL)
 # define SYM " ><"
 # include <unistd.h>
 # include <stdlib.h>
@@ -71,6 +74,12 @@ typedef struct		s_cmd
 	int	in;
 	int	out;
 }			t_cmd;
+
+typedef struct		s_env
+{
+	char name[MAX_NAME];
+	char value[MAX_NAME];
+}			t_env;
 
 /*
 * Initialization. Create a copy: envp, declare null and void in the structures
