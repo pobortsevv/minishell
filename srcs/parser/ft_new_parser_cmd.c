@@ -6,7 +6,7 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 12:07:24 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/03/17 11:16:45 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/03/20 07:38:57 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,8 @@ int				ft_parser_shell(char **envp, char *str)
 		/*TODO  вызов функций для выполнения массива t_cmd */
 		/* а пока печать массива t_cmd */
 		ft_print_array_t_cmd(ar_t_cmd, len);
+		// выполнение команды
+		ft_make_command(ar_t_cmd, len);
 		free_t_cmd(ar_t_cmd, len);
 		i++;
 	}

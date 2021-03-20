@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 17:51:39 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/18 10:32:15 by sabra            ###   ########.fr       */
+/*   Updated: 2021/03/20 08:01:59 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,14 @@ int				ft_lenarray(char **cmd);
 void			free_array_shell(char **ar);
 void			free_array_shell_2(char ***ar);
 void			free_t_cmd(t_cmd *ar_t_cmd, int len);
+
+
+/*
+ * Make command from t_cmd
+ */
+void			ft_make_command(t_cmd *ar_t_cmd, int len);
+char			**ft_parser_str(t_cmd ar_t_cmd);
+
 
 /*
  * Error
