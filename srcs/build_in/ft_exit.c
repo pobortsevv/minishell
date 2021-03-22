@@ -25,7 +25,7 @@ int	is_num_arg(char *str)
 	return (1);
 }
 
-int	ft_exit(t_cmd *cmd, t_list *list)
+int	ft_exit(t_cmd *cmd)
 {
 	size_t	len;
 	int	error_code;
@@ -44,7 +44,6 @@ int	ft_exit(t_cmd *cmd, t_list *list)
 	// TODO почистить копию массива
 	// TODO почистить полный лист
 	//ft_lstclear(&list, free);
-	(void)list;
 	ft_free_mat(cmd->args);
 	ft_printf("exit\n");
 	exit(error_code);

@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/08 01:17:24 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/09 12:37:58 by sabra            ###   ########.fr       */
+/*   Updated: 2021/03/21 23:30:31 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,19 +44,52 @@ static void	env_sort(char **a)
 	}
 }
 
+//int		quote_check(char *arg)
+//{
+	//int result;
+	//int i;
+//
+	//i = 0;
+	//result = 0;
+	//while (arg[i])
+	//{
+		//if (arg[])
+	//}
+//}
+
+//static int	arg_check(char *arg)
+//{
+	//int i;
+	//int result;
+//
+	//i = 0;
+	//result = 1;
+	////if (arg[0] == '\"' || arg[0] == '\'')
+		////result = quote_check(arg);
+	//if (!ft_isalpha(arg[0]) && arg[0] != '_')
+		//return (0);
+	//return (1);
+//}
+
 int		ft_export(t_cmd *cmd, char **ev)
 {
-	size_t i;
+	int	i;
+	char	**buf;
 	
 	i = 0;
-	(void)cmd;
-	env_sort(ev);
-	if (!ev)
-		return (0);
-	while(ev[i])
+	if (cmd->len_args > 1)
 	{
-		ft_printf("declare -x %s\n", ev[i]);
+		
+	}
+	buf = ft_copy_envp(ev);
+	env_sort(buf);
+	if (!buf)
+		return (0);
+	while(buf[i])
+	{
+		ft_printf("declare -x %s\n", buf[i]);
 		i++;
 	}
+	ft_free_mat(buf);
 	return (1);
 }

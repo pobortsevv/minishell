@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/08 01:17:53 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/08 01:17:55 by sabra            ###   ########.fr       */
+/*   Updated: 2021/03/21 21:51:20 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ int	ft_env(char **ev)
 		return (0);
 	while(ev[i])
 	{
-		ft_printf("%s\n", ev[i]);
+		if (ft_strchr(ev[i], '='))
+			ft_printf("%s\n", ev[i]);
 		i++;
 	}
 	return (1);

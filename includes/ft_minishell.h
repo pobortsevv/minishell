@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 17:51:39 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/18 10:32:15 by sabra            ###   ########.fr       */
+/*   Updated: 2021/03/22 11:59:46 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void			ft_read(char **str);
 /*
  * Parsing str into t_cmd structure
  */
-int				ft_parser_shell(char **envp, char *str);
+char			**ft_parser_shell(char **envp, char *str);
 char			**ft_split_cmd(char const *s, char c, size_t i, int flag);
 char			**ft_split_arg(char *s, char *c, size_t i, int flag);
 int				ft_isntend_split(char const *s, int *flag);
@@ -108,12 +108,14 @@ char			*ft_parser_er1(char *error);
 /*
  * Commands funcs :)
  */
+
+char 			**ft_exec_cmd(t_cmd *ar_cmd, char **env, int cmd_count);
 int			ft_pwd(void);
 int			ft_env(char **env);
 int			ft_export(t_cmd *cmd, char **env);
+char			**ft_unset(t_cmd *cmd, char **env);
 int			ft_cd(t_cmd *cmd);
-int			ft_exit(t_cmd *cmd, t_list *list);
-
+int			ft_exit(t_cmd *cmd);
 
 /*
  * test funcs :)

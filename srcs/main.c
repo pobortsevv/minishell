@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 12:47:01 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/18 10:41:11 by sabra            ###   ########.fr       */
+/*   Updated: 2021/03/22 12:00:55 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void		ft_test_pr(t_list *first)
 	return ;
 }
 
-int			init_command(t_cmd *cmd, char **envp, t_list *list)
+int			init_command(t_cmd *cmd, char **envp)
 {
 	if ((ft_strncmp(cmd->args[0], "pwd", ft_strlen(cmd->args[0]))) == 0)
 		return (ft_pwd());
@@ -56,19 +56,24 @@ int			init_command(t_cmd *cmd, char **envp, t_list *list)
 	if ((ft_strncmp(cmd->args[0], "cd", ft_strlen(cmd->args[0]))) == 0)
 		return (ft_cd(cmd));
 	if ((ft_strncmp(cmd->args[0], "exit", ft_strlen(cmd->args[0]))) == 0)
-		return (ft_exit(cmd, list));
+		return (ft_exit(cmd));
 	return (1);
 }
 
-void			exec_cmd(t_cmd *ar_cmd, char **env, int cmd_count)
+char			**ft_exec_cmd(t_cmd *ar_cmd, char **env, int cmd_count)
 {
-	size_t i;
+	int i;
 
 	i = 0;
 	while (i < cmd_count)
 	{
-
+		if ((ft_strncmp(ar_cmd[i].args[0], "unset", ft_strlen(ar_cmd[i].args[0]))) == 0)
+			env = ft_unset(&ar_cmd[i], env);
+		else
+			init_command(&ar_cmd[i], env);
+		i++;
 	}
+	return (env);
 }
 
 int			main(int argc, char **argv, char **envp)
@@ -86,7 +91,8 @@ int			main(int argc, char **argv, char **envp)
 	evc = ft_copy_envp(envp);
 	while (1)
 	{
-		printf("читаю строку\n");
+		//printf("читаю строку\n");
+		ft_printf("minishell> ");
 		get_next_line(0, &str);
 		//ft_read(&str);
 		if (str == NULL)
@@ -94,8 +100,9 @@ int			main(int argc, char **argv, char **envp)
 		//TODO заменить envp  на w_envp, когда реализуем копирование
 		//	printf("before parser str =<%s>\n", str);
 		// TODO из парсера вызывается исполнение команд 
-		printf("начинаю парсер\n");
-		if (ft_parser_shell(evc, str))
+		//printf("начинаю парсер\n");
+		evc = ft_parser_shell(evc, str);
+		if (!evc)
 		{
 			printf("Error with shell\n");
 			break ;

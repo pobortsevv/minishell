@@ -6,7 +6,7 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 12:07:24 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/03/17 11:16:45 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/03/22 17:18:21 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,7 @@ static char		**ft_copy_array_shell(char **r_a, char **a)
 			return (ft_parser_er2(strerror(errno)));
 		}
 		i++;
-	}
-	return (r_a);
+	} return (r_a);
 }
 
 static t_cmd	ft_make_tcmd(char **a)
@@ -89,7 +88,7 @@ static char		***ft_new_parser_cmd(char *cmd, int *len)
 	return (arg_pipe);
 }
 
-int				ft_parser_shell(char **envp, char *str)
+char			**ft_parser_shell(char **envp, char *str)
 {
 	char	**cmd;
 	t_cmd	*ar_t_cmd;
@@ -112,13 +111,13 @@ int				ft_parser_shell(char **envp, char *str)
 		free_array_shell_2(ar_pipe);
 		/*TODO  вызов функций для выполнения массива t_cmd */
 		/* а пока печать массива t_cmd */
-		ft_print_array_t_cmd(ar_t_cmd, len);
+		//ft_print_array_t_cmd(ar_t_cmd, len);
+		envp = ft_exec_cmd(ar_t_cmd, envp, len);			
 		free_t_cmd(ar_t_cmd, len);
 		i++;
 	}
 	/* free массив - массив команд разделенных ;*/
 	free_array_shell(cmd);
 	/*TODO убрать эту проверку в дальнейшем, когда будем использовать envp */
-	(void)envp;
-	return (0);
+	return (envp);
 }
