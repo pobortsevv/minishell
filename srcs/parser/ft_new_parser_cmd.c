@@ -6,7 +6,7 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 12:07:24 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/03/20 07:38:57 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/03/23 11:38:03 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,9 @@
 static char		**ft_copy_array_shell(char **r_a, char **a)
 {
 	int		i;
-	int		len;
+	int		len;	
 	int		res;
+	char	**norm;
 
 	i = 0;
 	len = ft_lenarray(a);
@@ -25,12 +26,16 @@ static char		**ft_copy_array_shell(char **r_a, char **a)
 	if (r_a == NULL)
 		return (ft_parser_er2(strerror(errno)));
 	r_a[len] = NULL;
-	while (a[i] != NULL)
+	if (!(norm = ft_make_norm(a)))
+		return (NULL);
+	//printf("после нормализации\n");
+	//ft_print_array_2(norm);
+	while (norm[i] != NULL)
 	{
-		if ((r_a[i] = (char *)malloc(ft_strlen(a[i]) + 1)) == NULL)
+		if ((r_a[i] = (char *)malloc(ft_strlen(norm[i]) + 1)) == NULL)
 			return (ft_parser_er2(strerror(errno)));
-		res = ft_strlcpy(r_a[i], a[i], ft_strlen(a[i]) + 1);
-		if (res != (int)ft_strlen(a[i]))
+		res = ft_strlcpy(r_a[i], norm[i], ft_strlen(norm[i]) + 1);
+		if (res != (int)ft_strlen(norm[i]))
 		{
 			free(r_a[i]);
 			r_a[i] = NULL;
@@ -39,6 +44,7 @@ static char		**ft_copy_array_shell(char **r_a, char **a)
 		}
 		i++;
 	}
+	free_array_shell(norm);
 	return (r_a);
 }
 
@@ -64,6 +70,8 @@ static t_cmd	*ft_make_ar_cmd(char ***arg_pipe, int len)
 	while (i < len)
 	{
 		(ar_cmd)[i] = ft_make_tcmd(arg_pipe[i]);
+		//пришла ошибка, если ar_cmd[i].args[0] == NULL
+		//TODO обработать pipe через dup2
 		i++;
 	}
 	return (ar_cmd);
@@ -98,6 +106,7 @@ int				ft_parser_shell(char **envp, char *str)
 	int		len;
 
 	i = 0;
+	ar_t_cmd = NULL;
 	if ((cmd = ft_split_cmd(str, ';', 0, 0)) == NULL)
 		ft_printf("%s\n", strerror(errno));
 	while (cmd != 0 && cmd[i] != NULL)
@@ -112,10 +121,12 @@ int				ft_parser_shell(char **envp, char *str)
 		free_array_shell_2(ar_pipe);
 		/*TODO  вызов функций для выполнения массива t_cmd */
 		/* а пока печать массива t_cmd */
-		ft_print_array_t_cmd(ar_t_cmd, len);
-		// выполнение команды
-		ft_make_command(ar_t_cmd, len);
-		free_t_cmd(ar_t_cmd, len);
+//		if (ar_t_cmd[0].args != NULL) 
+		if (ar_t_cmd != NULL)
+		{
+			ft_print_array_t_cmd(ar_t_cmd, len);
+			free_t_cmd(ar_t_cmd, len);
+		}
 		i++;
 	}
 	/* free массив - массив команд разделенных ;*/

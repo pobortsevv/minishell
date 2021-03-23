@@ -6,7 +6,7 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 12:04:21 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/03/22 16:11:11 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/03/23 11:37:43 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,20 @@ char	*ft_dollar (char *str, int *i, int *flag)
 		ft_is(&str[*i], flag, i);
 	}
 	temp[j] = '\0';
-	// printf("найти значение переменной %s\n", &temp[1]);
+	//printf("найти значение переменной %s\n", &temp[1]);
 	//  получить значение переменной
 	//  res = ft_giv(&temp[1]);
-	res = (char *)malloc (2);
-	res[0] = 'a';
-	res[1] = '\0';
+	res = (char *)malloc (10);
+	res[0] = 'Z';
+	res[1] = 'N';
+	res[2] = 'A';
+	res[3] = 'C';
+	res[4] = 'H';
+	res[5] = 'E';
+	res[6] = 'N';
+	res[7] = 'I';
+	res[8] = 'E';
+	res[9] = '\0';
 	free(temp);
 	return (res);
 }
@@ -113,5 +121,31 @@ char		**ft_parser_str(t_cmd ar)
 	result[i] = NULL;
 	*/
 	//вернем массив аргументов для команды и измененный in и out у структуры
+	return (res);
+}
+
+char	**ft_make_norm(char **ar)
+{
+	int		len;
+	char	**res;
+	int		flag;
+	int		i;
+
+	flag = 0;
+	i = 1;
+	len = ft_lenarray(ar);
+	if (len <= 0
+			|| !(res = (char **)malloc(sizeof(char *) * len + 1)))
+		return (NULL);
+	res[len] = NULL;
+	res[0] = ft_res0(ar[0], &flag);
+	if (res[0] == NULL || flag)
+		return ((ft_parser_err_free2("comman not found (127)\n", res)));
+	while (ar[i] != NULL)
+	{
+		flag = 0;
+		res[i] = ft_res_arg(ar[i], &flag);
+		i++;
+	}
 	return (res);
 }

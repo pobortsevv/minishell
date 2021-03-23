@@ -6,7 +6,7 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 10:41:40 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/03/17 11:16:46 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/03/23 08:12:56 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,5 +21,25 @@ char	**ft_parser_er2(char *error)
 char	*ft_parser_er1(char *error)
 {
 	ft_printf("%s\n", error);
+	return (NULL);
+}
+
+char	**ft_parser_err_free2(char *error, char **a)
+{
+	int		i;
+
+	i = 0;
+	ft_printf("%s\n", error);
+	while (a && a[i])
+	{
+		free(a[i]);
+		a[i] = NULL;
+		i++;
+	}
+	if (a)
+	{
+		free(a);
+		a = NULL;
+	}
 	return (NULL);
 }

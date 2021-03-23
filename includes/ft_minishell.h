@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 17:51:39 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/22 15:48:39 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/03/23 08:59:58 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,9 +103,11 @@ void			free_t_cmd(t_cmd *ar_t_cmd, int len);
 /*
  * Make command from t_cmd
  */
-void			ft_make_command(t_cmd *ar_t_cmd, int len);
+//void			ft_make_command(t_cmd *ar_t_cmd, int len);
+char			**ft_make_norm(char **ar);
 char			**ft_parser_str(t_cmd ar_t_cmd);
 char			*ft_res0(char *str, int *flag);
+char			*ft_res_arg(char *str, int *flag);
 char			*ft_dollar (char *str, int *i, int *flag);
 int				ft_is(char const *s, int *flag, int *i);
 
@@ -115,6 +117,7 @@ int				ft_is(char const *s, int *flag, int *i);
  */
 char			**ft_parser_er2(char *error);
 char			*ft_parser_er1(char *error);
+char			**ft_parser_err_free2(char *error, char **a);
 
 /*
  * Commands funcs :)

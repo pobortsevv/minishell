@@ -1,22 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_parser_str1.c                                   :+:      :+:    :+:   */
+/*   ft_parser_str2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/22 15:30:20 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/03/23 09:26:31 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/03/23 11:48:49 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_minishell.h"
 
-static void	ft_check_condition(char const *s, int *flag, int *i)
+static void	ft_check_condition_a(char const *s, int *flag, int *i)
 {
 	if (!(checkbit(*flag, SLASH_2)))
 	{
-		if (!(checkbit(*flag, SINGLE_Q)) && s[(*i)] == 92)
+		if ((!(checkbit(*flag, SINGLE_Q))) && s[(*i)] == 92)
 			*flag = setbit(*flag, SLASH_1);
 		else if (s[*i] == 39 && s[(*i) + 1] != 39)
 		{
@@ -40,26 +40,26 @@ static void	ft_check_condition(char const *s, int *flag, int *i)
 	return ;
 }
 
-int			ft_is(char const *s, int *flag, int *i)
+static int	ft_is_a(char const *s, int *flag, int *i)
 {
 	int		ret;
 
 	ret = 1;
 	if (!checkbit(*flag, SLASH_1))
 	{
-		ft_check_condition(s, flag, i);
+		ft_check_condition_a(s, flag, i);
 	}
 	else
 	{
 		*flag = unsetbit(*flag, SLASH_1);
 		*flag = setbit(*flag, SLASH_2);
 		if (s[*i] != 34 && s[*i] != 39 && s[*i] != 92)
-			ft_check_condition(s, flag, i);
+			ft_check_condition_a(s, flag, i);
 	}
 	return (ret);
 }
 
-static void	ft_in_cycle(char **res, char *temp, int *j)
+static void	ft_in_cycle_a(char **res, char *temp, int *j)
 {
 	char	*t1;
 
@@ -72,7 +72,7 @@ static void	ft_in_cycle(char **res, char *temp, int *j)
 	return ;
 }
 
-static char	*ft_init_res0(char *str, char *res, int *i, int *j)
+static char	*ft_init_res_a(char *str, char *res, int *i, int *j)
 {
 	*i = 0;
 	*j = 0;
@@ -82,7 +82,7 @@ static char	*ft_init_res0(char *str, char *res, int *i, int *j)
 	return (res);
 }
 
-char		*ft_res0(char *str, int *flag)
+char		*ft_res_arg(char *str, int *flag)
 {
 	char	*res;
 	char	*temp;
@@ -90,20 +90,25 @@ char		*ft_res0(char *str, int *flag)
 	int		j;
 
 	res = NULL;
-	res = ft_init_res0(str, res, &i, &j);
+	res = ft_init_res_a(str, res, &i, &j);
 	while (str[i] != '\0')
 	{
-		ft_is(str, flag, &i);
+		ft_is_a(str, flag, &i);
+		if (checkbit(*flag, SLASH_1) &&  checkbit(*flag, DOUBLE_Q)  &&
+				(str[i + 1] != 39 && str[i +1 ] != 34 && str[i + 1] != 92))
+			res[j++] = 92;
 		if (((!(checkbit(*flag, SLASH_2)) && (str[i] == 39 || str[i] == 34))) ||
 			(*flag == 0 && str[i] == 92))
-			ft_is(str, flag, &i);
+			ft_is_a(str, flag, &i);
 		if (str[i] != '\0' && (!(checkbit(*flag, SINGLE_Q)))
 				&& (!checkbit(*flag, SLASH_2)) && str[i] == '$')
 		{
 			temp = ft_dollar(str, &i, flag);
-			ft_in_cycle(&res, temp, &j);
+			ft_in_cycle_a(&res, temp, &j);
 		}
-		else if (str[i] != '\0' && (!checkbit(*flag, SLASH_1)))
+		else if (str[i] != '\0' && ((!checkbit(*flag, SLASH_1)
+					|| (checkbit(*flag, SLASH_1) && (str[i] != 39
+							&& str[i] != 34 && str[i] != 92)))))
 			res[j++] = str[i];
 		i++;
 	}

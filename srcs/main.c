@@ -94,7 +94,6 @@ int			main(int argc, char **argv, char **envp)
 		//TODO заменить envp  на w_envp, когда реализуем копирование
 		//	printf("before parser str =<%s>\n", str);
 		// TODO из парсера вызывается исполнение команд 
-		printf("начинаю парсер\n");
 		if (ft_parser_shell(evc, str))
 		{
 			printf("Error with shell\n");
