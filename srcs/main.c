@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 12:47:01 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/23 21:52:04 by sabra            ###   ########.fr       */
+/*   Updated: 2021/03/24 00:29:14 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ int			main(int argc, char **argv, char **envp)
 
 	str = NULL;
 	evc = ft_copy_envp(envp);
+	sig_init();
 	while (1)
 	{
 		//printf("читаю строку\n");

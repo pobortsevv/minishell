@@ -6,12 +6,15 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 17:51:39 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/23 21:49:19 by sabra            ###   ########.fr       */
+/*   Updated: 2021/03/24 00:26:07 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_MINISHELL_H
 # define FT_MINISHELL_H
+# define STDIN 0
+# define STDOUT 1
+# define STDERR 2
 # define ECHO 1
 # define CD 2
 # define PWD 3
@@ -27,6 +30,7 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <string.h>
+# include <signal.h>
 # include <errno.h>
 # include "../libft/libft/libft.h"
 # include "../libbitop/libbitop.h"
@@ -104,8 +108,17 @@ void			free_t_cmd(t_cmd *ar_t_cmd, int len);
 /*
  * Error
  */
+
 char			**ft_parser_er2(char *error);
 char			*ft_parser_er1(char *error);
+
+/*
+ * Signals
+ */
+
+void			sig_init(void);
+void			sig_int(int signal);
+void			sig_quit(int signal);
 
 /*
  * Commands funcs :)

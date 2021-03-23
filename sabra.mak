@@ -7,3 +7,4 @@ SABRA	=	srcs/main.c \
 		srcs/build_in/ft_unset.c \
 		srcs/build_in/ft_cd.c \
 		srcs/build_in/ft_exit.c \
+		srcs/signals/sig_init.c \
