@@ -6,7 +6,7 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 12:04:21 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/03/23 11:37:43 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/03/23 15:42:16 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ char	*ft_dollar (char *str, int *i, int *flag)
 	free(temp);
 	return (res);
 }
-
+/*
 char		**ft_parser_str(t_cmd ar)
 {
 	char	**res;
@@ -81,7 +81,7 @@ char		**ft_parser_str(t_cmd ar)
 //	printf("command =%s\n", res[0]);
 	res[1] = NULL;
 
-
+*/
 	//TODO цикл по массиву аргументов t_cmd
 /*	while (ar.args[i] != NULL)
 	{
@@ -121,10 +121,52 @@ char		**ft_parser_str(t_cmd ar)
 	result[i] = NULL;
 	*/
 	//вернем массив аргументов для команды и измененный in и out у структуры
-	return (res);
+//	return (res);
+//}
+
+static void	ft_sckip_space(char *a, int *i)
+{
+	//printf("%s\n", &a[*i]);
+	while (a[*i] == ' ')
+		(*i)++;
+	return ;
 }
 
-char	**ft_make_norm(char **ar)
+ void	ft_in_out(char *a, int *in, int *out, int *flag)
+{
+	int		i;
+
+	i = 0;
+	*flag = setbit(*flag, END_ARRAY);
+	if (a[0] == '>' && a[1] == '>')
+	{
+		if (*out != 1)
+			close(*out);
+		i = 2;
+		ft_sckip_space(a, &i);
+		*out = open(&a[i], O_RDWR | O_APPEND |O_CREAT, 0666);
+	}
+	else if (a[0] == '>')
+	{
+		if (*out != 1)
+			close(*out);
+		i = 1;
+		ft_sckip_space(a, &i);
+		*out = open(&a[i], O_RDWR | O_CREAT |  0666);
+	}
+	else
+	{
+		if (*in != 0)
+			close(*out);
+		i = 1;
+		ft_sckip_space(a, &i);
+		if ((*in = open(&a[i], O_RDWR | O_CREAT |O_EXCL, 0666)) == -1)
+			perror(&a[i]);
+	}
+	return ;
+}
+
+char	**ft_make_norm(char **ar, int *in, int *out)
 {
 	int		len;
 	char	**res;
@@ -144,7 +186,12 @@ char	**ft_make_norm(char **ar)
 	while (ar[i] != NULL)
 	{
 		flag = 0;
-		res[i] = ft_res_arg(ar[i], &flag);
+		if (ar[i][0] == '<' || ar[i][0] == '>')
+			ft_in_out(ar[i], in, out, &flag);
+		else if (!checkbit(flag, END_ARRAY))
+			res[i] = ft_res_arg(ar[i], &flag);
+		else
+			printf("послe > <  идут аргументы\n");
 		i++;
 	}
 	return (res);
