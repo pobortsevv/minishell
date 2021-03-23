@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/08 01:17:01 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/08 01:17:04 by sabra            ###   ########.fr       */
+/*   Updated: 2021/03/23 18:17:29 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,12 @@
 
 int	ft_pwd(void)
 {
-	char path[FILENAME_MAX];
+	char *path;
 	
-	if (!getcwd(path, sizeof(path)))
+	path = getcwd(NULL, 0);
+	if (!path)
 		return (0);
 	ft_printf("%s\n", path);
+	ft_free_line(&path);
 	return (1);
 }

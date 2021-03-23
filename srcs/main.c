@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 12:47:01 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/22 12:00:55 by sabra            ###   ########.fr       */
+/*   Updated: 2021/03/23 19:00:36 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,6 @@ int			init_command(t_cmd *cmd, char **envp)
 		return (ft_pwd());
 	if ((ft_strncmp(cmd->args[0], "env", ft_strlen(cmd->args[0]))) == 0)
 		return (ft_env(envp));
-	if ((ft_strncmp(cmd->args[0], "export", ft_strlen(cmd->args[0]))) == 0)
-		return (ft_export(cmd, envp));
 	if ((ft_strncmp(cmd->args[0], "cd", ft_strlen(cmd->args[0]))) == 0)
 		return (ft_cd(cmd));
 	if ((ft_strncmp(cmd->args[0], "exit", ft_strlen(cmd->args[0]))) == 0)
@@ -69,6 +67,8 @@ char			**ft_exec_cmd(t_cmd *ar_cmd, char **env, int cmd_count)
 	{
 		if ((ft_strncmp(ar_cmd[i].args[0], "unset", ft_strlen(ar_cmd[i].args[0]))) == 0)
 			env = ft_unset(&ar_cmd[i], env);
+		else if ((ft_strncmp(ar_cmd[i].args[0], "export", ft_strlen(ar_cmd[i].args[0]))) == 0)
+			env = ft_export(&ar_cmd[i], env);
 		else
 			init_command(&ar_cmd[i], env);
 		i++;

@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/21 23:25:54 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/22 22:10:38 by sabra            ###   ########.fr       */
+/*   Updated: 2021/03/23 20:49:48 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,21 @@
 int	ft_unstr(char *var, char *key)
 {
 	size_t	i;
-	size_t	len;
+	size_t	var_len;
+	size_t	key_len;
 
 	i = 0;
-	len = 0;
+	var_len = 0;
+	key_len = 0;
 	if (!var || !key)
 		return(0);
 	while (var[i] && key[i] && var[i] == key[i] && var[i] != '=')
 		i++;
-	while (var[len] && var[len] != '=')
-		len++;
-	if (ft_strlen(key) == i && ft_strlen(key) == len)
+	while (var[var_len] && var[var_len] != '=')
+		var_len++;
+	while (key[key_len] && key[key_len] != '=')
+		key_len++;
+	if (key_len == i && key_len == var_len)
 		return (1);
 	return (0);
 }
