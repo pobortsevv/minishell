@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 17:51:39 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/23 19:02:53 by sabra            ###   ########.fr       */
+/*   Updated: 2021/03/23 21:49:19 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,7 @@ char			**ft_unset(t_cmd *cmd, char **env);
 int			ft_cd(t_cmd *cmd);
 int			ft_exit(t_cmd *cmd);
 int			ft_unstr(char *var, char *key);
+char			*ft_var_find(char *var, char **ev);
 
 /*
  * test funcs :)
