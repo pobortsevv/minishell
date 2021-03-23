@@ -1,45 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_error_parser_shell.c                            :+:      :+:    :+:   */
+/*   ft_make_command.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/17 10:41:40 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/03/23 08:12:56 by mlaureen         ###   ########.fr       */
+/*   Created: 2021/03/20 07:37:09 by mlaureen          #+#    #+#             */
+/*   Updated: 2021/03/23 07:03:57 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_minishell.h"
-
-char	**ft_parser_er2(char *error)
-{
-	ft_printf("%s\n", error);
-	return (NULL);
-}
-
-char	*ft_parser_er1(char *error)
-{
-	ft_printf("%s\n", error);
-	return (NULL);
-}
-
-char	**ft_parser_err_free2(char *error, char **a)
+#include "stdio.h"
+/*
+void	ft_make_command(t_cmd *ar_t_cmd, int len)
 {
 	int		i;
-
 	i = 0;
-	ft_printf("%s\n", error);
-	while (a && a[i])
-	{
-		free(a[i]);
-		a[i] = NULL;
+	while(i < len)
+	
+		//  обработка t_cmd в массив для отправики в команду
+		
 		i++;
 	}
-	if (a)
-	{
-		free(a);
-		a = NULL;
-	}
-	return (NULL);
+	return ;
 }
+*/

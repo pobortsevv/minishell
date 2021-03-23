@@ -6,81 +6,91 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 12:04:21 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/03/17 12:37:50 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/03/23 15:42:16 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_minishell.h"
+#include  <stdio.h>
 
 // проверка символа и установка флагов
-int			ft_isntend_split(char const *s, int *flag)
-{
-	int		ret;
+// 	Сделано: если " ' -  то в итоговой строке их не должно быть (e'h'c"o"  == echo)
+// 	TODO если:
+//		export ec="echo"
+//		$ec tar
+//		"$ec" r
+//		рабочие варианты
+// 	Сделано: если \ - то в итоговой строке его нет (e\cho == echo), но  "e\cho" - ошибка - e\cho 
+// 	TODO если $NAME - то замена 
 
-	ret = 1;
-	if ((checkbit(*flag, SLASH_1) && checkbit(*flag, SLASH_2)) ||
-			!checkbit(*flag, SLASH_1))
+char	*ft_dollar (char *str, int *i, int *flag)
+{
+	char	*res;
+	char	*temp;
+	int		j;
+
+	j = 0;
+	temp = (char *)malloc(sizeof(char) * ft_strlen(str) + 1);
+	while (str[*i] != '\0' && str[*i] != ' ' && str[*i] != '<'
+					&& str[*i] !='>')
 	{
-		if (checkbit(*flag, SLASH_2))
-		{
-			*flag = switchbit(*flag, SLASH_1);
-			*flag = switchbit(*flag, SLASH_2);
-		}
-		if (!(checkbit(*flag, SINGLE_Q)) && s[0] == '\\')
-			*flag = setbit(*flag, SLASH_1);
-		else if (s[0] == 39)
-			*flag = switchbit(*flag, SINGLE_Q);
-		else if (!(checkbit(*flag, SINGLE_Q)) && s[0] == '"')
-			*flag = switchbit(*flag, DOUBLE_Q);
+		temp[j] = str[(*i)];
+		j++;
+		(*i)++;
+		ft_is(&str[*i], flag, i);
 	}
-	else if (checkbit(*flag, SLASH_1))
-		*flag = setbit(*flag, SLASH_2);
-	return (ret);
-}
-
-// перешагиваем через символ, если он равен 
-//  ' - установлен флаг SINGLE_Q
-//  " - установлен флаг DOUBLE_Q - TODO переделать, если " - то обработать $
-//  символ после \  -  установлен флаг SLASH_2
-//
-static void	ft_skip(char const **s, int *flag)
-{
-	*flag = 0;
-	while (**s && ft_isntend_split(*s, flag) &&
-			&& (checkbit(*flag, SINGLE_Q) || checkbit(*flag, DOUBLE_Q) ||
-				checkbit(*flag, SLASH_2)))))
-		(*s)++;
-	return ;
-}
-
-//возвращаем 1 если флаг = SINGLE_Q, DOUBLE_Q, SLASH_2
-//TODO надо выделить  обработку " - проверку $
-
-static int	ft_check_flag(int flag)
-{
-	int		res;
-
-	res = 0;
-	res = (checkbit(flag, SINGLE_Q) || checkbit(flag, DOUBLE_Q) ||
-			checkbit(flag, SLASH_2));
+	temp[j] = '\0';
+	//printf("найти значение переменной %s\n", &temp[1]);
+	//  получить значение переменной
+	//  res = ft_giv(&temp[1]);
+	res = (char *)malloc (10);
+	res[0] = 'Z';
+	res[1] = 'N';
+	res[2] = 'A';
+	res[3] = 'C';
+	res[4] = 'H';
+	res[5] = 'E';
+	res[6] = 'N';
+	res[7] = 'I';
+	res[8] = 'E';
+	res[9] = '\0';
+	free(temp);
 	return (res);
 }
-
-
-
-char		**ft_split_cmd(char const *s, char c, size_t i, int flag)
+/*
+char		**ft_parser_str(t_cmd ar)
 {
-	char	**result;
+	char	**res;
+	int		flag;
+	int		i;
 
-	i = 0;
+	res = NULL;
 	flag = 0;
-	// TODO создать массив для отправки в команду, из стркутуры t_cmd, размер известен - 
-	if (!s ||
-			!(result = (char **)malloc(sizeof(char *) * (ft_count(s, c)) + 1)))
+	i = 1;
+	if (ar.len_args <= 0
+			|| !(res = (char **)malloc(sizeof(char *) * ar.len_args + 1)))
 		return (NULL);
+	res[ar.len_args] = NULL;
+	// Проверяю 0-й элемент - команду - это путь или  имя? - проврека вчодит ли в команду'/'
+	// проверить ", например 'e'c"h"o tat  => echo tat
+	res[0] = ft_res0(ar.args[0], &flag);
+	if (flag)
+		printf("Error: comand error\n");
+	// TODO обработку ошибок - кавычки без пары
+	
+//	printf("command =%s\n", res[0]);
+	res[1] = NULL;
+
+*/
 	//TODO цикл по массиву аргументов t_cmd
-	while (*s)
+/*	while (ar.args[i] != NULL)
 	{
+		res[i]= (char *)malloc(sizeof(char) * (ft_strlen (ar.args[i]) + 1));
+		ft_strlcpy(res[i], ar.args[i], ft_strlen(ar.args[i]) + 1);
+		i++;
+	}
+	*/
+/*
 		// TODO обработать строку: >>      a.txt
 		// проверяем первый и второй символ, если равны <, > то это 
 		// надо открыть файл - в массив не заносим - обработка завершена 
@@ -109,6 +119,80 @@ char		**ft_split_cmd(char const *s, char c, size_t i, int flag)
 	// TODO записываем NULL - во все невостребованные элементы массива для отправки в команду;
 	// то есть те что уже исполнили >, >>, <
 	result[i] = NULL;
+	*/
 	//вернем массив аргументов для команды и измененный in и out у структуры
-	return (result);
+//	return (res);
+//}
+
+static void	ft_sckip_space(char *a, int *i)
+{
+	//printf("%s\n", &a[*i]);
+	while (a[*i] == ' ')
+		(*i)++;
+	return ;
+}
+
+ void	ft_in_out(char *a, int *in, int *out, int *flag)
+{
+	int		i;
+
+	i = 0;
+	*flag = setbit(*flag, END_ARRAY);
+	if (a[0] == '>' && a[1] == '>')
+	{
+		if (*out != 1)
+			close(*out);
+		i = 2;
+		ft_sckip_space(a, &i);
+		*out = open(&a[i], O_RDWR | O_APPEND |O_CREAT, 0666);
+	}
+	else if (a[0] == '>')
+	{
+		if (*out != 1)
+			close(*out);
+		i = 1;
+		ft_sckip_space(a, &i);
+		*out = open(&a[i], O_RDWR | O_CREAT |  0666);
+	}
+	else
+	{
+		if (*in != 0)
+			close(*out);
+		i = 1;
+		ft_sckip_space(a, &i);
+		if ((*in = open(&a[i], O_RDWR | O_CREAT |O_EXCL, 0666)) == -1)
+			perror(&a[i]);
+	}
+	return ;
+}
+
+char	**ft_make_norm(char **ar, int *in, int *out)
+{
+	int		len;
+	char	**res;
+	int		flag;
+	int		i;
+
+	flag = 0;
+	i = 1;
+	len = ft_lenarray(ar);
+	if (len <= 0
+			|| !(res = (char **)malloc(sizeof(char *) * len + 1)))
+		return (NULL);
+	res[len] = NULL;
+	res[0] = ft_res0(ar[0], &flag);
+	if (res[0] == NULL || flag)
+		return ((ft_parser_err_free2("comman not found (127)\n", res)));
+	while (ar[i] != NULL)
+	{
+		flag = 0;
+		if (ar[i][0] == '<' || ar[i][0] == '>')
+			ft_in_out(ar[i], in, out, &flag);
+		else if (!checkbit(flag, END_ARRAY))
+			res[i] = ft_res_arg(ar[i], &flag);
+		else
+			printf("послe > <  идут аргументы\n");
+		i++;
+	}
+	return (res);
 }

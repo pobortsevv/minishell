@@ -6,11 +6,12 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/16 10:49:54 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/03/16 10:59:01 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/03/23 15:42:17 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_minishell.h"
+#include <stdio.h>
 
 void		free_array_shell(char **ar)
 {
@@ -75,5 +76,23 @@ void		free_t_cmd(t_cmd *ar_t_cmd, int len)
 		u++;
 	}
 	free(ar_t_cmd);
+	return ;
+}
+
+void		free_close_fd(t_cmd *ar_t_cmd, int len)
+{
+	int		u;
+
+	u = 0;
+	while (u < len)
+	{
+		printf("close fd = %d, if fd != 0\n", ar_t_cmd[u].in);
+		if (ar_t_cmd[u].in != 0)
+			close(ar_t_cmd[u].in);
+		printf("close fd =%d, if fd != 1\n", ar_t_cmd[u].out);
+		if (ar_t_cmd[u].out != 1)
+			close(ar_t_cmd[u].out);
+		u++;
+	}
 	return ;
 }
