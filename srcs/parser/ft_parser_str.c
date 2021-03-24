@@ -6,7 +6,7 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 12:04:21 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/03/24 10:58:37 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/03/24 14:21:09 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,8 @@ char	**ft_make_norm(char **ar, int *in, int *out)
 		return (NULL);
 	res[len] = NULL;
 	res[0] = ft_res0(ar[0], &flag);
-	if (res[0] == NULL || flag)
+//	printf("res= %s\n", res[0]);
+	if (res[0] == NULL)
 		return ((ft_parser_err_free2("comman not found (127)\n", res)));
 	while (ar[i] != NULL)
 	{
