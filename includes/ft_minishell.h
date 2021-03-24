@@ -6,12 +6,15 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 17:51:39 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/23 16:00:05 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/03/24 07:05:11 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_MINISHELL_H
 # define FT_MINISHELL_H
+# define STDIN 0
+# define STDOUT 1
+# define STDERR 2
 # define ECHO 1
 # define CD 2
 # define PWD 3
@@ -21,10 +24,13 @@
 # define EXIT 7
 # define FD_ERR 2
 # define SYM " ><"
+# define ADD_VALUE 3
+# define CHANGE_VALUE 4
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>
 # include <string.h>
+# include <signal.h>
 # include <errno.h>
 # include <fcntl.h>
 # include "../libft/libft/libft.h"
@@ -117,9 +123,18 @@ int				ft_is(char const *s, int *flag, int *i);
 /*
  * Error
  */
+
 char			**ft_parser_er2(char *error);
 char			*ft_parser_er1(char *error);
 char			**ft_parser_err_free2(char *error, char **a);
+
+/*
+ * Signals
+ */
+
+void			sig_init(void);
+void			sig_int(int signal);
+void			sig_quit(int signal);
 
 /*
  * Commands funcs :)
@@ -128,10 +143,12 @@ char			**ft_parser_err_free2(char *error, char **a);
 char 			**ft_exec_cmd(t_cmd *ar_cmd, char **env, int cmd_count);
 int			ft_pwd(void);
 int			ft_env(char **env);
-int			ft_export(t_cmd *cmd, char **env);
+char			**ft_export(t_cmd *cmd, char **env);
 char			**ft_unset(t_cmd *cmd, char **env);
 int			ft_cd(t_cmd *cmd);
 int			ft_exit(t_cmd *cmd);
+int			ft_unstr(char *var, char *key);
+char			*ft_var_find(char *var, char **ev);
 
 /*
  * test funcs :)

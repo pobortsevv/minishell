@@ -1,27 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_cd.c                                            :+:      :+:    :+:   */
+/*   sig_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/09 12:55:10 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/23 18:15:09 by sabra            ###   ########.fr       */
+/*   Created: 2021/03/23 23:37:59 by sabra             #+#    #+#             */
+/*   Updated: 2021/03/24 00:25:12 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_minishell.h"
 
-int	ft_cd(t_cmd *cmd)
+void	sig_int(int signal)
 {
-	int	res;
+	(void)signal;
+	ft_putstr_fd("\b\b  ", STDERR);
+	ft_putstr_fd("\nminishell> ", STDERR);
+}
 
-	errno = 0;
-	res = chdir(cmd->args[1]);
-	if (res == -1)
-	{
-		ft_printf("%s\n", strerror(errno));
-		return (0);
-	}
-	return (1);
+void	sig_quit(int signal)
+{
+	ft_putstr_fd("quit: code: ", STDERR);
+	ft_putnbr_fd(signal, STDERR);
+	ft_putstr_fd("\b\b  ", STDERR);
+}
+
+void	sig_init(void)
+{
+	signal(SIGINT, sig_int);
+	signal(SIGQUIT, sig_quit);
 }
