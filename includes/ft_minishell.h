@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 17:51:39 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/24 09:40:25 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/03/24 20:02:00 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,8 +138,8 @@ int				ft_parser_err_fd(char *name);
  */
 
 void			sig_init(void);
-void			sig_int(int signal);
-void			sig_quit(int signal);
+void			sig_int(int id);
+void			sig_quit(int id);
 
 /*
  * Commands funcs :)

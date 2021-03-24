@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 12:47:01 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/24 07:04:33 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/03/24 22:34:53 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ int			main(int argc, char **argv, char **envp)
 //	t_cmd		*ar_cmd;
 //	char		**cmd;
 //	int			i;
+	int			gnl;
 
 	str = NULL;
 	evc = ft_copy_envp(envp);
@@ -94,21 +95,20 @@ int			main(int argc, char **argv, char **envp)
 	{
 		//printf("читаю строку\n");
 		ft_printf("minishell> ");
-		get_next_line(0, &str);
+		gnl = get_next_line(0, &str);
 		//ft_read(&str);
 		if (str == NULL)
 			return (error_message(PROBLEM_WITH_MALLOC));
-		//TODO заменить envp  на w_envp, когда реализуем копирование
-		//	printf("before parser str =<%s>\n", str);
-		// TODO из парсера вызывается исполнение команд 
-		//printf("начинаю парсер\n");
+		//if (*str == '\0' && gnl == 0)
+		//{
+			//exit(0);
+		//}
 		evc = ft_parser_shell(evc, str);
 		if (!evc)
 		{
 			printf("Error with shell\n");
 			break ;
 		}
-
 		// вызов реализации команды со структурой sh
 
 		//exec_cmd(&first, envp);
