@@ -6,7 +6,7 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 10:41:40 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/03/23 08:12:56 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/03/24 08:17:57 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 char	**ft_parser_er2(char *error)
 {
+	//TODO  печать в поток 2
 	ft_printf("%s\n", error);
 	return (NULL);
 }
@@ -43,3 +44,11 @@ char	**ft_parser_err_free2(char *error, char **a)
 	}
 	return (NULL);
 }
+
+int		ft_parser_err_fd(char *name)
+{
+	ft_putstr_fd("Error: Permission deniedied", 2);
+	ft_putstr_fd(name, 2);
+	return (-1);
+}
+

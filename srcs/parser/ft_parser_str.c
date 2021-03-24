@@ -6,7 +6,7 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 12:04:21 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/03/23 15:42:16 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/03/24 08:34:38 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ char		**ft_parser_str(t_cmd ar)
 	//вернем массив аргументов для команды и измененный in и out у структуры
 //	return (res);
 //}
-
+/*
 static void	ft_sckip_space(char *a, int *i)
 {
 	//printf("%s\n", &a[*i]);
@@ -131,39 +131,19 @@ static void	ft_sckip_space(char *a, int *i)
 		(*i)++;
 	return ;
 }
-
- void	ft_in_out(char *a, int *in, int *out, int *flag)
+*/
+ static int	ft_in_out(char *a, int *in, int *out)
 {
 	int		i;
 
 	i = 0;
-	*flag = setbit(*flag, END_ARRAY);
 	if (a[0] == '>' && a[1] == '>')
-	{
-		if (*out != 1)
-			close(*out);
-		i = 2;
-		ft_sckip_space(a, &i);
-		*out = open(&a[i], O_RDWR | O_APPEND |O_CREAT, 0666);
-	}
+		return (ft_write_append(&a[2], out));  
 	else if (a[0] == '>')
-	{
-		if (*out != 1)
-			close(*out);
-		i = 1;
-		ft_sckip_space(a, &i);
-		*out = open(&a[i], O_RDWR | O_CREAT |  0666);
-	}
+		return (ft_write_only(&a[1], out));  
 	else
-	{
-		if (*in != 0)
-			close(*out);
-		i = 1;
-		ft_sckip_space(a, &i);
-		if ((*in = open(&a[i], O_RDWR | O_CREAT |O_EXCL, 0666)) == -1)
-			perror(&a[i]);
-	}
-	return ;
+		return (ft_read_only(&a[1], in));  
+	return (0);
 }
 
 char	**ft_make_norm(char **ar, int *in, int *out)
@@ -172,9 +152,11 @@ char	**ft_make_norm(char **ar, int *in, int *out)
 	char	**res;
 	int		flag;
 	int		i;
+	int		j;
 
 	flag = 0;
 	i = 1;
+	j = 1;
 	len = ft_lenarray(ar);
 	if (len <= 0
 			|| !(res = (char **)malloc(sizeof(char *) * len + 1)))
@@ -188,11 +170,17 @@ char	**ft_make_norm(char **ar, int *in, int *out)
 		flag = 0;
 		if (ar[i][0] == '<' || ar[i][0] == '>')
 			ft_in_out(ar[i], in, out, &flag);
-		else if (!checkbit(flag, END_ARRAY))
-			res[i] = ft_res_arg(ar[i], &flag);
 		else
-			printf("послe > <  идут аргументы\n");
+		{
+			res[j] = ft_res_arg(ar[i], &flag);
+			j++;
+		}
 		i++;
+	}
+	while (j <= i)
+	{
+		res[j] = NULL;
+		j++;
 	}
 	return (res);
 }

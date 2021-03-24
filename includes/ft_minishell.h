@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 17:51:39 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/24 07:05:11 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/03/24 08:16:13 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,9 @@ void			free_array_shell(char **ar);
 void			free_array_shell_2(char ***ar);
 void			free_t_cmd(t_cmd *ar_t_cmd, int len);
 void			free_close_fd(t_cmd *ar_t_cmd, int len);
+int				ft_write_append(char *a, int *out);
+int				ft_write_only(char *a, int *out);
+int				ft_read_only(char *a, int *in);
 
 
 /*
@@ -127,6 +130,7 @@ int				ft_is(char const *s, int *flag, int *i);
 char			**ft_parser_er2(char *error);
 char			*ft_parser_er1(char *error);
 char			**ft_parser_err_free2(char *error, char **a);
+int				ft_parser_err_fd(char *name);
 
 /*
  * Signals
