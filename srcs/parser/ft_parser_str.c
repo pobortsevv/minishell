@@ -6,7 +6,7 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 12:04:21 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/03/24 08:34:38 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/03/24 10:58:37 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,11 @@ char	*ft_dollar (char *str, int *i, int *flag)
 
 	j = 0;
 	temp = (char *)malloc(sizeof(char) * ft_strlen(str) + 1);
-	while (str[*i] != '\0' && str[*i] != ' ' && str[*i] != '<'
-					&& str[*i] !='>')
+	while (str[*i] != '\0' && str[(*i) - 1] != 92 && str[*i] != ' ')
 	{
 		temp[j] = str[(*i)];
 		j++;
 		(*i)++;
-		ft_is(&str[*i], flag, i);
 	}
 	temp[j] = '\0';
 	//printf("найти значение переменной %s\n", &temp[1]);
@@ -55,94 +53,23 @@ char	*ft_dollar (char *str, int *i, int *flag)
 	res[8] = 'E';
 	res[9] = '\0';
 	free(temp);
+	//TODO убрать если флаг не нужен
+	if (*flag == -1)
+		printf("   ");
 	return (res);
 }
-/*
-char		**ft_parser_str(t_cmd ar)
-{
-	char	**res;
-	int		flag;
-	int		i;
 
-	res = NULL;
-	flag = 0;
-	i = 1;
-	if (ar.len_args <= 0
-			|| !(res = (char **)malloc(sizeof(char *) * ar.len_args + 1)))
-		return (NULL);
-	res[ar.len_args] = NULL;
-	// Проверяю 0-й элемент - команду - это путь или  имя? - проврека вчодит ли в команду'/'
-	// проверить ", например 'e'c"h"o tat  => echo tat
-	res[0] = ft_res0(ar.args[0], &flag);
-	if (flag)
-		printf("Error: comand error\n");
-	// TODO обработку ошибок - кавычки без пары
-	
-//	printf("command =%s\n", res[0]);
-	res[1] = NULL;
-
-*/
-	//TODO цикл по массиву аргументов t_cmd
-/*	while (ar.args[i] != NULL)
-	{
-		res[i]= (char *)malloc(sizeof(char) * (ft_strlen (ar.args[i]) + 1));
-		ft_strlcpy(res[i], ar.args[i], ft_strlen(ar.args[i]) + 1);
-		i++;
-	}
-	*/
-/*
-		// TODO обработать строку: >>      a.txt
-		// проверяем первый и второй символ, если равны <, > то это 
-		// надо открыть файл - в массив не заносим - обработка завершена 
-		// изменяем в структуре дескрипторы
-		while (*s && s[0] == c && ft_isntend_split(s, &flag))
-			s++;
-
-		//TODO обрабатываем слово по-символьно:
-		// 1. убираем ' 
-		// 2. убираем " - и обрабатываем $
-		// 3. перешагиваем \символ
-		//
-		if (*s && ft_isntend_split(s, &flag) && (s[0] != c || (s[0] == c &&
-			(ft_check_flag(flag)))))
-		{
-			// TODO записываем слово в массив для отправки в команду,
-			// слово после удаления ', " и вставке $ПЕРЕМЕННАЯ
-			if (!(result[i] = ft_create_word(s, c)))
-			{
-				ft_free_split(result, i);
-				return (NULL);
-			}
-			i++;
-		}
-	}
-	// TODO записываем NULL - во все невостребованные элементы массива для отправки в команду;
-	// то есть те что уже исполнили >, >>, <
-	result[i] = NULL;
-	*/
-	//вернем массив аргументов для команды и измененный in и out у структуры
-//	return (res);
-//}
-/*
-static void	ft_sckip_space(char *a, int *i)
-{
-	//printf("%s\n", &a[*i]);
-	while (a[*i] == ' ')
-		(*i)++;
-	return ;
-}
-*/
- static int	ft_in_out(char *a, int *in, int *out)
+static int	ft_in_out(char *a, int *in, int *out)
 {
 	int		i;
 
 	i = 0;
 	if (a[0] == '>' && a[1] == '>')
-		return (ft_write_append(&a[2], out));  
+		return (ft_write_append(&a[2], out));
 	else if (a[0] == '>')
-		return (ft_write_only(&a[1], out));  
+		return (ft_write_only(&a[1], out));
 	else
-		return (ft_read_only(&a[1], in));  
+		return (ft_read_only(&a[1], in));
 	return (0);
 }
 
@@ -169,7 +96,7 @@ char	**ft_make_norm(char **ar, int *in, int *out)
 	{
 		flag = 0;
 		if (ar[i][0] == '<' || ar[i][0] == '>')
-			ft_in_out(ar[i], in, out, &flag);
+			ft_in_out(ar[i], in, out);
 		else
 		{
 			res[j] = ft_res_arg(ar[i], &flag);

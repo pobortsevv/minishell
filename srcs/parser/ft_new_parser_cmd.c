@@ -6,7 +6,7 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 12:07:24 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/03/23 15:55:18 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/03/24 09:08:39 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ char			**ft_parser_shell(char **envp, char *str)
 		//в случае ошибки у нас вернеться ar_t_cmd = NULL
 		if (ar_t_cmd != NULL)
 		{
-		//	ft_print_array_t_cmd(ar_t_cmd, len);
+			ft_print_array_t_cmd(ar_t_cmd, len);
 			envp = ft_exec_cmd(ar_t_cmd, envp, len);
 			free_close_fd(ar_t_cmd, len);
 			free_t_cmd(ar_t_cmd, len);

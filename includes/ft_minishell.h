@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 17:51:39 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/24 08:16:13 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/03/24 09:40:25 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ void			free_close_fd(t_cmd *ar_t_cmd, int len);
 int				ft_write_append(char *a, int *out);
 int				ft_write_only(char *a, int *out);
 int				ft_read_only(char *a, int *in);
+char			*ft_strjoin_mod(char const *s1, char const *s2, size_t len);
 
 
 /*
