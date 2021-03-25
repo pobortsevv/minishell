@@ -6,7 +6,7 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/22 15:30:20 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/03/24 15:33:30 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/03/25 07:10:29 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,13 +94,11 @@ char		*ft_res0(char *str, int *flag)
 	while (str[i] != '\0')
 	{
 		ft_is(str, flag, &i);
-		/*
 		if (((!(checkbit(*flag, SLASH_2)) && (str[i] == 39 || str[i] == 34))))
 		{
 			//	||(*flag == 0 && str[i] == 92))
 			ft_is(str, flag, &i);
 		}
-		*/
 		if (str[i] != '\0' && (!(checkbit(*flag, SINGLE_Q)))
 				&& (!checkbit(*flag, SLASH_1)) && (!checkbit(*flag, SLASH_2)) && str[i] == '$' && !checkbit(*flag, SLASH_1))
 		{
@@ -132,13 +130,11 @@ char		*ft_res_arg(char *str, int *flag)
 	while (str[i] != '\0')
 	{
 		ft_is(str, flag, &i);
-		/*
 		if (((!(checkbit(*flag, SLASH_2)) && (str[i] == 39 || str[i] == 34))))
 		{
 			//	||(*flag == 0 && str[i] == 92))
 			ft_is(str, flag, &i);
 		}
-		*/
 		if (str[i] != '\0' && (!(checkbit(*flag, SINGLE_Q)))
 				&& (!checkbit(*flag, SLASH_1)) && (!checkbit(*flag, SLASH_2)) && str[i] == '$' && !checkbit(*flag, SLASH_1))
 		{
