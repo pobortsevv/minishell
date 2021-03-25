@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 12:47:01 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/24 22:34:53 by sabra            ###   ########.fr       */
+/*   Updated: 2021/03/25 19:26:08 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ int			init_command(t_cmd *cmd, char **envp)
 		return (ft_env(envp));
 	if ((ft_strncmp(cmd->args[0], "cd", ft_strlen(cmd->args[0]))) == 0)
 		return (ft_cd(cmd));
+	if ((ft_strncmp(cmd->args[0], "echo", ft_strlen(cmd->args[0]))) == 0)
+		return (ft_echo(cmd));
 	if ((ft_strncmp(cmd->args[0], "exit", ft_strlen(cmd->args[0]))) == 0)
 		return (ft_exit(cmd));
 	return (1);
