@@ -6,7 +6,7 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/22 15:30:20 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/03/25 07:10:29 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/03/25 10:57:41 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static void	ft_in_cycle(char **res, char *temp, int *j, size_t len)
 	(*res)[*j] = '\0';
 	t1 = *res;
 	*res = ft_strjoin_mod(*res, temp, len);
-	printf("%p, %p\n", t1, temp);
+	//printf("%p, %p\n", t1, temp);
 	free(t1);
 	free(temp);
 	*j = ft_strlen(*res);
@@ -82,7 +82,7 @@ static void ft_init_res0(char *str, char **res, int *i, int *j)
 	return ;
 }
 
-char		*ft_res0(char *str, int *flag)
+char		*ft_res0(char *str, int *flag, char **envp)
 {
 	char	*res;
 	char	*temp;
@@ -102,7 +102,7 @@ char		*ft_res0(char *str, int *flag)
 		if (str[i] != '\0' && (!(checkbit(*flag, SINGLE_Q)))
 				&& (!checkbit(*flag, SLASH_1)) && (!checkbit(*flag, SLASH_2)) && str[i] == '$' && !checkbit(*flag, SLASH_1))
 		{
-			temp = ft_dollar(str, &i, flag);
+			temp = ft_dollar(str, &i, flag, envp);
 			ft_in_cycle(&res, temp, &j, ft_strlen(str));
 			i--;
 		}
@@ -118,7 +118,7 @@ char		*ft_res0(char *str, int *flag)
 }
 
 
-char		*ft_res_arg(char *str, int *flag)
+char		*ft_res_arg(char *str, int *flag, char **envp)
 {
 	char	*res;
 	char	*temp;
@@ -138,7 +138,7 @@ char		*ft_res_arg(char *str, int *flag)
 		if (str[i] != '\0' && (!(checkbit(*flag, SINGLE_Q)))
 				&& (!checkbit(*flag, SLASH_1)) && (!checkbit(*flag, SLASH_2)) && str[i] == '$' && !checkbit(*flag, SLASH_1))
 		{
-			temp = ft_dollar(str, &i, flag);
+			temp = ft_dollar(str, &i, flag, envp);
 			ft_in_cycle(&res, temp, &j, ft_strlen(str));
 			i--;
 		}

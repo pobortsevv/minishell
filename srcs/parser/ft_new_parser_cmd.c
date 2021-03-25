@@ -6,14 +6,14 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 12:07:24 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/03/24 22:45:03 by sabra            ###   ########.fr       */
+/*   Updated: 2021/03/25 10:19:13 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_minishell.h"
 #include <stdio.h>
 
-static char		**ft_copy_array_shell(char **r_a, char **a, int *in, int *out)
+static char		**ft_copy_array_shell(char **r_a, char **a, t_cmd  *cmd, char **envp)
 {
 	int		i;
 	int		len;
@@ -28,7 +28,8 @@ static char		**ft_copy_array_shell(char **r_a, char **a, int *in, int *out)
 	if (r_a == NULL)
 		return (ft_parser_er2(strerror(errno)));
 	r_a[len] = NULL;
-	if (!(norm = ft_make_norm(a, in, out)))
+	if (!(norm = ft_make_norm(a, &(cmd->in), &(cmd->out), envp)))
+//	if (!(norm = ft_make_norm(a, in, out)))
 		return (NULL);
 	//printf("после нормализации\n");
 	//ft_print_array_2(norm);
@@ -50,19 +51,20 @@ static char		**ft_copy_array_shell(char **r_a, char **a, int *in, int *out)
 	return (r_a);
 }
 
-static t_cmd	ft_make_tcmd(char **a)
+static t_cmd	ft_make_tcmd(char **a, char **envp)
 {
 	t_cmd	res;
 
 	res.id = 0;
 	res.in = 0;
 	res.out = 1;
-	res.args = ft_copy_array_shell(res.args, a, &res.in, &res.out);
+	res.args = ft_copy_array_shell(res.args, a, &res, envp);
+//	res.args = ft_copy_array_shell(res.args, a, &res.in, &res.out);
 	res.len_args = ft_lenarray(a);
 	return (res);
 }
 
-static t_cmd	*ft_make_ar_cmd(char ***arg_pipe, int len)
+static t_cmd	*ft_make_ar_cmd(char ***arg_pipe, int len, char **envp)
 {
 	t_cmd	*ar_cmd;
 	int		i;
@@ -71,7 +73,7 @@ static t_cmd	*ft_make_ar_cmd(char ***arg_pipe, int len)
 	ar_cmd = (t_cmd *)malloc(sizeof(t_cmd) * len);
 	while (i < len)
 	{
-		(ar_cmd)[i] = ft_make_tcmd(arg_pipe[i]);
+		(ar_cmd)[i] = ft_make_tcmd(arg_pipe[i], envp);
 		//пришла ошибка, если ar_cmd[i].args[0] == NULL
 		//TODO обработать pipe через dup2
 		i++;
@@ -125,7 +127,7 @@ char			**ft_parser_shell(char **envp, char *str)
 		}
 		//printf("массив полученный pipe:\n");
 		//ft_print_array_3(ar_pipe);
-		ar_t_cmd = ft_make_ar_cmd(ar_pipe, len);
+		ar_t_cmd = ft_make_ar_cmd(ar_pipe, len, envp);
 		free_array_shell_2(ar_pipe);
 		/*TODO  вызов функций для выполнения массива t_cmd */
 		/* а пока печать массива t_cmd */

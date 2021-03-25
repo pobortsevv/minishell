@@ -6,7 +6,7 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 12:04:21 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/03/24 14:21:09 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/03/25 10:57:41 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,24 +23,33 @@
 // 	Сделано: если \ - то в итоговой строке его нет (e\cho == echo), но  "e\cho" - ошибка - e\cho 
 // 	TODO если $NAME - то замена 
 
-char	*ft_dollar (char *str, int *i, int *flag)
+char	*ft_dollar (char *str, int *i, int *flag, char **envp)
 {
 	char	*res;
 	char	*temp;
 	int		j;
 
 	j = 0;
+	res = NULL;
 	temp = (char *)malloc(sizeof(char) * ft_strlen(str) + 1);
-	while (str[*i] != '\0' && str[(*i) - 1] != 92 && str[*i] != ' ')
+	while (str[*i] != '\0' && str[(*i) - 1] != 92 && str[*i] != ' ' && str[*i] != 34)
 	{
 		temp[j] = str[(*i)];
 		j++;
 		(*i)++;
 	}
 	temp[j] = '\0';
+	//printf("Ищу var=%s\n", &temp[1]);
 	//printf("найти значение переменной %s\n", &temp[1]);
 	//  получить значение переменной
 	//  res = ft_giv(&temp[1]);
+	if (temp[1] != '\0' && (res = ft_var_find(&temp[1], envp)) == NULL)
+	{
+	//	printf("var = NULL\n");
+		res = (char *)malloc(sizeof(char));
+		res[0] = '\0';
+	}
+	/*
 	res = (char *)malloc (10);
 	res[0] = 'Z';
 	res[1] = 'N';
@@ -52,10 +61,11 @@ char	*ft_dollar (char *str, int *i, int *flag)
 	res[7] = 'I';
 	res[8] = 'E';
 	res[9] = '\0';
+	*/
 	free(temp);
 	//TODO убрать если флаг не нужен
 	if (*flag == -1)
-		printf("   ");
+		printf("");
 	return (res);
 }
 
@@ -73,7 +83,7 @@ static int	ft_in_out(char *a, int *in, int *out)
 	return (0);
 }
 
-char	**ft_make_norm(char **ar, int *in, int *out)
+char	**ft_make_norm(char **ar, int *in, int *out, char **envp)
 {
 	int		len;
 	char	**res;
@@ -89,7 +99,7 @@ char	**ft_make_norm(char **ar, int *in, int *out)
 			|| !(res = (char **)malloc(sizeof(char *) * len + 1)))
 		return (NULL);
 	res[len] = NULL;
-	res[0] = ft_res0(ar[0], &flag);
+	res[0] = ft_res0(ar[0], &flag, envp);
 //	printf("res= %s\n", res[0]);
 	if (res[0] == NULL)
 		return ((ft_parser_err_free2("comman not found (127)\n", res)));
@@ -100,7 +110,7 @@ char	**ft_make_norm(char **ar, int *in, int *out)
 			ft_in_out(ar[i], in, out);
 		else
 		{
-			res[j] = ft_res_arg(ar[i], &flag);
+			res[j] = ft_res_arg(ar[i], &flag, envp);
 			j++;
 		}
 		i++;

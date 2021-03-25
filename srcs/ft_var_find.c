@@ -16,6 +16,7 @@ char	*ft_var_find(char *var, char **ev)
 {
 	size_t	i;
 	char	*value;
+	char	*res;
 
 	i = 0;
 	if (!var || !ev)
@@ -28,7 +29,8 @@ char	*ft_var_find(char *var, char **ev)
 			if (!value)
 				return (NULL);
 			value++;
-			return (value);
+			res = ft_strdup(value);
+			return (res);
 		}
 		i++;
 	}
