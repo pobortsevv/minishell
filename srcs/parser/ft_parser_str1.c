@@ -6,7 +6,7 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/22 15:30:20 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/03/26 07:50:29 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/03/26 10:18:34 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,15 @@ static void	ft_check_condition(char const *s, int *flag, int *i)
 			(*i)++;
 			*flag = switchbit(*flag, SINGLE_Q);
 		}
-		else if (s[*i] == 39 && s[(*i) + 1] == 39)
+		else if (!(checkbit(*flag, DOUBLE_Q)) && s[*i] == 39 && s[(*i) + 1] == 39)
 			(*i) += 2;
 		else if (!(checkbit(*flag, SINGLE_Q))
 				&& (s[*i] == '"' && s[(*i) + 1] != '"'))
 		{
 			(*i)++;
 			*flag = switchbit(*flag, DOUBLE_Q);
+			if (s[*i] == 92)
+				*flag = setbit(*flag, SLASH_1);
 		}
 		else if (!(checkbit(*flag, SINGLE_Q))
 				&& (s[*i] == '"' && s[(*i) + 1] == '"'))
@@ -134,10 +136,11 @@ char		*ft_res_arg(char *str, int *flag, char **envp)
 		if (((!(checkbit(*flag, SLASH_2)) && (str[i] == 39 || str[i] == 34))))
 		{
 			//	||(*flag == 0 && str[i] == 92))
+		//	printf("1\n");
 			ft_is(str, flag, &i);
 		}
 		if (str[i] != '\0' && (!(checkbit(*flag, SINGLE_Q)))
-				&& (!checkbit(*flag, SLASH_1)) && (!checkbit(*flag, SLASH_2)) && str[i] == '$' && !checkbit(*flag, SLASH_1))
+				&& (!checkbit(*flag, SLASH_1)) && (!checkbit(*flag, SLASH_2)) && str[i] == '$') // && !checkbit(*flag, SLASH_1))
 		{
 	//		temp = ft_dollar(str, &i, flag, envp);
 			temp = ft_dollar(str, &i, envp);
@@ -148,11 +151,17 @@ char		*ft_res_arg(char *str, int *flag, char **envp)
 				&&  (checkbit(*flag, SINGLE_Q) ||
 					checkbit(*flag, SLASH_2) ||
 					(checkbit(*flag, DOUBLE_Q) &&
-					 (str[i] != 92 || (str[i] == 92 && str[i + 1] != '\0' && str[i + 1] != 34 && str[i + 1] != 92)
+					 (str[i] != 92 || (str[i] == 92 && str[i + 1] != '\0' && str[i + 1] != 34 && str[i + 1] != 92 && str[i + 1] != '$')
 					 )) ||
 					*flag == 0))
+		{
+	//		printf("2\n");
 			res[j++] = str[i];
-		i++;
+		}
+	//	TODO если у флага  установлены  биты " ' - выдать ошибку "кавычки не закрыты"
+	//	printf("flag =%d\n", *flag);
+	//	printf("str=%s\n", &str[i]);
+			i++;
 	}
 	res[j] = '\0';
 	return (res);
