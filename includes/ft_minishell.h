@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 17:51:39 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/25 19:26:36 by sabra            ###   ########.fr       */
+/*   Updated: 2021/03/26 07:32:36 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ char			**ft_make_norm(char **ar, int *in, int *out, char **envp);
 char			**ft_parser_str(t_cmd ar_t_cmd);
 char			*ft_res0(char *str, int *flag, char **envp);
 char			*ft_res_arg(char *str, int *flag, char **envp);
-char			*ft_dollar (char *str, int *i, int *flag, char **envp);
+char			*ft_dollar (char *str, int *i, char **envp);
 int				ft_is(char const *s, int *flag, int *i);
 
 

@@ -6,7 +6,7 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 12:04:21 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/03/25 10:57:41 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/03/26 07:32:09 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 // 	Сделано: если \ - то в итоговой строке его нет (e\cho == echo), но  "e\cho" - ошибка - e\cho 
 // 	TODO если $NAME - то замена 
 
-char	*ft_dollar (char *str, int *i, int *flag, char **envp)
+char	*ft_dollar (char *str, int *i, char **envp)
 {
 	char	*res;
 	char	*temp;
@@ -32,40 +32,21 @@ char	*ft_dollar (char *str, int *i, int *flag, char **envp)
 	j = 0;
 	res = NULL;
 	temp = (char *)malloc(sizeof(char) * ft_strlen(str) + 1);
-	while (str[*i] != '\0' && str[(*i) - 1] != 92 && str[*i] != ' ' && str[*i] != 34)
+	(*i)++;
+	while (str[*i] != '\0' && str[(*i) - 1] != 92 && str[*i] != ' '
+			&& str[*i] != 34 && str[*i] !='$')
 	{
 		temp[j] = str[(*i)];
 		j++;
 		(*i)++;
 	}
 	temp[j] = '\0';
-	//printf("Ищу var=%s\n", &temp[1]);
-	//printf("найти значение переменной %s\n", &temp[1]);
-	//  получить значение переменной
-	//  res = ft_giv(&temp[1]);
-	if (temp[1] != '\0' && (res = ft_var_find(&temp[1], envp)) == NULL)
+	if (temp[0] != '\0' && (res = ft_var_find(&temp[0], envp)) == NULL)
 	{
-	//	printf("var = NULL\n");
 		res = (char *)malloc(sizeof(char));
 		res[0] = '\0';
 	}
-	/*
-	res = (char *)malloc (10);
-	res[0] = 'Z';
-	res[1] = 'N';
-	res[2] = 'A';
-	res[3] = 'C';
-	res[4] = 'H';
-	res[5] = 'E';
-	res[6] = 'N';
-	res[7] = 'I';
-	res[8] = 'E';
-	res[9] = '\0';
-	*/
 	free(temp);
-	//TODO убрать если флаг не нужен
-	if (*flag == -1)
-		printf("");
 	return (res);
 }
 
@@ -100,7 +81,6 @@ char	**ft_make_norm(char **ar, int *in, int *out, char **envp)
 		return (NULL);
 	res[len] = NULL;
 	res[0] = ft_res0(ar[0], &flag, envp);
-//	printf("res= %s\n", res[0]);
 	if (res[0] == NULL)
 		return ((ft_parser_err_free2("comman not found (127)\n", res)));
 	while (ar[i] != NULL)

@@ -6,7 +6,7 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/22 15:30:20 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/03/25 10:57:41 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/03/26 07:32:12 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,8 @@ char		*ft_res0(char *str, int *flag, char **envp)
 		if (str[i] != '\0' && (!(checkbit(*flag, SINGLE_Q)))
 				&& (!checkbit(*flag, SLASH_1)) && (!checkbit(*flag, SLASH_2)) && str[i] == '$' && !checkbit(*flag, SLASH_1))
 		{
-			temp = ft_dollar(str, &i, flag, envp);
+//			temp = ft_dollar(str, &i, flag, envp);
+			temp = ft_dollar(str, &i, envp);
 			ft_in_cycle(&res, temp, &j, ft_strlen(str));
 			i--;
 		}
@@ -138,7 +139,8 @@ char		*ft_res_arg(char *str, int *flag, char **envp)
 		if (str[i] != '\0' && (!(checkbit(*flag, SINGLE_Q)))
 				&& (!checkbit(*flag, SLASH_1)) && (!checkbit(*flag, SLASH_2)) && str[i] == '$' && !checkbit(*flag, SLASH_1))
 		{
-			temp = ft_dollar(str, &i, flag, envp);
+	//		temp = ft_dollar(str, &i, flag, envp);
+			temp = ft_dollar(str, &i, envp);
 			ft_in_cycle(&res, temp, &j, ft_strlen(str));
 			i--;
 		}
