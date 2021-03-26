@@ -6,7 +6,7 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 12:07:24 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/03/26 14:16:38 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/03/26 15:29:52 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,8 @@ static t_cmd	*ft_make_ar_cmd(char ***arg_pipe, int len, char **envp)
 		if (out != ar_cmd[i].out)
 		{
 			close(fd[0]);
-			fd[0] = ar_cmd[i].out;
+			fd[0] = 0;
+		//	fd[0] = ar_cmd[i].out;
 		}
 		//пришла ошибка, если ar_cmd[i].args[0] == NULL
 		i++;
