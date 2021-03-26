@@ -6,7 +6,7 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/22 15:30:20 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/03/26 07:32:12 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/03/26 07:50:29 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void	ft_check_condition(char const *s, int *flag, int *i)
 	{
 		if (!(checkbit(*flag, SINGLE_Q)) && s[(*i)] == 92)
 			*flag = setbit(*flag, SLASH_1);
-		else if (s[*i] == 39 && s[(*i) + 1] != 39)
+		else if (!(checkbit(*flag, DOUBLE_Q)) && s[*i] == 39 && s[(*i) + 1] != 39)
 		{
 			(*i)++;
 			*flag = switchbit(*flag, SINGLE_Q);
