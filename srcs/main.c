@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 12:47:01 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/25 19:26:08 by sabra            ###   ########.fr       */
+/*   Updated: 2021/03/26 19:04:59 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,6 @@ int			init_command(t_cmd *cmd, char **envp)
 		return (ft_pwd());
 	if ((ft_strncmp(cmd->args[0], "env", ft_strlen(cmd->args[0]))) == 0)
 		return (ft_env(envp));
-	if ((ft_strncmp(cmd->args[0], "cd", ft_strlen(cmd->args[0]))) == 0)
-		return (ft_cd(cmd));
 	if ((ft_strncmp(cmd->args[0], "echo", ft_strlen(cmd->args[0]))) == 0)
 		return (ft_echo(cmd));
 	if ((ft_strncmp(cmd->args[0], "exit", ft_strlen(cmd->args[0]))) == 0)
@@ -71,6 +69,8 @@ char			**ft_exec_cmd(t_cmd *ar_cmd, char **env, int cmd_count)
 			env = ft_unset(&ar_cmd[i], env);
 		else if ((ft_strncmp(ar_cmd[i].args[0], "export", ft_strlen(ar_cmd[i].args[0]))) == 0)
 			env = ft_export(&ar_cmd[i], env);
+		else if ((ft_strncmp(ar_cmd[i].args[0], "cd", ft_strlen(ar_cmd[i].args[0]))) == 0)
+			env = ft_cd(&ar_cmd[i], env);
 		else
 			init_command(&ar_cmd[i], env);
 		i++;
@@ -92,6 +92,7 @@ int			main(int argc, char **argv, char **envp)
 
 	str = NULL;
 	evc = ft_copy_envp(envp);
+	evc = ft_init_envp(evc);
 	sig_init();
 	while (1)
 	{
@@ -101,31 +102,20 @@ int			main(int argc, char **argv, char **envp)
 		//ft_read(&str);
 		if (str == NULL)
 			return (error_message(PROBLEM_WITH_MALLOC));
-		//if (*str == '\0' && gnl == 0)
-		//{
-			//exit(0);
-		//}
+		if (gnl == 0 && *str == '\0')
+		{
+			ft_exit(NULL);
+		}
 		evc = ft_parser_shell(evc, str);
 		if (!evc)
 		{
 			printf("Error with shell\n");
 			break ;
 		}
-		// вызов реализации команды со структурой sh
-
-		//exec_cmd(&first, envp);
-
-		// TODO  кейс: export qwe=1234; echo $qwe
-		//  если парсер создат "листы комманд", то надо заново парсить,
-		//  для раскрытия - соответсвенно на этапе парсинга не имеет смысла раскрывать? .
-		//  надо парсить по  PIPE  кейс: cat | ls
-		//  	начнут одновременно но ls закроет stdin, и cat получит 1 строчку
-		//  - у каждой команды свой stdin, stdout - это надо прописать
 		if (str)
 			free(str);
 	}
 	ft_free_mat(evc);
-	//TODO очистка массива sh.array
 	if (str)	
 		free(str);
 	if (argc && argv[0] && envp[0])

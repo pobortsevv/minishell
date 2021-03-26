@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/21 23:25:54 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/23 20:49:48 by sabra            ###   ########.fr       */
+/*   Updated: 2021/03/26 17:36:37 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ char 	**ft_del_env(char **ev, size_t env_count, char *el)
 
 	i = 0;
 	j = 0;
+	if (!el)
+		return (ev);
 	res = (char **)malloc(sizeof(char *) * env_count + 1);
 	if (!res)
 		return (NULL);

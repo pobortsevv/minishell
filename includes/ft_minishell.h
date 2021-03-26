@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 17:51:39 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/26 07:32:36 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/03/26 19:42:45 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ typedef struct		s_cmd
 * Initialization. Create a copy: envp, declare null and void in the structures
 */
 char			**ft_copy_envp(char **ev);
+char			**ft_init_envp(char **ev);
 
 /*
  * Reading from std0 to str
@@ -150,11 +151,15 @@ int			ft_pwd(void);
 int			ft_env(char **env);
 char			**ft_export(t_cmd *cmd, char **env);
 char			**ft_unset(t_cmd *cmd, char **env);
-int			ft_cd(t_cmd *cmd);
+char			**ft_cd(t_cmd *cmd, char **envp);
 int			ft_exit(t_cmd *cmd);
 int			ft_echo(t_cmd *cmd);
 int			ft_unstr(char *var, char *key);
 char			*ft_var_find(char *var, char **ev);
+char 			*ft_find_env(char *var, char **ev);
+char			**add_value(char *var, char **ev);
+char			**change_value(char *var, char **ev);
+char			**ft_del_env(char **ev, size_t env_len, char *var);
 
 /*
  * test funcs :)
