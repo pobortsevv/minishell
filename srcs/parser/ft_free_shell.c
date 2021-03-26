@@ -6,7 +6,7 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/16 10:49:54 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/03/23 15:42:17 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/03/26 14:19:50 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,10 +86,10 @@ void		free_close_fd(t_cmd *ar_t_cmd, int len)
 	u = 0;
 	while (u < len)
 	{
-		printf("close fd = %d, if fd != 0\n", ar_t_cmd[u].in);
+		//printf("close fd = %d, if fd != 0\n", ar_t_cmd[u].in);
 		if (ar_t_cmd[u].in != 0)
 			close(ar_t_cmd[u].in);
-		printf("close fd =%d, if fd != 1\n", ar_t_cmd[u].out);
+		//printf("close fd =%d, if fd != 1\n", ar_t_cmd[u].out);
 		if (ar_t_cmd[u].out != 1)
 			close(ar_t_cmd[u].out);
 		u++;

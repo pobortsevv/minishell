@@ -6,7 +6,7 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/09 08:35:33 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/03/16 11:14:17 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/03/26 13:04:39 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,8 @@ void	ft_print_array_t_cmd(t_cmd *ar_t_cmd, int len)
 			printf("ar_cmd[%d].args[%d]\n = %s\n", u, j, ar_t_cmd[u].args[j]);
 			j++;
 		}
+		printf("ar_cmd[%d].in=%d\n",  u, ar_t_cmd[u].in);
+		printf("ar_cmd[%d].out=%d\n",  u, ar_t_cmd[u].out);
 		u++;
 	}
 	printf("массив напечатан\n");

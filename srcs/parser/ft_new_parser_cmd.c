@@ -6,7 +6,7 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 12:07:24 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/03/26 10:12:01 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/03/26 14:16:38 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,15 +51,16 @@ static char		**ft_copy_array_shell(char **r_a, char **a, t_cmd  *cmd, char **env
 	return (r_a);
 }
 
-static t_cmd	ft_make_tcmd(char **a, char **envp)
+static t_cmd	ft_make_tcmd(char **a, char **envp, int in, int out)
 {
 	t_cmd	res;
 
 	res.id = 0;
-	res.in = 0;
-	res.out = 1;
+	res.in = in;
+	res.out = out;
 	res.args = ft_copy_array_shell(res.args, a, &res, envp);
-//	res.args = ft_copy_array_shell(res.args, a, &res.in, &res.out);
+//	if (res.out != out) 
+//		printf("парсер в пайпе встретил редирект на out\n");
 	res.len_args = ft_lenarray(a);
 	return (res);
 }
@@ -68,14 +69,31 @@ static t_cmd	*ft_make_ar_cmd(char ***arg_pipe, int len, char **envp)
 {
 	t_cmd	*ar_cmd;
 	int		i;
+	int		fd[2];
+	int		in;
+	int		out;
 
 	i = 0;
+	fd[0] = 0; //in
 	ar_cmd = (t_cmd *)malloc(sizeof(t_cmd) * len);
 	while (i < len)
 	{
-		(ar_cmd)[i] = ft_make_tcmd(arg_pipe[i], envp);
+		in = fd[0];
+		if (i < len - 1)
+		{
+			pipe(fd);
+			out = fd[1];
+		}
+		else if (i == len - 1)
+			out = 1;
+		(ar_cmd)[i] = ft_make_tcmd(arg_pipe[i], envp, in, out);
+		//TODO если изменился out => был редирект => меняю для следующего по цепочке pipe in на новый in
+		if (out != ar_cmd[i].out)
+		{
+			close(fd[0]);
+			fd[0] = ar_cmd[i].out;
+		}
 		//пришла ошибка, если ar_cmd[i].args[0] == NULL
-		//TODO обработать pipe через dup2
 		i++;
 	}
 	return (ar_cmd);
