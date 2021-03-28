@@ -34,7 +34,7 @@ int	ft_exit(t_cmd *cmd)
 	error_code = 0;
 	if (!cmd)
 	{
-		ft_putstr_fd("\nexit\n", STDOUT);
+		ft_putendl_fd("\nexit", STDOUT);
 		exit(0);
 		return (1);
 	}
@@ -49,7 +49,6 @@ int	ft_exit(t_cmd *cmd)
 		ft_putstr_fd("minishell: exit: too many arguments\n", STDERR);
 	// TODO почистить копию массива
 	// TODO почистить полный лист
-	//ft_lstclear(&list, free);
 	ft_free_mat(cmd->args);
 	ft_putstr_fd("exit\n", STDOUT);
 	exit(error_code);

@@ -1,29 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_env.c                                           :+:      :+:    :+:   */
+/*   ft_find_bin.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/08 01:17:53 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/28 14:53:40 by sabra            ###   ########.fr       */
+/*   Created: 2021/03/28 22:22:43 by sabra             #+#    #+#             */
+/*   Updated: 2021/03/28 22:40:58 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_minishell.h"
-
-int	ft_env(char **ev, int out)
+char	*ft_find_bin(char *filename, char *path)
 {
-	size_t i;
-	
-	i = 0;
-	if (!ev)
-		return (0);
-	while(ev[i])
+	struct stat 	buf;
+	int		result;
+	char		**split;
+	char		*shot;
+	size_t		len;
+
+	if (stat(filename, &buf) == -1)
+		result = 0;
+	else
+		return (filename);
+	len = 0;
+	split = ft_split(path, ':');
+	while (split[len])
+		len++;
+	while (len-- >= 0)
 	{
-		if (ft_strchr(ev[i], '=') && !ft_unstr(ev[i], "?"))
-			ft_putendl_fd(ev[i], out);
-		i++;
+		shot = ft_strdup(split[len]);
+		// TODO сделать функцию ft_dupjoin;
 	}
-	return (1);
+	return (NULL);
 }

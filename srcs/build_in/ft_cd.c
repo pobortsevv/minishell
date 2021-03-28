@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/09 12:55:10 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/26 19:43:18 by sabra            ###   ########.fr       */
+/*   Updated: 2021/03/28 12:22:33 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ char		**ft_cd(t_cmd *cmd, char **ev)
 
 	if (res == -1)
 	{
-		ft_printf("%s\n", strerror(errno));
+		ft_putendl_fd(strerror(errno), cmd->out);
 		return (ev);
 	}
 	if (cmd->len_args > 1)

@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/01 12:47:01 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/26 19:04:59 by sabra            ###   ########.fr       */
+/*   Created: 2021/03/28 21:45:13 by sabra             #+#    #+#             */
+/*   Updated: 2021/03/28 22:41:29 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,7 @@ void		ft_test_pr(t_list *first)
 	t_cmd	*ex;
 	int		i;
 
-	t=first;
-	while (t != NULL)
+	t=first; while (t != NULL)
 	{
 		i = 0;
 		printf("инструкция:\n");
@@ -47,22 +46,31 @@ void		ft_test_pr(t_list *first)
 
 int			init_command(t_cmd *cmd, char **envp)
 {
+	char *path;
+
+	path = ft_var_find("PATH", envp);
 	if ((ft_strncmp(cmd->args[0], "pwd", ft_strlen(cmd->args[0]))) == 0)
-		return (ft_pwd());
+		return (ft_pwd(cmd->out));
 	if ((ft_strncmp(cmd->args[0], "env", ft_strlen(cmd->args[0]))) == 0)
-		return (ft_env(envp));
+		return (ft_env(envp, cmd->out));
 	if ((ft_strncmp(cmd->args[0], "echo", ft_strlen(cmd->args[0]))) == 0)
 		return (ft_echo(cmd));
 	if ((ft_strncmp(cmd->args[0], "exit", ft_strlen(cmd->args[0]))) == 0)
 		return (ft_exit(cmd));
-	return (1);
+	//else if (ft_find_bin(cmd->args[0], path)
+		//return (ft_exec_bin(cmd, envp));
+	if (path)
+		ft_free_line(&path);
+	return (0);
 }
 
 char			**ft_exec_cmd(t_cmd *ar_cmd, char **env, int cmd_count)
 {
 	int i;
+	int result;
 
 	i = 0;
+	result = 1;
 	while (i < cmd_count)
 	{
 		if ((ft_strncmp(ar_cmd[i].args[0], "unset", ft_strlen(ar_cmd[i].args[0]))) == 0)
@@ -72,7 +80,13 @@ char			**ft_exec_cmd(t_cmd *ar_cmd, char **env, int cmd_count)
 		else if ((ft_strncmp(ar_cmd[i].args[0], "cd", ft_strlen(ar_cmd[i].args[0]))) == 0)
 			env = ft_cd(&ar_cmd[i], env);
 		else
-			init_command(&ar_cmd[i], env);
+			result = init_command(&ar_cmd[i], env);
+		if (!result)
+		{
+			ft_putstr_fd("minishell: ", ar_cmd[i].out);
+			ft_putstr_fd(ar_cmd[i].args[0], ar_cmd[i].out);
+			ft_putendl_fd(": command not found", ar_cmd[i].out); 
+		}
 		i++;
 	}
 	return (env);

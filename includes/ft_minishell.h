@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 17:51:39 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/26 19:42:45 by sabra            ###   ########.fr       */
+/*   Updated: 2021/03/28 22:24:06 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <string.h>
+# include <sys/types.h> 
+# include <sys/stat.h>
 # include <signal.h>
 # include <errno.h>
 # include <fcntl.h>
@@ -147,8 +149,8 @@ void			sig_quit(int id);
  */
 
 char 			**ft_exec_cmd(t_cmd *ar_cmd, char **env, int cmd_count);
-int			ft_pwd(void);
-int			ft_env(char **env);
+int			ft_pwd(int out);
+int			ft_env(char **env, int out);
 char			**ft_export(t_cmd *cmd, char **env);
 char			**ft_unset(t_cmd *cmd, char **env);
 char			**ft_cd(t_cmd *cmd, char **envp);

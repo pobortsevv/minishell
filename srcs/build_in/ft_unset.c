@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/21 23:25:54 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/26 17:36:37 by sabra            ###   ########.fr       */
+/*   Updated: 2021/03/28 14:55:48 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,7 @@ int	ft_unstr(char *var, char *key)
 		return(0);
 	while (var[i] && key[i] && var[i] == key[i] && var[i] != '=')
 		i++;
-	while (var[var_len] && var[var_len] != '=')
-		var_len++;
-	while (key[key_len] && key[key_len] != '=')
+	while (var[var_len] && var[var_len] != '=') var_len++; while (key[key_len] && key[key_len] != '=')
 		key_len++;
 	if (key_len == i && key_len == var_len)
 		return (1);
@@ -49,7 +47,7 @@ char 	**ft_del_env(char **ev, size_t env_count, char *el)
 		return (NULL);
 	while (i < env_count)
 	{
-		if (ft_strnstr(ev[i], el, ft_strlen(el)))
+		if (ft_unstr(ev[i], el))
 		{
 			i++;
 			continue;
@@ -109,6 +107,7 @@ char 	**ft_unset(t_cmd *cmd, char **ev)
 				if (!ev)
 					return (NULL);
 				env_count--;
+				break;
 			}
 			j++;
 		}

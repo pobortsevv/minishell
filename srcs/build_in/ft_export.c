@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/08 01:17:24 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/26 19:34:05 by sabra            ###   ########.fr       */
+/*   Updated: 2021/03/28 14:55:58 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,19 +44,6 @@ static void	env_sort(char **a)
 	}
 }
 
-//int		quote_check(char *arg)
-//{
-	//int result;
-	//int i;
-//
-	//i = 0;
-	//result = 0;
-	//while (arg[i])
-	//{
-		//if (arg[])
-	//}
-//}
-
 static int	arg_check(char *arg)
 {
 	int i;
@@ -64,8 +51,6 @@ static int	arg_check(char *arg)
 
 	i = 0;
 	result = 1;
-	//if (arg[0] == '\"' || arg[0] == '\'')
-		//result = quote_check(arg);
 	if (!ft_isalpha(arg[0]) && arg[0] != '_')
 	{
 		ft_printf("minishell: export: `%s': not a valid identifier'\n", arg);
@@ -74,7 +59,7 @@ static int	arg_check(char *arg)
 	return (1);
 }
 
-void	ft_print_export(char **ev)
+void	ft_print_export(char **ev, int out)
 {
 	char	**buf;
 	size_t	i;
@@ -87,25 +72,30 @@ void	ft_print_export(char **ev)
 	i = 0;
 	while(buf[i])
 	{
+		if (ft_unstr(buf[i], "?"))
+		{
+			i++;
+			continue;
+		}
 		j = 0;
-		ft_putstr_fd("declare -x ", 1);
+		ft_putstr_fd("declare -x ", out);
 		while (buf[i][j] && buf[i][j] != '=')
-			write(1, &buf[i][j++], 1);
+			write(out, &buf[i][j++], 1);
 		if (!buf[i][j])
 		{
-			write(1, "\n", 1);
+			write(out, "\n", 1);
 			i++;
 			continue;
 		}
 		else if (buf[i][j] == '=' && buf[i][j + 1] == '\0')
 		{
-			write(1, "=\"\"\n", 4);
+			write(out, "=\"\"\n", 4);
 			i++;
 			continue;
 		}
 		ft_printf("%c\"", buf[i][j++]);
 		while (buf[i][j])
-			write(1, &buf[i][j++], 1);
+			write(out, &buf[i][j++], 1);
 		write(1, "\"\n", 2);
 		i++;
 	}
@@ -196,7 +186,7 @@ char		**ft_export(t_cmd *cmd, char **ev)
 	i = 1;
 	if (cmd->len_args == 1)
 	{
-		ft_print_export(ev);
+		ft_print_export(ev, cmd->out);
 		return (ev);
 	}
 	while(i < cmd->len_args)
