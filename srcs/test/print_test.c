@@ -6,7 +6,7 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/09 08:35:33 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/03/29 12:46:38 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/03/29 14:19:19 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void	ft_print_array_t_cmd(t_cmd *ar_t_cmd, int len)
 	{
 		j = 0;
 		//while(j < ar_t_cmd[u].len_args)
-	//	printf("len=%d\n",ar_t_cmd[u].len_args);
+		printf("len=%d\n",ar_t_cmd[u].len_args);
 		while(ar_t_cmd[u].args[j] != NULL)
 		{
 			if (ar_t_cmd[u].args[j] != NULL)

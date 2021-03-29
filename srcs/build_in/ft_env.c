@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/08 01:17:53 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/28 14:53:40 by sabra            ###   ########.fr       */
+/*   Updated: 2021/03/29 15:40:38 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@ int	ft_env(char **ev, int out)
 	
 	i = 0;
 	if (!ev)
-		return (0);
+		return (-1);
 	while(ev[i])
 	{
-		if (ft_strchr(ev[i], '=') && !ft_unstr(ev[i], "?"))
+		if (ft_strchr(ev[i], '='))
 			ft_putendl_fd(ev[i], out);
 		i++;
 	}
-	return (1);
+	return (0);
 }

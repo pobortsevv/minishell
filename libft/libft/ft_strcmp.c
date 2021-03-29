@@ -1,35 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_echo.c                                          :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/24 20:06:48 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/29 15:40:26 by sabra            ###   ########.fr       */
+/*   Created: 2021/03/29 14:01:35 by sabra             #+#    #+#             */
+/*   Updated: 2021/03/29 14:06:02 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_minishell.h"
+#include "libft.h"
 
-int	ft_echo(t_cmd *cmd)
+int		ft_strcmp(char *s1, char *s2)
 {
-	int i;
-	int status;
+	unsigned char	*str1;
+	unsigned char	*str2;
+	unsigned int	i;
 
-	status = 0;
-	i = 1;
-	if (cmd->len_args > 1 && !ft_strncmp(cmd->args[1], "-n", ft_strlen(cmd->args[1])))
-	{
-			status = 1;
-			i++;
-	}
-	while (i < cmd->len_args)
-	{
-		ft_putstr_fd(cmd->args[i], cmd->out);
+	str1 = (unsigned char *)s1;
+	str2 = (unsigned char *)s2;
+	i = 0;
+	if (ft_strlen(s1) != ft_strlen(s2))
+		return (-1);
+	while (str1[i] && str2[i] && str1[i] == str2[i])
 		i++;
-	}
-	if (!status)
-		write(cmd->out, "\n", 1);
-	return (0);
+	return (str1[i] - str2[i]);
 }

@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/09 12:55:10 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/28 12:22:33 by sabra            ###   ########.fr       */
+/*   Updated: 2021/03/29 15:40:07 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,9 @@ char		**ft_cd(t_cmd *cmd, char **ev)
 	}
 	else
 		res = chdir(cmd->args[1]);
-
 	if (res == -1)
 	{
+		shell.status = errno;
 		ft_putendl_fd(strerror(errno), cmd->out);
 		return (ev);
 	}

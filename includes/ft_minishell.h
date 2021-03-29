@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 17:51:39 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/29 10:58:46 by sabra            ###   ########.fr       */
+/*   Updated: 2021/03/29 15:19:38 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,13 @@
 # include "../libft/libft/libft.h"
 # include "../libbitop/libbitop.h"
 
+typedef struct 	s_sh
+{
+	int status;	
+}				t_sh;
+
+extern t_sh shell;
+
 enum			e_parser
 {
 	SEMICOLON = 0,    	// ;
@@ -61,16 +68,6 @@ enum			e_error
 	OK = 0,
 	PROBLEM_WITH_MALLOC,
 };
-
-typedef struct		s_sh
-{
-	char		*inst;
-	t_list		*arg;
-	int			flag; // устанавливаю биты - e_parser,  если найду, в начале обязательно занулить
-}			t_sh;
-
-// Загатовленная структура для команд, TODO реализовать парсинг с листом команд(структур команд)
-// Пока вызов команд выполнен относительно вышеуказанной структуры.
 
 typedef struct		s_cmd
 {

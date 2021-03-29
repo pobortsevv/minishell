@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/08 01:17:24 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/28 14:55:58 by sabra            ###   ########.fr       */
+/*   Updated: 2021/03/29 15:32:19 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,11 +72,6 @@ void	ft_print_export(char **ev, int out)
 	i = 0;
 	while(buf[i])
 	{
-		if (ft_unstr(buf[i], "?"))
-		{
-			i++;
-			continue;
-		}
 		j = 0;
 		ft_putstr_fd("declare -x ", out);
 		while (buf[i][j] && buf[i][j] != '=')

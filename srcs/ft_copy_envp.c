@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 10:30:41 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/28 14:52:16 by sabra            ###   ########.fr       */
+/*   Updated: 2021/03/29 15:31:11 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ char		**ft_init_envp(char **ev)
 		new_pwd = create_var("PWD", pwd_value);
 		ev = change_value(new_pwd, ev);
 	}
-	ev = add_value("?=0", ev);
 	return (ev);
 }
 

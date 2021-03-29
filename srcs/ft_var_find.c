@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 21:36:31 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/26 19:40:57 by sabra            ###   ########.fr       */
+/*   Updated: 2021/03/29 15:37:00 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ char	*ft_var_find(char *var, char **ev)
 	char	*value;
 	char	*res;
 
+	if (ft_strcmp(var, "?") == 0)
+		return (ft_itoa(shell.status));
 	i = 0;
 	if (!var || !ev)
 		return (NULL);

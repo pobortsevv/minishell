@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/28 22:22:43 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/29 10:47:54 by sabra            ###   ########.fr       */
+/*   Updated: 2021/03/29 13:58:17 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ char	*ft_find_bin(char *filename, char *path)
 
 	if (stat(filename, &buf) != -1)
 		return (filename);
+	if (!path)
+		return (NULL);
 	len = 0;
 	split = ft_split(path, ':');
 	while (split[len])
