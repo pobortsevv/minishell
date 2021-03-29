@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/28 21:45:13 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/29 15:51:31 by sabra            ###   ########.fr       */
+/*   Updated: 2021/03/29 16:40:19 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ int			main(int argc, char **argv, char **envp)
 	char		*str;
 	char		**evc=NULL;
 	int			gnl;
+	int 		res;
 
 	str = NULL;
 	ft_bzero(&shell, sizeof(t_sh));
@@ -111,7 +112,7 @@ int			main(int argc, char **argv, char **envp)
 			free(str);
 	}
 	ft_free_mat(evc);
-	if (str)	
+	if (str)
 		free(str);
 	if (argc && argv[0] && envp[0])
 		;
