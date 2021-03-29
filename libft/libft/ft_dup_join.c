@@ -1,34 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free_mat.c                                      :+:      :+:    :+:   */
+/*   ft_dup_join.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/06 17:05:16 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/29 08:48:00 by sabra            ###   ########.fr       */
+/*   Created: 2021/03/29 08:25:38 by sabra             #+#    #+#             */
+/*   Updated: 2021/03/29 08:33:41 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	**ft_free_mat(char **mat)
+char 	*ft_dup_join(char *dup, char *join)
 {
-	int i;
+	char *res;
+	char *tmp;
 
-	i = 0;
-	while (mat[i])
-	{
-		ft_free_line(&mat[i]);
-		i++;
-	}
-	free(mat);
-	mat = NULL;
-	return (mat);
-}
-
-void	ft_free_line(char **line)
-{
-	free(*line);
-	*line = NULL;
+	if (!dup || !join)
+		return (NULL);
+	tmp = ft_strdup(dup);
+	res = ft_strjoin(tmp, join);
+	if (tmp)
+		ft_free_line(&tmp);
+	return (res);
 }

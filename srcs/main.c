@@ -6,20 +6,20 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/28 21:45:13 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/28 22:41:29 by sabra            ###   ########.fr       */
+/*   Updated: 2021/03/29 11:47:38 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_minishell.h"
 #include <stdio.h>
 
-static int		error_message(int error)
-{
-	ft_putendl_fd("Error", FD_ERR);
-	if (error == PROBLEM_WITH_MALLOC)
-		ft_putendl_fd("Problem with memeory (malloc)", FD_ERR);
-	return (error);
-}
+//static int		error_message(int error)
+//{
+	//ft_putendl_fd("Error", FD_ERR);
+	//if (error == PROBLEM_WITH_MALLOC)
+		//ft_putendl_fd("Problem with memeory (malloc)", FD_ERR);
+	//return (error);
+//}
 // тест-функция: печать из "списка команд"
 
 void		ft_test_pr(t_list *first)
@@ -47,6 +47,7 @@ void		ft_test_pr(t_list *first)
 int			init_command(t_cmd *cmd, char **envp)
 {
 	char *path;
+	char *filename;
 
 	path = ft_var_find("PATH", envp);
 	if ((ft_strncmp(cmd->args[0], "pwd", ft_strlen(cmd->args[0]))) == 0)
@@ -57,8 +58,8 @@ int			init_command(t_cmd *cmd, char **envp)
 		return (ft_echo(cmd));
 	if ((ft_strncmp(cmd->args[0], "exit", ft_strlen(cmd->args[0]))) == 0)
 		return (ft_exit(cmd));
-	//else if (ft_find_bin(cmd->args[0], path)
-		//return (ft_exec_bin(cmd, envp));
+	else if ((filename = ft_find_bin(cmd->args[0], path)))
+		return (ft_exec_bin(cmd, filename, envp));
 	if (path)
 		ft_free_line(&path);
 	return (0);
@@ -114,8 +115,8 @@ int			main(int argc, char **argv, char **envp)
 		ft_printf("minishell> ");
 		gnl = get_next_line(0, &str);
 		//ft_read(&str);
-		if (str == NULL)
-			return (error_message(PROBLEM_WITH_MALLOC));
+		//if (str == NULL)
+			//return (error_message(PROBLEM_WITH_MALLOC));
 		if (gnl == 0 && *str == '\0')
 		{
 			ft_exit(NULL);

@@ -11,6 +11,7 @@ SRCS	=	ft_memset.c \
 		 	ft_isdigit.c \
 		 	ft_memchr.c \
 		 	ft_strdup.c \
+		 	ft_dup_join.c \
 		 	ft_strlcat.c \
 		 	ft_calloc.c \
 		 	ft_isalnum.c \

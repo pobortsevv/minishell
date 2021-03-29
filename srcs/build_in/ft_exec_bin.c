@@ -1,34 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free_mat.c                                      :+:      :+:    :+:   */
+/*   ft_exec_bin.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/06 17:05:16 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/29 08:48:00 by sabra            ###   ########.fr       */
+/*   Created: 2021/03/29 10:53:39 by sabra             #+#    #+#             */
+/*   Updated: 2021/03/29 11:47:58 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_minishell.h"
 
-char	**ft_free_mat(char **mat)
+int	ft_exec_bin(t_cmd *cmd, char *filename, char **ev)
 {
-	int i;
-
-	i = 0;
-	while (mat[i])
-	{
-		ft_free_line(&mat[i]);
-		i++;
-	}
-	free(mat);
-	mat = NULL;
-	return (mat);
-}
-
-void	ft_free_line(char **line)
-{
-	free(*line);
-	*line = NULL;
+	pid_t	pid;
+	int	status;
+	
+	pid = fork();
+	if (pid == 0)
+		execve(filename, &cmd->args[0], ev);
+	else
+		wait(&status);
+	return (1);
 }

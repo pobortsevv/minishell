@@ -4,7 +4,9 @@ SABRA	=	srcs/main.c \
 		srcs/build_in/ft_echo.c \
 		srcs/ft_copy_envp.c \
 		srcs/ft_var_find.c \
+		srcs/ft_find_bin.c \
 		srcs/build_in/ft_export.c \
+		srcs/build_in/ft_exec_bin.c \
 		srcs/build_in/ft_unset.c \
 		srcs/build_in/ft_cd.c \
 		srcs/build_in/ft_exit.c \

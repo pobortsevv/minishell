@@ -6,13 +6,13 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/16 14:02:21 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/03/17 12:37:52 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/03/29 08:59:24 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_minishell.h"
 
-size_t		ft_count(char const *s, char c)
+static size_t		ft_count(char const *s, char c)
 {
 	size_t	count;
 	int		flag;
@@ -39,7 +39,7 @@ size_t		ft_count(char const *s, char c)
 	return (count);
 }
 
-char		*ft_create_word(char const *s, char c)
+static char		*ft_create_word(char const *s, char c)
 {
 	char	*word;
 	int		i;
