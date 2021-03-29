@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/28 21:45:13 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/29 13:45:31 by sabra            ###   ########.fr       */
+/*   Updated: 2021/03/29 16:33:49 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,14 +106,9 @@ char			**ft_exec_cmd(t_cmd *ar_cmd, char **env, int cmd_count)
 int			main(int argc, char **argv, char **envp)
 {
 	char		*str;
-//	t_cmd		sh;
-//	t_list		first;
 	char		**evc=NULL;
-//	t_cmd		**ar_cmd;
-//	t_cmd		*ar_cmd;
-//	char		**cmd;
-//	int			i;
 	int			gnl;
+	int 		res;
 
 	str = NULL;
 	evc = ft_copy_envp(envp);
@@ -121,22 +116,9 @@ int			main(int argc, char **argv, char **envp)
 	sig_init();
 	while (1)
 	{
-		//printf("читаю строку\n");
 		ft_printf("minishell> ");
 		gnl = get_next_line(0, &str);
-		//ft_read(&str);
-		//if (str == NULL)
-			//return (error_message(PROBLEM_WITH_MALLOC));
-		//{
-		//	printf ("gnl вернул пустую строку\n");
-		//	return (error_message(PROBLEM_WITH_MALLOC));
-		//}
-		//while (str == NULL)
-		//{
-		//	printf("я  жду GNL\n");
-		//	gnl = get_next_line(0, &str);
-		//}
-		if (gnl == 0 && *str == '\0')
+		h (gnl == 0 && *str == '\0')
 		{
 			ft_exit(NULL);
 		}
@@ -150,7 +132,7 @@ int			main(int argc, char **argv, char **envp)
 			free(str);
 	}
 	ft_free_mat(evc);
-	if (str)	
+	if (str)
 		free(str);
 	if (argc && argv[0] && envp[0])
 		;
