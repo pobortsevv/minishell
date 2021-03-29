@@ -6,7 +6,7 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 12:04:21 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/03/26 07:50:28 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/03/29 12:44:59 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,11 @@ char	**ft_make_norm(char **ar, int *in, int *out, char **envp)
 	}
 	while (j <= i)
 	{
+//		printf ("Я здесь j=%d\n", j);
 		res[j] = NULL;
 		j++;
 	}
+//	printf("нормированный массив\n");
+//	ft_print_array_2(res);
 	return (res);
 }

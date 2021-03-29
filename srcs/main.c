@@ -6,12 +6,17 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/28 21:45:13 by sabra             #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2021/03/29 11:47:38 by sabra            ###   ########.fr       */
+=======
+/*   Updated: 2021/03/29 10:21:12 by mlaureen         ###   ########.fr       */
+>>>>>>> 7342a938a8b56e919b82c8b0b6d93f73977ab458
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_minishell.h"
 #include <stdio.h>
+<<<<<<< HEAD
 
 //static int		error_message(int error)
 //{
@@ -20,6 +25,18 @@
 		//ft_putendl_fd("Problem with memeory (malloc)", FD_ERR);
 	//return (error);
 //}
+=======
+/*
+static int		error_message(int error)
+{
+	ft_putendl_fd("Error", FD_ERR);
+	if (error == PROBLEM_WITH_MALLOC)
+		ft_putendl_fd("Problem with memeory (malloc)", FD_ERR);
+	return (error);
+}
+*/
+
+>>>>>>> 7342a938a8b56e919b82c8b0b6d93f73977ab458
 // тест-функция: печать из "списка команд"
 
 void		ft_test_pr(t_list *first)
@@ -116,7 +133,19 @@ int			main(int argc, char **argv, char **envp)
 		gnl = get_next_line(0, &str);
 		//ft_read(&str);
 		//if (str == NULL)
+<<<<<<< HEAD
 			//return (error_message(PROBLEM_WITH_MALLOC));
+=======
+		//{
+		//	printf ("gnl вернул пустую строку\n");
+		//	return (error_message(PROBLEM_WITH_MALLOC));
+		//}
+		//while (str == NULL)
+		//{
+		//	printf("я  жду GNL\n");
+		//	gnl = get_next_line(0, &str);
+		//}
+>>>>>>> 7342a938a8b56e919b82c8b0b6d93f73977ab458
 		if (gnl == 0 && *str == '\0')
 		{
 			ft_exit(NULL);
