@@ -6,7 +6,7 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/24 08:00:42 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/03/24 10:18:39 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/03/29 11:43:29 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 static void	ft_sckip_space(char *a, int *i)
 {
-	//printf("%s\n", &a[*i]);
 	while (a[*i] == ' ')
 		(*i)++;
 	return ;
@@ -43,7 +42,9 @@ int		ft_write_only(char *a, int *out)
 	i = 0;
 	ft_sckip_space(a, &i);
 	if ((f = open(&a[i], O_CREAT | O_WRONLY | O_TRUNC,  0666)) < 0)
-			return (ft_parser_err_fd(&a[i]));
+	{
+		return (ft_parser_err_fd(&a[i]));
+	}
 	if (*out != 1)
 		close(*out);
 	*out = f;

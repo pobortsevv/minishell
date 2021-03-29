@@ -6,13 +6,13 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/28 21:45:13 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/28 22:41:29 by sabra            ###   ########.fr       */
+/*   Updated: 2021/03/29 10:21:12 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_minishell.h"
 #include <stdio.h>
-
+/*
 static int		error_message(int error)
 {
 	ft_putendl_fd("Error", FD_ERR);
@@ -20,6 +20,8 @@ static int		error_message(int error)
 		ft_putendl_fd("Problem with memeory (malloc)", FD_ERR);
 	return (error);
 }
+*/
+
 // тест-функция: печать из "списка команд"
 
 void		ft_test_pr(t_list *first)
@@ -114,8 +116,16 @@ int			main(int argc, char **argv, char **envp)
 		ft_printf("minishell> ");
 		gnl = get_next_line(0, &str);
 		//ft_read(&str);
-		if (str == NULL)
-			return (error_message(PROBLEM_WITH_MALLOC));
+		//if (str == NULL)
+		//{
+		//	printf ("gnl вернул пустую строку\n");
+		//	return (error_message(PROBLEM_WITH_MALLOC));
+		//}
+		//while (str == NULL)
+		//{
+		//	printf("я  жду GNL\n");
+		//	gnl = get_next_line(0, &str);
+		//}
 		if (gnl == 0 && *str == '\0')
 		{
 			ft_exit(NULL);

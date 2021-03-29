@@ -6,14 +6,14 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 12:07:24 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/03/26 16:51:09 by sabra            ###   ########.fr       */
+/*   Updated: 2021/03/29 12:57:54 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_minishell.h"
 #include <stdio.h>
 
-static char		**ft_copy_array_shell(char **r_a, char **a, t_cmd  *cmd, char **envp)
+static char		**ft_copy_array_shell(char **r_a, char **a, t_cmd  **cmd, char **envp)
 {
 	int		i;
 	int		len;
@@ -28,11 +28,12 @@ static char		**ft_copy_array_shell(char **r_a, char **a, t_cmd  *cmd, char **env
 	if (r_a == NULL)
 		return (ft_parser_er2(strerror(errno)));
 	r_a[len] = NULL;
-	if (!(norm = ft_make_norm(a, &(cmd->in), &(cmd->out), envp)))
-//	if (!(norm = ft_make_norm(a, in, out)))
+	if (!(norm = ft_make_norm(a, &((*cmd)->in), &((*cmd)->out), envp)))
+	//	if (!(norm = ft_make_norm(a, in, out)))
 		return (NULL);
-	//printf("после нормализации\n");
-	//ft_print_array_2(norm);
+//	printf("после нормализации\n");
+//	ft_print_array_2(norm);
+//	printf("after in=%d, out =%d\n", (*cmd)->in, (*cmd)->out);
 	while (norm[i] != NULL)
 	{
 		if ((r_a[i] = (char *)malloc(ft_strlen(norm[i]) + 1)) == NULL)
@@ -47,6 +48,11 @@ static char		**ft_copy_array_shell(char **r_a, char **a, t_cmd  *cmd, char **env
 		}
 		i++;
 	}
+	while (i < len)
+	{
+		r_a[i] = NULL;
+		i++;
+	}
 	free_array_shell(norm);
 	return (r_a);
 }
@@ -54,13 +60,17 @@ static char		**ft_copy_array_shell(char **r_a, char **a, t_cmd  *cmd, char **env
 static t_cmd	ft_make_tcmd(char **a, char **envp, int in, int out)
 {
 	t_cmd	res;
+	t_cmd	*res_ad;
 
 	res.id = 0;
+	res_ad = &res;
 	res.in = in;
 	res.out = out;
-	res.args = ft_copy_array_shell(res.args, a, &res, envp);
+	res.args = ft_copy_array_shell(res.args, a, &res_ad, envp);
 //	if (res.out != out) 
 //		printf("парсер в пайпе встретил редирект на out\n");
+//	printf("!!after in=%d, out =%d\n", res.in, res.out);
+//	read(0,0,1);
 	res.len_args = ft_lenarray(a);
 	return (res);
 }
@@ -86,9 +96,11 @@ static t_cmd	*ft_make_ar_cmd(char ***arg_pipe, int len, char **envp)
 		}
 		else if (i == len - 1)
 			out = 1;
+
 		(ar_cmd)[i] = ft_make_tcmd(arg_pipe[i], envp, in, out);
+//		printf("!!!! in =%d, out =%d\n", ar_cmd[i].in, ar_cmd[i].out);
 		//TODO если изменился out => был редирект => меняю для следующего по цепочке pipe in на новый in
-		if (out != ar_cmd[i].out)
+		if (out != 1 && out != ar_cmd[i].out)
 		{
 			close(fd[0]);
 			fd[0] = 0;
