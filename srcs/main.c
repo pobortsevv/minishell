@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/28 21:45:13 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/29 16:40:19 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/03/29 16:47:24 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,8 @@ int			main(int argc, char **argv, char **envp)
 	{
 		ft_printf("minishell> ");
 		gnl = get_next_line(0, &str);
+		if ((res = ft_check_str(str)) != 0)
+			printf("minishell: syntax error near unexpected token (%d)\n", res);
 		if (gnl == 0 && *str == '\0')
 			ft_exit(NULL);
 		evc = ft_parser_shell(evc, str);
