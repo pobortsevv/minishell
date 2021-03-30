@@ -12,5 +12,6 @@ MLAUREEN	=srcs/ft_read.c\
 			 srcs/command/ft_make_command.c\
 			 srcs/parser/ft_open_fd.c\
 			 srcs/parser/ft_strjoin_mod.c\
-			 srcs/parser/ft_check_str.c
+			 srcs/parser/ft_check_str.c\
+			 srcs/parser/ft_check_name_file.c
 

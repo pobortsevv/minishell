@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 17:51:39 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/29 16:38:44 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/03/30 10:49:32 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ int				ft_write_append(char *a, int *out);
 int				ft_write_only(char *a, int *out);
 int				ft_read_only(char *a, int *in);
 char			*ft_strjoin_mod(char const *s1, char const *s2, size_t len);
+char			*ft_pars_name(char *str);
 
 
 /*
