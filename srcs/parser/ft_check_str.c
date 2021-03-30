@@ -6,7 +6,7 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/29 15:10:12 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/03/30 09:24:38 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/03/30 10:06:02 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ static void	ft_check_condition_sh(char const *s, int *flag, int *i)
 		{
 			(*i)++;
 			*flag = switchbit(*flag, SINGLE_Q);
+			if (!checkbit(*flag, SINGLE_Q) && s[*i] == 34)
+				*flag = setbit(*flag, DOUBLE_Q);
 		}
 		else if (!(checkbit(*flag, DOUBLE_Q)) && s[*i] == 39 && s[(*i) + 1] == 39)
 			(*i) += 2;
@@ -36,6 +38,8 @@ static void	ft_check_condition_sh(char const *s, int *flag, int *i)
 			*flag = switchbit(*flag, DOUBLE_Q);
 			if (s[*i] == 92)
 				*flag = setbit(*flag, SLASH_1);
+			if (!checkbit(*flag, DOUBLE_Q) && s[*i] == 39)
+				*flag = setbit(*flag, SINGLE_Q);
 		}
 		else if (!(checkbit(*flag, SINGLE_Q))
 				&& (s[*i] == '"' && s[(*i) + 1] == '"'))
@@ -95,7 +99,8 @@ int			ft_check_str(char *str)
 	flag = 0;
 	if (str && t1(str, &i) && (str[i] == ';' || str[i] == '|'))
 		return (258);
-	while (str && str[i] == '\0')
+
+	while (str && str[i] != '\0')
 	{
 		ft_is_check(str, &flag, &i);
 		if (!checkbit(flag, SLASH_1) &&

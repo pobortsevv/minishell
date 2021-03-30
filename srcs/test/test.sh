@@ -18,6 +18,8 @@ echo "$PWD""$PWD"
     ;   echo sd
     |echo sdf
 echo > "\"text.txt
+echo "dfg"'
+echo 'sdfs'"
 echo ;;
 echo ;    ;   :q
 echo ||
