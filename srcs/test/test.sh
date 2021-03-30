@@ -11,3 +11,29 @@ e\c\h\o "\$PWD"
 echo $PWD$PWD
 echo "$PWD"$PWD
 echo "$PWD""$PWD"
+
+# ошибки 
+echo > "\"text.txt
+echo ;;
+echo ;    ;   
+echo ||
+echo |     | 
+echo ;|
+echo ;           | 
+echo |;
+echo |    ;
+echo ><
+echo >           < 
+echo <>
+echo <       > 
+echo <<
+echo <      < 
+echo >
+echo >           
+echo << <
+echo << <
+echo >>>
+echo >>>
+
+#TODO нормальная работа у нас сега!!!! файл создается
+echo > \"test.txtls

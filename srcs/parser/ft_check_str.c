@@ -6,7 +6,7 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/29 15:10:12 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/03/29 16:46:00 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/03/30 09:24:38 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,29 +66,51 @@ static int	ft_is_check(char const *s, int *flag, int *i)
 	return (ret);
 }
 
+static int	t(char *s, int *i)
+{
+	if (s[(*i) + 1] == ' ')
+	{
+		while (s[(*i) + 1] == ' ')
+			(*i)++;
+	}
+	return (1);
+}
 
+static int	t1(char *s, int *i)
+{
+	if (s[(*i)] == ' ')
+	{
+		while (s[(*i)] == ' ')
+			(*i)++;
+	}
+	return (1);
+}
 
-int		ft_check_str(char *str)
+int			ft_check_str(char *str)
 {
 	int		i;
 	int		flag;
 
 	i = 0;
 	flag = 0;
-	while (str && str[i] != '\0')
+	if (str && t1(str, &i) && (str[i] == ';' || str[i] == '|'))
+		return (258);
+	while (str && str[i] == '\0')
 	{
 		ft_is_check(str, &flag, &i);
-		if (!checkbit(flag, SLASH_1) && 
+		if (!checkbit(flag, SLASH_1) &&
 				!checkbit(flag, SLASH_2) &&
 				!checkbit(flag, SINGLE_Q) &&
 				!checkbit(flag, DOUBLE_Q) &&
-				((str[i] == ';' && str[i + 1] == ';')
-				 || (str[i] == '|' && str[i + 1] == '|')
-				 || (str[i] == '>' && str[i + 1] == '<')
-				 || (str[i] == '<' && str[i + 1] == '>')
-				 || (str[i] == '<' && str[i + 1] == '<')
-				 || (str[i] == '>' && str[i + 1] == '>' && 
-					 ((str[i + 2] = '>') || str[i + 2] == '<'))))
+				((str[i] == ';' && t(str, &i) && str[i + 1] == ';')
+				 || (str[i] == ';' && t(str, &i) && str[i +1] =='|')
+				 || (str[i] == '|' && t(str, &i) && (str[i + 1] == ';' || str[i + 1] == '\0'))
+				 || (str[i] == '|' && t(str, &i) && (str[i + 1] == '|' || str[i + 1] == '\0'))
+				 || (str[i] == '>' && t(str, &i) && (str[i + 1] == '<' || str[i + 1] == '\0'))
+				 || (str[i] == '<' && t(str, &i) && (str[i + 1] == '>' || str[i + 1] == '\0'))
+				 || (str[i] == '<' && t(str, &i) && (str[i + 1] == '<' || str[i + 1] == '\0'))
+				 || (str[i] == '>' && str[i + 1] == '>' && t(str, &i) &&
+					 (str[i + 2] == '>' || str[i + 2] == '<' || str[i + 1] == '\0'))))
 			return (258);
 		i++;
 	}
