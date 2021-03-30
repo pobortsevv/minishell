@@ -6,7 +6,7 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/29 15:10:12 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/03/30 13:43:33 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/03/30 13:55:09 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static void	ft_check_condition_sh(char const *s, int *flag, int *i)
 		//	if (s[*i] == 92)
 		//		(*i)--;
 				//*flag = setbit(*flag, SLASH_1);
-			printf("SECOND\n");
+//			printf("SECOND\n");
 			if (!checkbit(*flag, DOUBLE_Q) && s[*i] == 39)
 				*flag = setbit(*flag, SINGLE_Q);
 		}
