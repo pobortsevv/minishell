@@ -6,7 +6,7 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 12:04:21 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/03/29 12:44:59 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/03/30 13:41:04 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,16 +73,17 @@ char	**ft_make_norm(char **ar, int *in, int *out, char **envp)
 	int		j;
 
 	flag = 0;
-	i = 1;
-	j = 1;
+	i = 0;
+	j = 0;
 	len = ft_lenarray(ar);
 	if (len <= 0
 			|| !(res = (char **)malloc(sizeof(char *) * len + 1)))
 		return (NULL);
 	res[len] = NULL;
-	res[0] = ft_res0(ar[0], &flag, envp);
-	if (res[0] == NULL)
-		return ((ft_parser_err_free2("comman not found (127)\n", res)));
+	res[0] = NULL;
+	//res[0] = ft_res0(ar[0], &flag, envp);
+	//if (res[0] == NULL)
+	//	return ((ft_parser_err_free2("comman not found (127)\n", res)));
 	while (ar[i] != NULL)
 	{
 		flag = 0;
@@ -90,11 +91,17 @@ char	**ft_make_norm(char **ar, int *in, int *out, char **envp)
 			ft_in_out(ar[i], in, out);
 		else
 		{
-			res[j] = ft_res_arg(ar[i], &flag, envp);
+			if (j == 0)
+				res[0] = ft_res0(ar[i], &flag, envp);
+			else 
+				res[j] = ft_res_arg(ar[i], &flag, envp);
 			j++;
 		}
 		i++;
 	}
+	// TODO проверить закрытие fd
+	if (res[0] == NULL)
+		return ((ft_parser_err_free2("comman not found (127)\n", res)));
 	while (j <= i)
 	{
 //		printf ("Я здесь j=%d\n", j);

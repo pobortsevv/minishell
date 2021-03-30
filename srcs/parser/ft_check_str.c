@@ -6,7 +6,7 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/29 15:10:12 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/03/30 13:25:48 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/03/30 13:43:33 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ static void	ft_check_condition_sh(char const *s, int *flag, int *i)
 		{
 			(*i)++;
 			*flag = switchbit(*flag, SINGLE_Q);
-			printf("first\n");
-			if (s[*i] == 92)
-				(*i)--;
+		//	printf("first\n");
+		//	if (s[*i] == 92)
+		//		(*i)--;
 			if (!checkbit(*flag, SINGLE_Q) && s[*i] == 34)
 				*flag = setbit(*flag, DOUBLE_Q);
 		}
@@ -39,8 +39,8 @@ static void	ft_check_condition_sh(char const *s, int *flag, int *i)
 		{
 			(*i)++;
 			*flag = switchbit(*flag, DOUBLE_Q);
-			if (s[*i] == 92)
-				(*i)--;
+		//	if (s[*i] == 92)
+		//		(*i)--;
 				//*flag = setbit(*flag, SLASH_1);
 			printf("SECOND\n");
 			if (!checkbit(*flag, DOUBLE_Q) && s[*i] == 39)
@@ -122,8 +122,8 @@ int			ft_check_str(char *str)
 				 || (str[i] == '>' && str[i + 1] == '>' && t(str, &i) &&
 					 (str[i + 2] == '>' || str[i + 2] == '<' || str[i + 1] == '\0'))))
 			return (258);
-		printf("^^S%zu\n", checkbit(flag, SINGLE_Q));
-		printf("^^D%zu\n", checkbit(flag, DOUBLE_Q));
+//		printf("^^S%zu\n", checkbit(flag, SINGLE_Q));
+//		printf("^^D%zu\n", checkbit(flag, DOUBLE_Q));
 		i++;
 	}
 	if (checkbit(flag, SINGLE_Q) || checkbit(flag, DOUBLE_Q))

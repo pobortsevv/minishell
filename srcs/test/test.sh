@@ -11,6 +11,7 @@ e\c\h\o "\$PWD"
 echo $PWD$PWD
 echo "$PWD"$PWD
 echo "$PWD""$PWD"
+>>123 echo 123
 
 # ошибки
 ; echo df
@@ -22,7 +23,7 @@ echo "dfg"'
 echo 'sdfs'"
 echo ;;
 echo ;    ;   :q
-echo ||
+echo ||:q
 echo |     | 
 echo ;|
 echo ;           | 
