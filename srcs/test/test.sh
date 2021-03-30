@@ -12,10 +12,14 @@ echo $PWD$PWD
 echo "$PWD"$PWD
 echo "$PWD""$PWD"
 
-# ошибки 
+# ошибки
+; echo df
+| echo sdf
+    ;   echo sd
+    |echo sdf
 echo > "\"text.txt
 echo ;;
-echo ;    ;   
+echo ;    ;   :q
 echo ||
 echo |     | 
 echo ;|
