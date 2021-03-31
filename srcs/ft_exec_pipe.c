@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 14:05:37 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/31 18:59:08 by sabra            ###   ########.fr       */
+/*   Updated: 2021/04/01 00:00:09 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,6 @@ char	**ft_exec_pipe(t_cmd *ar_cmd, char **env, int cmd_count)
 	path = ft_var_find("PATH", env);
 	while (i < cmd_count)
 	{
-		if (ar_cmd[i].out != 1)
-			dup2(ar_cmd[i].out, 1);
-		if (ar_cmd[i].in != 0)
-			dup2(ar_cmd[i].in, 0);
 		if ((pid = fork()) == -1)
 		{
 			shell.status = errno;
@@ -36,27 +32,27 @@ char	**ft_exec_pipe(t_cmd *ar_cmd, char **env, int cmd_count)
 		}
 		if (pid == 0)
 		{
-			if (i > 0 && ar_cmd[i].in != 0)
-				close(ar_cmd[i - 1].out);
-			if (i < cmd_count - 1 && ar_cmd[i].out != 1)
-				close(ar_cmd[i + 1].in);
+			if (i != 0)
+				dup2(ar_cmd[i - 1].out, 0);
+			if (i != cmd_count - 2)
+				dup2(ar_cmd[i + 1].in, 1);
 			line = ft_find_bin(ar_cmd[i].args[0], path);
 			if (line)
 				execve(line, &ar_cmd[i].args[0], env);
+			else 
+			{
+				shell.status = init_command(&ar_cmd[i], env);
+				exit(shell.status);
+			}
+			close(ar_cmd[i].in);
+			close(ar_cmd[i].out);
+			dup2(shell.in_tmp, 0);
 			ft_free_line(&line);
 		}
-		else
-		{
-			wait(&shell.status);
-			if (ar_cmd[i].in != 0)
-				close(ar_cmd[i].in);
-			if (ar_cmd[i].out != 1)
-				close(ar_cmd[i].out);
-		}
-		if (shell.status != 0)
-			return (env);
 		i++;
 	}
+	while (cmd_count-- > 0)
+		wait(&shell.status);	
 	dup2(shell.in_tmp, 0);
 	return (env);
 }

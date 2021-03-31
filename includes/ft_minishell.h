@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 17:51:39 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/31 18:15:33 by sabra            ###   ########.fr       */
+/*   Updated: 2021/03/31 23:38:51 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,6 +154,7 @@ char			**ft_exec_pipe(t_cmd *ar_cmd, char **env, int cmd_count);
 int			ft_pwd(int out);
 int			ft_env(char **env, int out);
 int			ft_exec_bin(t_cmd *cmd, char *filename, char **envp);
+int			init_command(t_cmd *cmd, char **envp);
 char			**ft_export(t_cmd *cmd, char **env);
 char			**ft_unset(t_cmd *cmd, char **env);
 char			**ft_cd(t_cmd *cmd, char **envp);

@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/28 21:45:13 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/31 18:59:21 by sabra            ###   ########.fr       */
+/*   Updated: 2021/03/31 23:38:14 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@ int			init_command(t_cmd *cmd, char **envp)
 
 char			**ft_exec_cmd(t_cmd *ar_cmd, char **env, int cmd_count)
 {
-	//if (cmd_count > 1)
-		//return (ft_exec_pipe(ar_cmd, env, cmd_count));
+	if (cmd_count > 1)
+		return (ft_exec_pipe(ar_cmd, env, cmd_count));
 	if (cmd_count == 1)
 	{
 		ft_stolower(ar_cmd[0].args[0]);
