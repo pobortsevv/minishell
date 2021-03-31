@@ -6,7 +6,7 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/09 08:35:33 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/03/29 14:19:19 by sabra            ###   ########.fr       */
+/*   Updated: 2021/03/31 13:01:29 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void	ft_print_array_t_cmd(t_cmd *ar_t_cmd, int len)
 			if (ar_t_cmd[u].args[j] != NULL)
 			{
 	//			printf("DFGDGD u=%d, j=%d\n", u,j);
-				printf("ar_cmd[%d].args[%d]\n = %s\n", u, j, ar_t_cmd[u].args[j]);
+				printf("ar_cmd[%d].args[%d]\n = <%s>\n", u, j, ar_t_cmd[u].args[j]);
 			}
 			j++;
 		}

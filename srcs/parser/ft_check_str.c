@@ -6,7 +6,7 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/29 15:10:12 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/03/31 12:39:21 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/03/31 14:01:49 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,13 @@
 
 static void	ft_check_condition_sh(char const *s, int *flag, int *i)
 {
-	if (!(checkbit(*flag, SLASH_2)))
+	if (checkbit(*flag, SLASH_2))
+		*flag = unsetbit(*flag, SLASH_2);
+//	if (!(checkbit(*flag, SLASH_2)))
 	{
 		if (!(checkbit(*flag, SINGLE_Q)) && s[(*i)] == 92)
 		{
-			(*i)++;
+	//		(*i)++;
 			*flag = setbit(*flag, SLASH_1);
 		}
 		else if (!(checkbit(*flag, DOUBLE_Q)) && s[*i] == 39 && s[(*i) + 1] != 39)
@@ -28,6 +30,8 @@ static void	ft_check_condition_sh(char const *s, int *flag, int *i)
 			*flag = switchbit(*flag, SINGLE_Q);
 			if (!checkbit(*flag, SINGLE_Q) && s[*i] == 34)
 				*flag = setbit(*flag, DOUBLE_Q);
+			if (!checkbit(*flag, SINGLE_Q) && s[*i] == 92)
+				*flag = setbit(*flag, SLASH_1);
 		}
 		else if (!(checkbit(*flag, DOUBLE_Q))
 				&& s[*i] == 39 && s[(*i) + 1] == 39)
@@ -41,8 +45,10 @@ static void	ft_check_condition_sh(char const *s, int *flag, int *i)
 		{
 			(*i)++;
 			*flag = switchbit(*flag, DOUBLE_Q);
-			if (!checkbit(*flag, DOUBLE_Q) && s[*i] == 39)
+			if (!checkbit(*flag, DOUBLE_Q) && (s[*i] == 39))
 				*flag = setbit(*flag, SINGLE_Q);
+			if (s[*i] == 92)
+				*flag = setbit(*flag, SLASH_1);
 		}
 		else if (!(checkbit(*flag, SINGLE_Q))
 				&& (s[*i] == '"' && s[(*i) + 1] == '"'))
@@ -52,8 +58,8 @@ static void	ft_check_condition_sh(char const *s, int *flag, int *i)
 				ft_check_condition_sh(s, flag, i);
 		}
 	}
-	else if (checkbit(*flag, SLASH_2))
-		*flag = unsetbit(*flag, SLASH_2);
+//	else if (checkbit(*flag, SLASH_2))
+//		*flag = unsetbit(*flag, SLASH_2);
 	return ;
 }
 
@@ -121,6 +127,8 @@ int			ft_check_str(char *str)
 					 (str[i + 2] == '>' || str[i + 2] == '<' || str[i + 1] == '\0'))))
 			return (258);
 //		printf("<%s>\n",  &str[i]);
+//		printf("^^SLASH1%zu\n", checkbit(flag, SLASH_1));
+//		printf("^^SLASH2%zu\n", checkbit(flag, SLASH_2));
 //		printf("^^S%zu\n", checkbit(flag, SINGLE_Q));
 //		printf("^^D%zu\n", checkbit(flag, DOUBLE_Q));
 		i++;
