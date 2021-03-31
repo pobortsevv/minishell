@@ -6,8 +6,7 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 12:07:24 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/03/31 14:45:46 by mlaureen         ###   ########.fr       */
-/*   Updated: 2021/03/29 16:23:42 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/03/31 15:04:57 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +147,11 @@ char			**ft_parser_shell(char **envp, char *str)
 	int		i;
 	char	***ar_pipe;
 	int		len;
+<<<<<<< HEAD
 //	char	*temp;
+=======
+	//char	*temp;
+>>>>>>> exec_pipe
 
 	i = 0;
 	ar_t_cmd = NULL;
@@ -185,6 +188,9 @@ char			**ft_parser_shell(char **envp, char *str)
 		//	temp = ft_array_to_str(ar_t_cmd[i].args);
 		//	printf("array to str =<%s>\n", temp);
 		//	free(temp);
+			//temp = ft_array_to_str(ar_t_cmd[i].args);
+			//printf("array to str =%s\n", temp);
+			//free(temp);
 			envp = ft_exec_cmd(ar_t_cmd, envp, len);
 			free_close_fd(ar_t_cmd, len);
 			free_t_cmd(ar_t_cmd, len);

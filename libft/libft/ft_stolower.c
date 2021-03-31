@@ -1,25 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pwd.c                                           :+:      :+:    :+:   */
+/*   ft_stolower.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/08 01:17:01 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/31 11:19:26 by sabra            ###   ########.fr       */
+/*   Created: 2021/03/31 11:49:18 by sabra             #+#    #+#             */
+/*   Updated: 2021/03/31 12:07:06 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_minishell.h"
+#include "libft.h"
 
-int	ft_pwd(int out)
+char 	*ft_stolower(char *str)
 {
-	char *path;
-	
-	path = getcwd(NULL, 0);
-	if (!path)
-		return (1);
-	ft_putendl_fd(path, out);
-	ft_free_line(&path);
-	return (0);
+	size_t	i;
+	size_t	len;
+
+	i = 0;
+	len = ft_strlen(str);	
+	while (i < len)
+	{
+		str[i] = ft_tolower(str[i]);
+		i++;
+	}
+	return (str);
 }

@@ -6,7 +6,7 @@
 /*   By: sabra <sabra@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/01 15:39:34 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/29 14:04:46 by sabra            ###   ########.fr       */
+/*   Updated: 2021/03/31 12:07:25 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ int					ft_isalpha(int character);
 int					ft_isascii(int character);
 int					ft_isprint(int character);
 int					ft_tolower(int c);
+char					*ft_stolower(char *str);
 int					ft_toupper(int c);
 char				*ft_substr(char const *s, unsigned int start, size_t len);
 int					ft_charcnt(char *line, int c);
