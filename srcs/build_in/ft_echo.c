@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/24 20:06:48 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/29 15:40:26 by sabra            ###   ########.fr       */
+/*   Updated: 2021/03/31 16:26:16 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	ft_echo(t_cmd *cmd)
 
 	status = 0;
 	i = 1;
-	if (cmd->len_args > 1 && !ft_strncmp(cmd->args[1], "-n", ft_strlen(cmd->args[1])))
+	if (!ft_strcmp(cmd->args[1], "-n"))
 	{
 			status = 1;
 			i++;
@@ -27,6 +27,7 @@ int	ft_echo(t_cmd *cmd)
 	while (i < cmd->len_args)
 	{
 		ft_putstr_fd(cmd->args[i], cmd->out);
+		ft_putstr_fd(" ", cmd->out);
 		i++;
 	}
 	if (!status)

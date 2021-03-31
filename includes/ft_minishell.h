@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 17:51:39 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/31 09:32:30 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/03/31 18:15:33 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@
 typedef struct 	s_sh
 {
 	int status;	
+	int in_tmp;
 }				t_sh;
 
 extern t_sh shell;

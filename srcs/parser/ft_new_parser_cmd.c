@@ -6,7 +6,7 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 12:07:24 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/03/31 15:04:57 by sabra            ###   ########.fr       */
+/*   Updated: 2021/03/31 16:06:25 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,11 +147,8 @@ char			**ft_parser_shell(char **envp, char *str)
 	int		i;
 	char	***ar_pipe;
 	int		len;
-<<<<<<< HEAD
 //	char	*temp;
-=======
 	//char	*temp;
->>>>>>> exec_pipe
 
 	i = 0;
 	ar_t_cmd = NULL;
@@ -171,7 +168,8 @@ char			**ft_parser_shell(char **envp, char *str)
 		free_array_shell_2(ar_pipe);
 		if (ar_t_cmd[i].args == NULL)
 		{
-			printf("minishell: comman not found (127)\n");
+			printf("minishell: command not found (127)\n");
+			shell.status = 127;	
 			free_close_fd(ar_t_cmd, len);
 			free(ar_t_cmd);
 		}

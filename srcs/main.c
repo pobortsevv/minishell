@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/28 21:45:13 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/31 12:55:52 by sabra            ###   ########.fr       */
+/*   Updated: 2021/03/31 18:59:21 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int			init_command(t_cmd *cmd, char **envp)
 		return (ft_pwd(cmd->out));
 	if ((ft_strcmp(cmd->args[0], "env")) == 0)
 		return (ft_env(envp, cmd->out));
-	if ((ft_strcmp(cmd->args[0], "echo")) == 0)
+	if ((ft_strcmp(cmd->args[0], "echo")) == 0 || (ft_strcmp(cmd->args[0], "echo\"\"")) == 0 || (ft_strcmp(cmd->args[0], "echo\'\'")) == 0)
 		return (ft_echo(cmd));
 	if ((ft_strcmp(cmd->args[0], "exit")) == 0)
 		return (ft_exit(cmd));
@@ -60,16 +60,16 @@ int			init_command(t_cmd *cmd, char **envp)
 
 char			**ft_exec_cmd(t_cmd *ar_cmd, char **env, int cmd_count)
 {
-	if (cmd_count > 1)
-		return (ft_exec_pipe(ar_cmd, env, cmd_count));
+	//if (cmd_count > 1)
+		//return (ft_exec_pipe(ar_cmd, env, cmd_count));
 	if (cmd_count == 1)
 	{
 		ft_stolower(ar_cmd[0].args[0]);
-		if ((ft_strncmp(ar_cmd[0].args[0], "unset", ft_strlen(ar_cmd[0].args[0]))) == 0)
+		if ((ft_strcmp(ar_cmd[0].args[0], "unset")) == 0)
 			env = ft_unset(&ar_cmd[0], env);
-		else if ((ft_strncmp(ar_cmd[0].args[0], "export", ft_strlen(ar_cmd[0].args[0]))) == 0)
+		else if ((ft_strcmp(ar_cmd[0].args[0], "export")) == 0)
 			env = ft_export(&ar_cmd[0], env);
-		else if ((ft_strncmp(ar_cmd[0].args[0], "cd", ft_strlen(ar_cmd[0].args[0]))) == 0)
+		else if ((ft_strcmp(ar_cmd[0].args[0], "cd")) == 0)
 			env = ft_cd(&ar_cmd[0], env);
 		else
 			shell.status = init_command(&ar_cmd[0], env);
@@ -94,6 +94,7 @@ int			main(int argc, char **argv, char **envp)
 	ft_bzero(&shell, sizeof(t_sh));
 	evc = ft_copy_envp(envp);
 	evc = ft_init_envp(evc);
+	shell.in_tmp = dup(0);
 	sig_init();
 	while (1)
 	{
