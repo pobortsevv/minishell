@@ -6,7 +6,7 @@
 /*   By: sabra <sabra@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/20 09:50:35 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/08 01:29:27 by sabra            ###   ########.fr       */
+/*   Updated: 2021/03/31 11:22:07 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ size_t	ft_strlen(const char *str)
 	size_t	i;
 
 	i = 0;
+	if (!str)
+		return (i);
 	while (str[i] != '\0')
 	{
 		i++;

@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/28 21:45:13 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/31 00:04:02 by sabra            ###   ########.fr       */
+/*   Updated: 2021/03/31 12:55:52 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,15 +55,16 @@ int			init_command(t_cmd *cmd, char **envp)
 		return (ft_exec_bin(cmd, filename, envp));
 	if (path)
 		ft_free_line(&path);
-	return (1);
+	return (127);
 }
 
 char			**ft_exec_cmd(t_cmd *ar_cmd, char **env, int cmd_count)
 {
-	//if (cmd_count > 1)
-		//return (ft_exec_pipe(ar_cmd, env, cmd_count));
+	if (cmd_count > 1)
+		return (ft_exec_pipe(ar_cmd, env, cmd_count));
 	if (cmd_count == 1)
 	{
+		ft_stolower(ar_cmd[0].args[0]);
 		if ((ft_strncmp(ar_cmd[0].args[0], "unset", ft_strlen(ar_cmd[0].args[0]))) == 0)
 			env = ft_unset(&ar_cmd[0], env);
 		else if ((ft_strncmp(ar_cmd[0].args[0], "export", ft_strlen(ar_cmd[0].args[0]))) == 0)
@@ -72,7 +73,7 @@ char			**ft_exec_cmd(t_cmd *ar_cmd, char **env, int cmd_count)
 			env = ft_cd(&ar_cmd[0], env);
 		else
 			shell.status = init_command(&ar_cmd[0], env);
-		if (shell.status == 1)
+		if (shell.status == 127)
 		{
 			ft_putstr_fd("minishell: ", ar_cmd[0].out);
 			ft_putstr_fd(ar_cmd[0].args[0], ar_cmd[0].out);
