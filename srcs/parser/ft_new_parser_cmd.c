@@ -6,7 +6,7 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 12:07:24 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/03/29 16:39:06 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/03/31 08:21:46 by mlaureen         ###   ########.fr       */
 /*   Updated: 2021/03/29 16:23:42 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -26,12 +26,17 @@ static char		**ft_copy_array_shell(char **r_a, char **a, t_cmd  **cmd, char **en
 	//printf("array a:\n");
 	//ft_print_array_2(a);
 	r_a = (char **)malloc(sizeof(char *) * len + 1);
+	//printf("r_a %p\n", r_a);
 	if (r_a == NULL)
 		return (ft_parser_er2(strerror(errno)));
 	r_a[len] = NULL;
+	//printf("%p \n", &r_a[len]);
 	if (!(norm = ft_make_norm(a, &((*cmd)->in), &((*cmd)->out), envp)))
-	//	if (!(norm = ft_make_norm(a, in, out)))
+	{
+		free(r_a);
+		r_a = NULL;
 		return (NULL);
+	}
 //	printf("после нормализации\n");
 //	ft_print_array_2(norm);
 //	printf("after in=%d, out =%d\n", (*cmd)->in, (*cmd)->out);
@@ -87,6 +92,7 @@ static t_cmd	*ft_make_ar_cmd(char ***arg_pipe, int len, char **envp)
 	i = 0;
 	fd[0] = 0; //in
 	ar_cmd = (t_cmd *)malloc(sizeof(t_cmd) * len);
+	//printf("ar_cmd %p\n", ar_cmd);
 	while (i < len)
 	{
 		in = fd[0];
@@ -159,13 +165,19 @@ char			**ft_parser_shell(char **envp, char *str)
 		//ft_print_array_3(ar_pipe);
 		ar_t_cmd = ft_make_ar_cmd(ar_pipe, len, envp);
 		free_array_shell_2(ar_pipe);
+		if (ar_t_cmd[i].args == NULL)
+		{
+			printf("minishell: comman not found (127)\n");
+			free_close_fd(ar_t_cmd, len);
+			free(ar_t_cmd);
+		}
 		/*TODO  вызов функций для выполнения массива t_cmd */
 		/* а пока печать массива t_cmd */
 		//envp = ft_exec_cmd(ar_t_cmd, envp, len);
 		//free_t_cmd(ar_t_cmd, len);
 		//
 		//в случае ошибки у нас вернеться ar_t_cmd = NULL
-		if (ar_t_cmd != NULL)
+		if (ar_t_cmd != NULL && ar_t_cmd[i].args != NULL)
 		{
 			ft_print_array_t_cmd(ar_t_cmd, len);
 			envp = ft_exec_cmd(ar_t_cmd, envp, len);
@@ -176,6 +188,5 @@ char			**ft_parser_shell(char **envp, char *str)
 	}
 	/* free массив - массив команд разделенных ;*/
 	free_array_shell(cmd);
-	/*TODO убрать эту проверку в дальнейшем, когда будем использовать envp */
 	return (envp);
 }

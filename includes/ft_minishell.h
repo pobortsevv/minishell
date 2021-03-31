@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 17:51:39 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/30 23:52:38 by sabra            ###   ########.fr       */
+/*   Updated: 2021/03/31 08:35:24 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,7 @@ int				ft_is(char const *s, int *flag, int *i);
 char			**ft_parser_er2(char *error);
 char			*ft_parser_er1(char *error);
 char			**ft_parser_err_free2(char *error, char **a);
+char			**ft_parser_free2(char **a);
 int				ft_parser_err_fd(char *name);
 
 /*

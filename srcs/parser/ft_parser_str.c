@@ -6,7 +6,7 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 12:04:21 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/03/30 13:41:04 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/03/31 08:34:38 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ char	**ft_make_norm(char **ar, int *in, int *out, char **envp)
 		return (NULL);
 	res[len] = NULL;
 	res[0] = NULL;
+	//printf("%p; %p\n", &res[0], &res[len]);
+	//printf("%p\n", res);
 	//res[0] = ft_res0(ar[0], &flag, envp);
 	//if (res[0] == NULL)
 	//	return ((ft_parser_err_free2("comman not found (127)\n", res)));
@@ -99,12 +101,10 @@ char	**ft_make_norm(char **ar, int *in, int *out, char **envp)
 		}
 		i++;
 	}
-	// TODO проверить закрытие fd
 	if (res[0] == NULL)
-		return ((ft_parser_err_free2("comman not found (127)\n", res)));
+		return ((ft_parser_free2(res)));
 	while (j <= i)
 	{
-//		printf ("Я здесь j=%d\n", j);
 		res[j] = NULL;
 		j++;
 	}
