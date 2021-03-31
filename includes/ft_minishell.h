@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 17:51:39 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/31 08:35:24 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/03/31 09:32:30 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,6 +166,10 @@ char			**add_value(char *var, char **ev);
 char			**change_value(char *var, char **ev);
 char			**ft_del_env(char **ev, size_t env_len, char *var);
 
+/*
+ *  Utilites
+ */
+char			*ft_array_to_str(char **array);
 /*
  * test funcs :)
  */
