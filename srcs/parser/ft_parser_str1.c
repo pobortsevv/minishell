@@ -6,7 +6,7 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/22 15:30:20 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/03/31 16:14:40 by sabra            ###   ########.fr       */
+/*   Updated: 2021/04/01 09:58:47 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,10 @@ static void	ft_check_condition(char const *s, int *flag, int *i)
 			(*i)++;
 			*flag = switchbit(*flag, SINGLE_Q);
 			if (!checkbit(*flag, SINGLE_Q) && s[*i] == 34)
+			{
+				(*i)++;
 				*flag = setbit(*flag, DOUBLE_Q);
+			}
 			if (!checkbit(*flag, SINGLE_Q) && s[*i] == 92)
 				*flag = setbit(*flag, SLASH_1);
 		}
@@ -97,7 +100,10 @@ static void	ft_check_condition(char const *s, int *flag, int *i)
 			(*i)++;
 			*flag = switchbit(*flag, DOUBLE_Q);
 			if (!checkbit(*flag, DOUBLE_Q) && s[*i] == 39)
+			{
 				*flag = setbit(*flag, SINGLE_Q);
+				(*i)++;
+			}
 			if (s[*i] == 92)
 				*flag = setbit(*flag, SLASH_1);
 		}
@@ -164,6 +170,7 @@ static void ft_init_res0(char *str, char **res, int *i, int *j)
 
 char		*ft_res0(char *str, int *flag, char **envp)
 {
+	
 	char	*res;
 	char	*temp;
 	int		i;
@@ -174,15 +181,17 @@ char		*ft_res0(char *str, int *flag, char **envp)
 	while (str[i] != '\0')
 	{
 		ft_is(str, flag, &i);
+		if (str[i] == '\0')
+			break;
 		if (((!(checkbit(*flag, SLASH_2)) && (str[i] == 39 || str[i] == 34))))
 		{
-			//	||(*flag == 0 && str[i] == 92))
 			ft_is(str, flag, &i);
+			if (str[i] == '\0')
+				break;
 		}
 		if (str[i] != '\0' && (!(checkbit(*flag, SINGLE_Q)))
 				&& (!checkbit(*flag, SLASH_1)) && (!checkbit(*flag, SLASH_2)) && str[i] == '$' && !checkbit(*flag, SLASH_1))
 		{
-//			temp = ft_dollar(str, &i, flag, envp);
 			temp = ft_dollar(str, &i, envp);
 			ft_in_cycle(&res, temp, &j, ft_strlen(str));
 			i--;
@@ -191,10 +200,20 @@ char		*ft_res0(char *str, int *flag, char **envp)
 				&& ((checkbit(*flag, SLASH_2))
 					|| (checkbit(*flag, SLASH_1) && (str[i + 1] =='$' || str[i + 1] == 92 || str[i + 1] == 39 || str[i + 1] == 34))
 					|| ((!checkbit(*flag, SLASH_1)) && (!checkbit(*flag, SLASH_2)))))
+		{
 			res[j++] = str[i];
-		i++;
+		}
+		if (str[i] != '\0')
+			i++;
 	}
 	res[j] = '\0';
+
+	res = ft_res_arg(str,flag, envp);
+	while (j >= 2 && (res[j - 1] == 34 || res[j - 1] == 39) && res[j - 2] != 92)
+	{
+		res[j] = '\0';
+		j--;
+	}
 	return (res);
 }
 
@@ -211,18 +230,18 @@ char		*ft_res_arg(char *str, int *flag, char **envp)
 	while (str[i] != '\0')
 	{
 		ft_is(str, flag, &i);
+		if (str[i] == '\0')
+			break;
 		if ((!(checkbit(*flag, SLASH_2))) && (!(checkbit(*flag, SLASH_1)))
 							&& (str[i] == 39 || str[i] == 34))
 		{
-			//	||(*flag == 0 && str[i] == 92))
-		//	printf("1\n");
-			printf ("я здесь :) %s\n", &str[i]);
 			ft_is(str, flag, &i);
+			if (str[i] == '\0')
+				break;
 		}
 		if (str[i] != '\0' && (!(checkbit(*flag, SINGLE_Q)))
 				&& (!checkbit(*flag, SLASH_1)) && (!checkbit(*flag, SLASH_2)) && str[i] == '$') // && !checkbit(*flag, SLASH_1))
 		{
-	//		temp = ft_dollar(str, &i, flag, envp);
 			temp = ft_dollar(str, &i, envp);
 			ft_in_cycle(&res, temp, &j, ft_strlen(str));
 			i--;
@@ -244,7 +263,8 @@ char		*ft_res_arg(char *str, int *flag, char **envp)
 	//	printf("str=%s\n", &str[i]);
 //		printf("akfu = %d\n", *flag);
 //		printf("пропускаю: %s\n", &str[i]);	
-		i++;
+		if (str[i] != '\0')
+			i++;
 	}
 	res[j] = '\0';
 	return (res);

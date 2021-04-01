@@ -6,7 +6,7 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 12:04:21 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/04/01 07:24:08 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/04/01 09:55:37 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,8 @@ char	**ft_make_norm(char **ar, int *in, int *out, char **envp)
 		else
 		{
 			if (j == 0)
-				res[0] = ft_res0(ar[i], &flag, envp);
+				res[0] = ft_res_arg(ar[i], &flag, envp);
+				//res[0] = ft_res0(ar[i], &flag, envp);
 			else 
 				res[j] = ft_res_arg(ar[i], &flag, envp);
 			j++;
