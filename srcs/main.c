@@ -102,7 +102,8 @@ int			main(int argc, char **argv, char **envp)
 		gnl = get_next_line(0, &str);
 		if ((res = ft_check_str(str)) != 0)
 		{
-			printf("minishell: syntax error near unexpected token (%d)\n", res);
+			printf("minishell: syntax error near unexpected token\n");
+			shell.status = res;
 			if (str)
 				free (str);
 		}

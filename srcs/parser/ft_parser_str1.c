@@ -145,10 +145,20 @@ static void	ft_in_cycle(char **res, char *temp, int *j, size_t len)
 
 static void ft_init_res0(char *str, char **res, int *i, int *j)
 {
+	int		len;
+	int		k;
+
 	*i = 0;
 	*j = 0;
-	(*res)[ft_strlen(str)] = '\0';
-	(*res)[0] = '\0';
+	k = 0;
+	len = ft_strlen(str);
+	while (k <= len)
+	{
+		(*res)[k] = '\0';
+		k++;
+	}
+//	(*res)[ft_strlen(str)] = '\0';
+//	(*res)[0] = '\0';
 	return ;
 }
 
