@@ -65,7 +65,7 @@ char		**ft_cd(t_cmd *cmd, char **ev)
 	if (res == -1)
 	{
 		shell.status = errno;
-		ft_putendl_fd(strerror(errno), cmd->out);
+		ft_putendl_fd(strerror(errno), STDERR);
 		return (ev);
 	}
 	if (cmd->len_args > 1)

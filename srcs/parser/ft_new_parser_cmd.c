@@ -6,7 +6,7 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 12:07:24 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/04/01 12:18:26 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/04/01 16:10:24 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,12 +106,12 @@ static t_cmd	*ft_make_ar_cmd(char ***arg_pipe, int len, char **envp)
 		(ar_cmd)[i] = ft_make_tcmd(arg_pipe[i], envp, in, out);
 //		printf("!!!! in =%d, out =%d\n", ar_cmd[i].in, ar_cmd[i].out);
 		//TODO если изменился out => был редирект => меняю для следующего по цепочке pipe in на новый in
-		if (out != 1 && out != ar_cmd[i].out)
-		{
-			close(fd[0]);
-			fd[0] = 0;
+		//if (out != 1 && out != ar_cmd[i].out)
+		//{
+			//close(fd[0]);
+			//fd[0] = 0;
 		//	fd[0] = ar_cmd[i].out;
-		}
+		//}
 		//пришла ошибка, если ar_cmd[i].args[0] == NULL
 		i++;
 	}
@@ -192,7 +192,7 @@ char			**ft_parser_shell(char **envp, char *str)
 		//в случае ошибки у нас вернеться ar_t_cmd = NULL
 		if (ar_t_cmd != NULL && ar_t_cmd[i].args != NULL)
 		{
-		//	ft_print_array_t_cmd(ar_t_cmd, len);
+			ft_print_array_t_cmd(ar_t_cmd, len);
 			envp = ft_exec_cmd(ar_t_cmd, envp, len);
 			free_close_fd(ar_t_cmd, len);
 			free_t_cmd(ar_t_cmd, len);

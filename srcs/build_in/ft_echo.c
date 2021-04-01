@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/24 20:06:48 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/31 16:26:16 by sabra            ###   ########.fr       */
+/*   Updated: 2021/04/01 16:43:30 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,11 @@ int	ft_echo(t_cmd *cmd)
 	}
 	while (i < cmd->len_args)
 	{
-		ft_putstr_fd(cmd->args[i], cmd->out);
-		ft_putstr_fd(" ", cmd->out);
+		ft_putstr_fd(cmd->args[i], STDOUT);
+		ft_putstr_fd(" ", STDOUT);
 		i++;
 	}
 	if (!status)
-		write(cmd->out, "\n", 1);
+		write(STDOUT, "\n", 1);
 	return (0);
 }

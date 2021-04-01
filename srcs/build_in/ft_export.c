@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/08 01:17:24 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/29 15:32:19 by sabra            ###   ########.fr       */
+/*   Updated: 2021/04/01 16:41:38 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static int	arg_check(char *arg)
 	return (1);
 }
 
-void	ft_print_export(char **ev, int out)
+void	ft_print_export(char **ev)
 {
 	char	**buf;
 	size_t	i;
@@ -73,24 +73,24 @@ void	ft_print_export(char **ev, int out)
 	while(buf[i])
 	{
 		j = 0;
-		ft_putstr_fd("declare -x ", out);
+		ft_putstr_fd("declare -x ", STDOUT);
 		while (buf[i][j] && buf[i][j] != '=')
-			write(out, &buf[i][j++], 1);
+			write(STDOUT, &buf[i][j++], 1);
 		if (!buf[i][j])
 		{
-			write(out, "\n", 1);
+			write(STDOUT, "\n", 1);
 			i++;
 			continue;
 		}
 		else if (buf[i][j] == '=' && buf[i][j + 1] == '\0')
 		{
-			write(out, "=\"\"\n", 4);
+			write(STDOUT, "=\"\"\n", 4);
 			i++;
 			continue;
 		}
 		ft_printf("%c\"", buf[i][j++]);
 		while (buf[i][j])
-			write(out, &buf[i][j++], 1);
+			write(STDOUT, &buf[i][j++], 1);
 		write(1, "\"\n", 2);
 		i++;
 	}
@@ -181,7 +181,7 @@ char		**ft_export(t_cmd *cmd, char **ev)
 	i = 1;
 	if (cmd->len_args == 1)
 	{
-		ft_print_export(ev, cmd->out);
+		ft_print_export(ev);
 		return (ev);
 	}
 	while(i < cmd->len_args)

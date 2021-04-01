@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/28 21:45:13 by sabra             #+#    #+#             */
-/*   Updated: 2021/04/01 12:25:38 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/04/01 16:40:07 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,22 +39,27 @@ void		ft_test_pr(t_list *first)
 
 int			init_command(t_cmd *cmd, char **envp)
 {
-	char *path;
-	char *filename;
+	char 	*path;
+	char 	*filename;
+	int		result;
 
-	path = ft_var_find("PATH", envp);
+	//ft_putstr_fd("test", 0);
+	result = 0;
 	if ((ft_strcmp(cmd->args[0], "pwd")) == 0)
-		return (ft_pwd(cmd->out));
+		return (ft_pwd());
 	if ((ft_strcmp(cmd->args[0], "env")) == 0)
-		return (ft_env(envp, cmd->out));
-	if ((ft_strcmp(cmd->args[0], "echo")) == 0 || (ft_strcmp(cmd->args[0], "echo\"\"")) == 0 || (ft_strcmp(cmd->args[0], "echo\'\'")) == 0)
+		return (ft_env(envp));
+	if ((ft_strcmp(cmd->args[0], "echo")) == 0)
 		return (ft_echo(cmd));
 	if ((ft_strcmp(cmd->args[0], "exit")) == 0)
 		return (ft_exit(cmd));
-	else if ((filename = ft_find_bin(cmd->args[0], path)))
-		return (ft_exec_bin(cmd, filename, envp));
+	path = ft_var_find("PATH", envp);
+	if ((filename = ft_find_bin(cmd->args[0], path)))
+		result = ft_exec_bin(cmd, filename, envp);
 	if (path)
 		ft_free_line(&path);
+	if (result)
+		return (result);
 	return (127);
 }
 
@@ -95,6 +100,7 @@ int			main(int argc, char **argv, char **envp)
 	evc = ft_copy_envp(envp);
 	evc = ft_init_envp(evc);
 	shell.in_tmp = dup(0);
+	shell.out_tmp = dup(1);
 	sig_init();
 	while (1)
 	{
