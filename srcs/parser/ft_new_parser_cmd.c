@@ -6,7 +6,7 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 12:07:24 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/04/01 10:03:59 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/04/01 12:18:26 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,25 +159,36 @@ char			**ft_parser_shell(char **envp, char *str)
 		/* здесь получаем массив *** - массив аргументов по pipe*/
 		if ((ar_pipe = ft_new_parser_cmd(cmd[i], &len)) == NULL)
 		{
-			ft_printf("%s\n", strerror(errno));
+			ft_putstr_fd("minishell", STDERR);
+			ft_putstr_fd(strerror(errno), STDERR);
+			ft_putstr_fd("\n", STDERR);
+			shell.status = errno;
 			continue ; // TODO или break - завершить обработку строки?
 		}
 		//printf("массив полученный pipe:\n");
 		//ft_print_array_3(ar_pipe);
-		ar_t_cmd = ft_make_ar_cmd(ar_pipe, len, envp);
+		if ((ar_t_cmd = ft_make_ar_cmd(ar_pipe, len, envp)) == NULL)
+		{
+			ft_putstr_fd("minishell", STDERR);
+			ft_putstr_fd(strerror(errno), STDERR);
+			ft_putstr_fd("\n", STDERR);
+			shell.status = errno;
+			continue ; // TODO или break - завершить обработку строки?
+		}
 		free_array_shell_2(ar_pipe);
 		if (ar_t_cmd[i].args == NULL)
 		{
-			printf("minishell: command not found (127)\n");
+			ft_putstr_fd("minishell: command not found\n", STDERR);
 			shell.status = 127;	
 			free_close_fd(ar_t_cmd, len);
 			free(ar_t_cmd);
 		}
-		/*TODO  вызов функций для выполнения массива t_cmd */
-		/* а пока печать массива t_cmd */
-		//envp = ft_exec_cmd(ar_t_cmd, envp, len);
-		//free_t_cmd(ar_t_cmd, len);
-		//
+		if (ar_t_cmd[i].in < 0  || ar_t_cmd[i].out < 0)
+		{
+			shell.status = 1;
+			free_close_fd(ar_t_cmd, len);
+			free_t_cmd(ar_t_cmd, len);
+		}
 		//в случае ошибки у нас вернеться ar_t_cmd = NULL
 		if (ar_t_cmd != NULL && ar_t_cmd[i].args != NULL)
 		{

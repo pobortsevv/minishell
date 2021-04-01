@@ -6,7 +6,7 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 12:04:21 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/04/01 09:55:37 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/04/01 11:08:46 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,17 @@ char	**ft_make_norm(char **ar, int *in, int *out, char **envp)
 	{
 		flag = 0;
 		if (ar[i][0] == '<' || ar[i][0] == '>')
+		{
 			ft_in_out(ar[i], in, out);
+			/*
+			if (ft_in_out(ar[i], in, out) == 1)
+				{
+					free(res);
+					res = NULL;
+					return (NULL);
+				};
+				*/
+		}
 		else
 		{
 			if (j == 0)

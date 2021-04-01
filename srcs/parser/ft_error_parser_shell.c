@@ -6,7 +6,7 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 10:41:40 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/03/31 08:35:38 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/04/01 12:17:54 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,17 @@ char	**ft_parser_free2(char **a)
 	return (NULL);
 }
 
-int		ft_parser_err_fd(char *name)
+int		ft_parser_err_fd(char **name)
 {
-	ft_putstr_fd("Error: Permission deniedied", 2);
-	ft_putstr_fd(name, 2);
-	return (-1);
+	ft_putstr_fd("minishell: ", STDERR); 
+	ft_putstr_fd(*name, STDERR);
+	ft_putstr_fd(": Permission deniedied\n", STDERR);
+	if(*name != NULL)
+		{
+			free(*name);
+			*name = NULL;
+		}
+	shell.status = 1;
+	return (1);
 }
 
