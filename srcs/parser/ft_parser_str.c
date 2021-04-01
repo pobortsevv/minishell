@@ -6,7 +6,7 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 12:04:21 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/03/31 08:34:38 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/04/01 07:24:08 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,12 @@ char	*ft_dollar (char *str, int *i, char **envp)
 	{
 		res = (char *)malloc(sizeof(char));
 		res[0] = '\0';
+	}
+	if  (temp[0] == '\0')
+	{
+		res = (char *)malloc(sizeof(char)*2);
+		res[0] = '$';
+		res[1] = '\0';
 	}
 	free(temp);
 	return (res);
