@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 14:05:37 by sabra             #+#    #+#             */
-/*   Updated: 2021/04/01 16:56:33 by sabra            ###   ########.fr       */
+/*   Updated: 2021/04/01 20:00:07 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,11 @@ char	**ft_exec_pipe(t_cmd *ar_cmd, char **env, int cmd_count)
 			dup2(shell.in_tmp, 0);
 		if (ar_cmd[i].in != 0)
 			dup2(ar_cmd[i].in, 0);
+		if (i != cmd_count - 1)
+			dup2(shell.out_tmp, 1);
 		if (i == cmd_count - 1)
 			dup2(shell.out_tmp, 1);
-		if (ar_cmd[i].out != 1)
-			dup2(ar_cmd[i].out, 1);
+		//if (ar_cmd[i].out != 1)
 		//dup2(ar_cmd[i].in, 0);
 		//dup2(ar_cmd[i].out, 1);
 		if ((pid = fork()) == -1)
@@ -55,15 +56,16 @@ char	**ft_exec_pipe(t_cmd *ar_cmd, char **env, int cmd_count)
 		}
 		if (pid == 0)
 		{
+			dup2(ar_cmd[i].out, 1);
 			//if(i != 0)
 				//close(0);
+			//close_files(ar_cmd, i, cmd_count);
 			shell.status = init_command(&ar_cmd[i], env);
 			if (shell.status != 127)
 				exit(shell.status);
 			line = ft_find_bin(ar_cmd[i].args[0], path);
 			if (line)
 			{
-				//close_files(ar_cmd, i, cmd_count);
 				execve(line, &ar_cmd[i].args[0], env);
 			}
 			if (line)
