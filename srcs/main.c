@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/28 21:45:13 by sabra             #+#    #+#             */
-/*   Updated: 2021/04/01 16:40:07 by sabra            ###   ########.fr       */
+/*   Updated: 2021/04/01 21:11:14 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int			init_command(t_cmd *cmd, char **envp)
 		result = ft_exec_bin(cmd, filename, envp);
 	if (path)
 		ft_free_line(&path);
-	if (result)
+	if (!result)
 		return (result);
 	return (127);
 }

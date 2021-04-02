@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 14:05:37 by sabra             #+#    #+#             */
-/*   Updated: 2021/04/01 20:00:07 by sabra            ###   ########.fr       */
+/*   Updated: 2021/04/02 18:31:50 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 t_cmd 	*close_files(t_cmd *ar_cmd, int i, int cmd_count)
 {
 	if (i > 0 && ar_cmd[i].in != 0 && ar_cmd[i - 1].out != 1)
-		close(ar_cmd[i - 1].out);
+		close(1);
 	if (i != cmd_count - 1 && ar_cmd[i].out != 1 
 				&& ar_cmd[i + 1].in != 0)
-		close(ar_cmd[i + 1].in);
+		close(0);
 	return (ar_cmd);
 }
 
@@ -40,14 +40,17 @@ char	**ft_exec_pipe(t_cmd *ar_cmd, char **env, int cmd_count)
 		if (i == 0)
 			dup2(shell.in_tmp, 0);
 		if (ar_cmd[i].in != 0)
+		{
 			dup2(ar_cmd[i].in, 0);
+			close(ar_cmd[i].in);
+		}
 		if (i != cmd_count - 1)
+		{
 			dup2(shell.out_tmp, 1);
+			close(ar_cmd[i].out);
+		}
 		if (i == cmd_count - 1)
 			dup2(shell.out_tmp, 1);
-		//if (ar_cmd[i].out != 1)
-		//dup2(ar_cmd[i].in, 0);
-		//dup2(ar_cmd[i].out, 1);
 		if ((pid = fork()) == -1)
 		{
 			shell.status = errno;
@@ -56,7 +59,7 @@ char	**ft_exec_pipe(t_cmd *ar_cmd, char **env, int cmd_count)
 		}
 		if (pid == 0)
 		{
-			dup2(ar_cmd[i].out, 1);
+			//dup2(ar_cmd[i].out, 1);
 			//if(i != 0)
 				//close(0);
 			//close_files(ar_cmd, i, cmd_count);
@@ -66,14 +69,16 @@ char	**ft_exec_pipe(t_cmd *ar_cmd, char **env, int cmd_count)
 			line = ft_find_bin(ar_cmd[i].args[0], path);
 			if (line)
 			{
+				//close_files(ar_cmd, i, cmd_count);
 				execve(line, &ar_cmd[i].args[0], env);
 			}
 			if (line)
 				ft_free_line(&line);
 		}
-		close(ar_cmd[i].in);
-		close(ar_cmd[i].out);
-		//close_files(ar_cmd, i, cmd_count);
+		close(1);
+		close(0);
+		//close(0);
+		//close(1);
 		i++;
 	}
 	while (cmd_count-- > 0)
