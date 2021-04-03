@@ -34,6 +34,7 @@ SRCS	=	ft_memset.c \
 			ft_free_mat.c \
 			ft_queq.c \
 		 	ft_split.c \
+		 	ft_splitset.c \
 		 	ft_itoa.c \
 		 	ft_strmapi.c \
 		 	ft_putchar_fd.c \
