@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/28 21:45:13 by sabra             #+#    #+#             */
-/*   Updated: 2021/04/01 21:11:14 by sabra            ###   ########.fr       */
+/*   Updated: 2021/04/04 00:51:23 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int			init_command(t_cmd *cmd, char **envp)
 	int		result;
 
 	//ft_putstr_fd("test", 0);
-	result = 0;
+	result = 1;
 	if ((ft_strcmp(cmd->args[0], "pwd")) == 0)
 		return (ft_pwd());
 	if ((ft_strcmp(cmd->args[0], "env")) == 0)
@@ -101,6 +101,7 @@ int			main(int argc, char **argv, char **envp)
 	evc = ft_init_envp(evc);
 	shell.in_tmp = dup(0);
 	shell.out_tmp = dup(1);
+	shell.term = ft_var_find("TERM", evc);
 	sig_init();
 	while (1)
 	{

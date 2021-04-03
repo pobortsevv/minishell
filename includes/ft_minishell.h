@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 17:51:39 by sabra             #+#    #+#             */
-/*   Updated: 2021/04/01 16:39:36 by sabra            ###   ########.fr       */
+/*   Updated: 2021/04/04 00:36:41 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@
 
 typedef struct 	s_sh
 {
+	char *term;
 	int status;	
 	int in_tmp;
 	int out_tmp;
