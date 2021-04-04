@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 17:51:39 by sabra             #+#    #+#             */
-/*   Updated: 2021/04/04 00:36:41 by sabra            ###   ########.fr       */
+/*   Updated: 2021/04/04 14:41:25 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,6 +163,7 @@ char			**ft_cd(t_cmd *cmd, char **envp);
 int			ft_exit(t_cmd *cmd);
 int			ft_echo(t_cmd *cmd);
 int			ft_unstr(char *var, char *key);
+int				handle_cmd_not_found(char *name);
 char			*ft_var_find(char *var, char **ev);
 char 			*ft_find_env(char *var, char **ev);
 char 			*ft_find_bin(char *filename, char *path);

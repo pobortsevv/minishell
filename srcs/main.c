@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/28 21:45:13 by sabra             #+#    #+#             */
-/*   Updated: 2021/04/04 00:51:23 by sabra            ###   ########.fr       */
+/*   Updated: 2021/04/04 15:36:46 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,14 @@ int			init_command(t_cmd *cmd, char **envp)
 	return (127);
 }
 
+int				handle_cmd_not_found(char *name)
+{
+		ft_putstr_fd("minishell: ", shell.out_tmp);
+		ft_putstr_fd(name, shell.out_tmp);
+		ft_putendl_fd(": command not found", shell.out_tmp); 
+		return (127);
+}
+
 char			**ft_exec_cmd(t_cmd *ar_cmd, char **env, int cmd_count)
 {
 	if (cmd_count > 1)
@@ -79,11 +87,7 @@ char			**ft_exec_cmd(t_cmd *ar_cmd, char **env, int cmd_count)
 		else
 			shell.status = init_command(&ar_cmd[0], env);
 		if (shell.status == 127)
-		{
-			ft_putstr_fd("minishell: ", ar_cmd[0].out);
-			ft_putstr_fd(ar_cmd[0].args[0], ar_cmd[0].out);
-			ft_putendl_fd(": command not found", ar_cmd[0].out); 
-		}
+			handle_cmd_not_found(ar_cmd[0].args[0]);
 	}
 	return (env);
 }
