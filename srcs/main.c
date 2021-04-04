@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/28 21:45:13 by sabra             #+#    #+#             */
-/*   Updated: 2021/04/04 15:36:46 by sabra            ###   ########.fr       */
+/*   Updated: 2021/04/04 18:44:54 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int			init_command(t_cmd *cmd, char **envp)
 	int		result;
 
 	//ft_putstr_fd("test", 0);
-	result = 1;
+	result = 127;
 	if ((ft_strcmp(cmd->args[0], "pwd")) == 0)
 		return (ft_pwd());
 	if ((ft_strcmp(cmd->args[0], "env")) == 0)
@@ -58,9 +58,7 @@ int			init_command(t_cmd *cmd, char **envp)
 		result = ft_exec_bin(cmd, filename, envp);
 	if (path)
 		ft_free_line(&path);
-	if (!result)
-		return (result);
-	return (127);
+	return (result);
 }
 
 int				handle_cmd_not_found(char *name)
@@ -106,17 +104,17 @@ int			main(int argc, char **argv, char **envp)
 	shell.in_tmp = dup(0);
 	shell.out_tmp = dup(1);
 	shell.term = ft_var_find("TERM", evc);
-	sig_init();
 	while (1)
 	{
-		ft_printf("minishell> ");
+		ft_putstr_fd("\033[0;35m\033[1mminishell> \033[0m", STDOUT);
+		sig_init();
 		gnl = get_next_line(0, &str);
 		if ((res = ft_check_str(str)) != 0)
 		{
 			ft_putstr_fd("minishell: syntax error near unexpected token\n", STDERR);
 			shell.status = 258;
 			if (str)
-				free (str);
+				ft_free_line(&str);
 		}
 		else
 		{
@@ -129,7 +127,7 @@ int			main(int argc, char **argv, char **envp)
 				break ;
 			}
 			if (str)
-				free(str);
+				ft_free_line(&str);
 		}
 	}
 	ft_free_mat(evc);

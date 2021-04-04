@@ -6,7 +6,7 @@
 /*   By: sabra <sabra@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 19:37:52 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/29 14:38:55 by sabra            ###   ########.fr       */
+/*   Updated: 2021/04/04 19:13:53 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,11 @@ int		ft_readfile(int fd, char **line, char **container)
 		}
 		*line = ft_strjoin_gnl(*line, container[fd]);
 	}
+	if (count == 0 && (*line))
+	{
+		ft_putstr_fd("  \b\b", 2);
+		count += ft_readfile(fd, line, container);
+	}
 	if (count == 0 && !(*line))
 		*line = ft_strdup_gnl("\0");
 	return (count == -1 ? (-1) : 0);
@@ -93,10 +98,7 @@ int		get_next_line(int fd, char **line)
 	else
 		container[fd] = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	result = ft_readfile(fd, line, container);
-	if (result < 1)
-	{
-		free(container[fd]);
-		container[fd] = NULL;
-	}
+	free(container[fd]);
+	container[fd] = NULL;
 	return (result);
 }

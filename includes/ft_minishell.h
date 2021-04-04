@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 17:51:39 by sabra             #+#    #+#             */
-/*   Updated: 2021/04/04 14:41:25 by sabra            ###   ########.fr       */
+/*   Updated: 2021/04/04 18:48:22 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,7 @@ int				ft_parser_err_fd(char **name);
 
 void			sig_init(void);
 void			sig_int(int id);
+void			sig_stub(int id);
 void			sig_quit(int id);
 
 /*
