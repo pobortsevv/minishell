@@ -49,11 +49,14 @@ char		**ft_cd(t_cmd *cmd, char **ev)
 			ft_free_line(&old_pwd);
 	}
 	errno = 0;
-	if (cmd->len_args == 1)
+	if (cmd->len_args == 1 || !ft_strcmp(cmd->args[1], "~"))
 	{
 		root = ft_var_find("HOME", ev);
 		if (!root)
+		{
+			ft_putstr_fd("minishell: cd: HOME not set\n", STDOUT);
 			return (ev);
+		}
 		res = chdir(root);
 		ev = change_dir_env(root, ev);
 		ft_free_line(&root);

@@ -1,11 +1,12 @@
 /* ************************************************************************** */
-/*                                                                            */ /*                                                        :::      ::::::::   */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/28 21:45:13 by sabra             #+#    #+#             */
-/*   Updated: 2021/04/04 18:44:54 by sabra            ###   ########.fr       */
+/*   Created: 2021/04/05 20:14:30 by sabra             #+#    #+#             */
+/*   Updated: 2021/04/05 20:15:01 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +63,10 @@ int			init_command(t_cmd *cmd, char **envp)
 
 int				handle_cmd_not_found(char *name)
 {
-		ft_putstr_fd("minishell: ", shell.out_tmp);
-		ft_putstr_fd(name, shell.out_tmp);
-		ft_putendl_fd(": command not found", shell.out_tmp); 
-		return (127);
+	ft_putstr_fd("minishell: ", shell.out_tmp);
+	ft_putstr_fd(name, shell.out_tmp);
+	ft_putendl_fd(": command not found", shell.out_tmp); 
+	return (127);
 }
 
 char			**ft_exec_cmd(t_cmd *ar_cmd, char **env, int cmd_count)
