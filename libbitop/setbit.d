@@ -1,1 +1,0 @@
-setbit.o: setbit.c
