@@ -6,11 +6,25 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/24 20:06:48 by sabra             #+#    #+#             */
-/*   Updated: 2021/04/01 16:43:30 by sabra            ###   ########.fr       */
+/*   Updated: 2021/04/05 11:53:18 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_minishell.h"
+
+int	check_flag(char *arg)
+{
+	size_t i;
+
+	i = 1;
+	if (arg[0] != '-')
+		return (0);
+	while (arg[i] && arg[i] == 'n')
+		i++;
+	if (ft_strlen(&arg[1]) != (i - 1))
+		return (0);
+	return (1);
+}
 
 int	ft_echo(t_cmd *cmd)
 {
@@ -26,8 +40,12 @@ int	ft_echo(t_cmd *cmd)
 	}
 	while (i < cmd->len_args)
 	{
-		ft_putstr_fd(cmd->args[i], STDOUT);
-		ft_putstr_fd(" ", STDOUT);
+		if (!check_flag(cmd->args[i]))
+		{
+			ft_putstr_fd(cmd->args[i], STDOUT);
+			if(i != cmd->len_args - 1)
+				ft_putstr_fd(" ", STDOUT);
+		}
 		i++;
 	}
 	if (!status)

@@ -1,6 +1,5 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
+/*                                                                            */ /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
@@ -77,15 +76,17 @@ char			**ft_exec_cmd(t_cmd *ar_cmd, char **env, int cmd_count)
 	{
 		ft_stolower(ar_cmd[0].args[0]);
 		if ((ft_strcmp(ar_cmd[0].args[0], "unset")) == 0)
-			env = ft_unset(&ar_cmd[0], env);
+			return (ft_unset(&ar_cmd[0], env));
 		else if ((ft_strcmp(ar_cmd[0].args[0], "export")) == 0)
-			env = ft_export(&ar_cmd[0], env);
+			return (ft_export(&ar_cmd[0], env));
 		else if ((ft_strcmp(ar_cmd[0].args[0], "cd")) == 0)
-			env = ft_cd(&ar_cmd[0], env);
+			return (ft_cd(&ar_cmd[0], env));
 		else
+		{
 			shell.status = init_command(&ar_cmd[0], env);
-		if (shell.status == 127)
-			handle_cmd_not_found(ar_cmd[0].args[0]);
+			if (shell.status == 127)
+				handle_cmd_not_found(ar_cmd[0].args[0]);
+		}
 	}
 	return (env);
 }
