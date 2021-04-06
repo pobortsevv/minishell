@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/05 20:14:30 by sabra             #+#    #+#             */
-/*   Updated: 2021/04/05 20:15:01 by sabra            ###   ########.fr       */
+/*   Updated: 2021/04/06 14:01:21 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,19 +98,24 @@ int			main(int argc, char **argv, char **envp)
 	char		**evc=NULL;
 	int			gnl;
 	int 		res;
+	t_hstr		*el;
 
 	str = NULL;
+	el = ft_make_el();
+	//printf("el =<%s> \n", el->cmd);
 	ft_bzero(&shell, sizeof(t_sh));
 	evc = ft_copy_envp(envp);
 	evc = ft_init_envp(evc);
 	shell.in_tmp = dup(0);
 	shell.out_tmp = dup(1);
 	shell.term = ft_var_find("TERM", evc);
+	shell.start = el;
 	while (1)
 	{
-		ft_putstr_fd("\033[0;35m\033[1mminishell> \033[0m", STDOUT);
+		//ft_putstr_fd("\033[0;35m\033[1mminishell> \033[0m", STDOUT);
 		sig_init();
-		gnl = get_next_line(0, &str);
+		//gnl = get_next_line(0, &str);
+		gnl = ft_give_str(&str);
 		if ((res = ft_check_str(str)) != 0)
 		{
 			ft_putstr_fd("minishell: syntax error near unexpected token\n", STDERR);

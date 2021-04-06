@@ -6,7 +6,7 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 12:07:24 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/04/06 08:13:02 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/04/06 13:35:47 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,7 +153,7 @@ char			**ft_parser_shell(char **envp, char *str)
 	i = 0;
 	ar_t_cmd = NULL;
 	if ((cmd = ft_split_cmd(str, ';', 0, 0)) == NULL)
-		ft_printf("%s\n", strerror(errno));
+		ft_putstr_error(strerror(errno), errno);
 //	printf("мфссив по ;\n");
 //	ft_print_array_2(cmd);
 	while (cmd != 0 && cmd[i] != NULL)

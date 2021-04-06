@@ -6,11 +6,12 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/04 07:44:59 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/04/06 13:04:17 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/04/06 14:04:27 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/ft_minishell.h"
+//#include "../../includes/ft_minishell.h"
+#include "ft_minishell.h"
 
 int			ft_putint(int c)
 {
@@ -56,13 +57,29 @@ t_hstr		*ft_read_term(t_hstr **history)
 	term.c_cc[VTIME] = 0; // 0 - не ждать read
 	if (tcsetattr(0, TCSANOW, &term) < 0)
 		return (el);
-	write(1, "minishell: ", 11);
+	//write(1, "minishell: ", 11);
+	ft_putstr_fd("\033[0;35m\033[1mminishell> \033[0m", STDOUT);
 	el = ft_read_t(history);
 	if (tcsetattr(0, TCSANOW, &pre_term) < 0)
 		return (el);
 	return (el);
 }
+int			ft_give_str(char **str)
+{
+	t_hstr			*el;
 
+	el = ft_read_term(&(shell.start));
+	if (el == NULL)
+	{
+		printf("ERRER in termcap\n");
+		return (0);
+	}
+	(*str) = (char *)malloc(sizeof(char) * ft_strlen(shell.start->cmd) + 2);
+	ft_strlcpy((*str), (shell.start->cmd), ft_strlen(shell.start->cmd) + 1);
+	return (ft_strlen(shell.start->cmd));
+}
+
+/*
 int			main(void)
 {
 	int				i;
@@ -94,3 +111,4 @@ int			main(void)
 	}
 	return (0);
 }
+*/

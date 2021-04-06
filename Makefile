@@ -6,7 +6,7 @@
 #    By: sabra <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/01 12:26:01 by sabra             #+#    #+#              #
-#    Updated: 2021/03/30 13:59:18 by sabra            ###   ########.fr        #
+#    Updated: 2021/04/06 13:47:27 by mlaureen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ CFLAGS	= -Wall -Werror -Wextra -g
 #CFLAGS	= -g -fsanitize=address -fno-omit-frame-pointer
 LIBFT_DIR = ./libft/libft/
 LIBBIT_DIR = ./libbitop/
-LIBS	= -L$(LIBFT_DIR) -lft -L$(LIBBIT_DIR) -lbitop
+LIBS	= -L$(LIBFT_DIR) -lft -L$(LIBBIT_DIR) -lbitop -ltermcap
 INCLUDES = -I./includes
 
 .SILENT: $(NAME) clean fclean re

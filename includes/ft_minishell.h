@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 17:51:39 by sabra             #+#    #+#             */
-/*   Updated: 2021/04/06 08:59:46 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/04/06 13:36:30 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@
 # include <signal.h>
 # include <errno.h>
 # include <fcntl.h>
+# include <term.h>
 # include "../libft/libft/libft.h"
 # include "../libbitop/libbitop.h"
 
@@ -47,10 +48,11 @@ typedef struct	s_hstr
 
 typedef struct 	s_sh
 {
-	char *term;
-	int status;	
-	int in_tmp;
-	int out_tmp;
+	char 			*term;
+	int 			status;
+	int 			in_tmp;
+	int 			out_tmp;
+	t_hstr			*start;
 }				t_sh;
 
 extern t_sh shell;
@@ -95,9 +97,17 @@ char			**ft_copy_envp(char **ev);
 char			**ft_init_envp(char **ev);
 
 /*
- * Reading from std0 to str
+ * Reading from std0 to str, termcap
  */
 void			ft_read(char **str);
+size_t			ft_strlchar(char *dst, const char src, size_t dstsize);
+int         	ft_putint(int c);
+t_hstr			*ft_read_t(t_hstr **history);
+t_hstr			*ft_make_el(void);
+void 			ft_add_before(t_hstr **lst, t_hstr *new);
+int				ft_give_str(char **str);
+size_t			ft_strlchar(char *dst, const char src, size_t dstsize);
+
 
 /*
  * Parsing str into t_cmd structure

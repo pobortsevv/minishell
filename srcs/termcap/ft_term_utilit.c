@@ -6,11 +6,12 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 11:53:34 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/04/06 13:04:18 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/04/06 14:04:29 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/ft_minishell.h"
+//#include "../../includes/ft_minishell.h"
+#include "ft_minishell.h"
 
 static void	ft_move_left_clear(int len)
 {
