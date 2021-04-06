@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 17:51:39 by sabra             #+#    #+#             */
-/*   Updated: 2021/04/06 07:18:50 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/04/06 08:59:46 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,13 @@
 # include <fcntl.h>
 # include "../libft/libft/libft.h"
 # include "../libbitop/libbitop.h"
+
+typedef struct	s_hstr
+{
+	char			*cmd;
+	struct s_hstr	*after;
+	struct s_hstr	*before;
+}				t_hstr;
 
 typedef struct 	s_sh
 {
