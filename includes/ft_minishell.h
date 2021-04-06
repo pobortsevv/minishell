@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 17:51:39 by sabra             #+#    #+#             */
-/*   Updated: 2021/04/04 18:48:22 by sabra            ###   ########.fr       */
+/*   Updated: 2021/04/06 07:18:50 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,6 +171,15 @@ char 			*ft_find_bin(char *filename, char *path);
 char			**add_value(char *var, char **ev);
 char			**change_value(char *var, char **ev);
 char			**ft_del_env(char **ev, size_t env_len, char *var);
+
+
+/*
+ *  Error
+ */
+
+void		ft_putstr_error(char *str, int er);
+int			ft_check_er_args(t_cmd *ar_t_cmd, int len);
+
 
 /*
  *  Utilites

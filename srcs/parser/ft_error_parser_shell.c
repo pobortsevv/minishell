@@ -66,9 +66,9 @@ char	**ft_parser_free2(char **a)
 
 int		ft_parser_err_fd(char **name)
 {
-	ft_putstr_fd("minishell: ", STDERR); 
-	ft_putstr_fd(*name, STDERR);
-	ft_putstr_fd(": Permission deniedied\n", STDERR);
+	ft_putstr_fd("minishell: ", shell.out_tmp); 
+	ft_putstr_fd(*name, shell.out_tmp);
+	ft_putstr_fd(": Permission deniedied\n", shell.out_tmp);
 	if(*name != NULL)
 		{
 			free(*name);

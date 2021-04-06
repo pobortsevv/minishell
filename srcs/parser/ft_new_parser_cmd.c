@@ -6,7 +6,7 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 12:07:24 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/04/05 23:05:42 by sabra            ###   ########.fr       */
+/*   Updated: 2021/04/06 07:33:33 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,39 +159,23 @@ char			**ft_parser_shell(char **envp, char *str)
 		/* здесь получаем массив *** - массив аргументов по pipe*/
 		if ((ar_pipe = ft_new_parser_cmd(cmd[i], &len)) == NULL)
 		{
-			ft_putstr_fd("minishell", STDERR);
-			ft_putstr_fd(strerror(errno), STDERR);
-			ft_putstr_fd("\n", STDERR);
-			shell.status = errno;
+			ft_putstr_error(strerror(errno), errno);
 			continue ; // TODO или break - завершить обработку строки?
 		}
 		//printf("массив полученный pipe:\n");
 		//ft_print_array_3(ar_pipe);
 		if ((ar_t_cmd = ft_make_ar_cmd(ar_pipe, len, envp)) == NULL)
 		{
-			ft_putstr_fd("minishell", STDERR);
-			ft_putstr_fd(strerror(errno), STDERR);
-			ft_putstr_fd("\n", STDERR);
-			shell.status = errno;
+			ft_putstr_error(strerror(errno), errno);
+			free_array_shell_2(ar_pipe);
 			continue ; // TODO или break - завершить обработку строки?
 		}
 		free_array_shell_2(ar_pipe);
-		if (ar_t_cmd[i].args == NULL)
-		{
-			ft_putstr_fd("minishell: command not found\n", STDERR);
-			shell.status = 127;	
-			free_close_fd(ar_t_cmd, len);
-			free(ar_t_cmd);
+
+		if (ft_check_er_args(ar_t_cmd, len) == -1)
 			break;
-		}
-		if (ar_t_cmd[i].in < 0  || ar_t_cmd[i].out < 0)
-		{
-			shell.status = 1;
-			free_close_fd(ar_t_cmd, len);
-			free_t_cmd(ar_t_cmd, len);
-		}
 		//в случае ошибки у нас вернеться ar_t_cmd = NULL
-		if (ar_t_cmd != NULL && ar_t_cmd[i].args != NULL)
+		if (ar_t_cmd != NULL && ar_t_cmd[0].args != NULL)
 		{
 			//ft_print_array_t_cmd(ar_t_cmd, len);
 			envp = ft_exec_cmd(ar_t_cmd, envp, len);

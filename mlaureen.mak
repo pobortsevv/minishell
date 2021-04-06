@@ -15,5 +15,4 @@ MLAUREEN	=srcs/ft_read.c\
 			 srcs/parser/ft_check_str.c\
 			 srcs/parser/ft_check_name_file.c\
 			 srcs/utilites/ft_array_to_str.c\
-
-
+			 srcs/error/ft_putstr_error.c
