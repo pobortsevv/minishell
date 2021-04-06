@@ -6,7 +6,7 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 12:07:24 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/04/06 07:33:33 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/04/06 08:13:02 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,6 +154,8 @@ char			**ft_parser_shell(char **envp, char *str)
 	ar_t_cmd = NULL;
 	if ((cmd = ft_split_cmd(str, ';', 0, 0)) == NULL)
 		ft_printf("%s\n", strerror(errno));
+//	printf("мфссив по ;\n");
+//	ft_print_array_2(cmd);
 	while (cmd != 0 && cmd[i] != NULL)
 	{
 		/* здесь получаем массив *** - массив аргументов по pipe*/
@@ -177,7 +179,7 @@ char			**ft_parser_shell(char **envp, char *str)
 		//в случае ошибки у нас вернеться ar_t_cmd = NULL
 		if (ar_t_cmd != NULL && ar_t_cmd[0].args != NULL)
 		{
-			//ft_print_array_t_cmd(ar_t_cmd, len);
+			ft_print_array_t_cmd(ar_t_cmd, len);
 			envp = ft_exec_cmd(ar_t_cmd, envp, len);
 			free_close_fd(ar_t_cmd, len);
 			free_t_cmd(ar_t_cmd, len);
