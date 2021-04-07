@@ -6,11 +6,10 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/04 07:44:59 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/04/06 14:04:27 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/04/07 09:29:00 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//#include "../../includes/ft_minishell.h"
 #include "ft_minishell.h"
 
 int			ft_putint(int c)
@@ -49,21 +48,21 @@ t_hstr		*ft_read_term(t_hstr **history)
 //	if (tgetent(0, shell.term) < 0)
 	if (tgetent(0, "xterm-256color") < 0)
 		return (el);
-	if (tcgetattr(0, &term) < 0)// получить атрибуты терминала
+	if (tcgetattr(0, &term) < 0)
 		return (el);
 	pre_term = term;
-	term.c_lflag &= ~(ECHO); // если установлен отображать вводимые символы
-	term.c_lflag &= ~(ICANON);// усли установлен запустить канонический режим
-	term.c_cc[VTIME] = 0; // 0 - не ждать read
+	term.c_lflag &= ~(ECHO);
+	term.c_lflag &= ~(ICANON);
+	term.c_cc[VTIME] = 0;
 	if (tcsetattr(0, TCSANOW, &term) < 0)
 		return (el);
-	//write(1, "minishell: ", 11);
 	ft_putstr_fd("\033[0;35m\033[1mminishell> \033[0m", STDOUT);
 	el = ft_read_t(history);
 	if (tcsetattr(0, TCSANOW, &pre_term) < 0)
 		return (el);
 	return (el);
 }
+
 int			ft_give_str(char **str)
 {
 	t_hstr			*el;
@@ -78,37 +77,3 @@ int			ft_give_str(char **str)
 	ft_strlcpy((*str), (shell.start->cmd), ft_strlen(shell.start->cmd) + 1);
 	return (ft_strlen(shell.start->cmd));
 }
-
-/*
-int			main(void)
-{
-	int				i;
-	t_hstr			*start;
-	t_hstr			*el;
-	t_hstr			*temp;
-
-	i = 0;
-	el = ft_make_el();
-	start = el;
-	while (i < 4)
-	{
-		el = ft_read_term(&start);
-		i++;
-	}
-	printf("лист командЖ\n");
-	temp = start;
-	while (temp != NULL)
-	{
-		printf("<%s>\n", (temp)->cmd);
-		temp = (temp)->after;
-	}
-	write(1, "\nEND\n", 4);
-	temp = start;
-	while (temp != NULL)
-	{
-		free(temp->cmd);
-		temp = (temp)->after;
-	}
-	return (0);
-}
-*/

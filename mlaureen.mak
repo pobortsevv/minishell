@@ -18,4 +18,5 @@ MLAUREEN	=srcs/ft_read.c\
 			 srcs/error/ft_putstr_error.c\
 			 srcs/termcap/ft_term.c\
 			 srcs/termcap/ft_term_utilit.c\
+			 srcs/termcap/ft_term_utilit1.c\
 			 srcs/termcap/ft_strlchar.c

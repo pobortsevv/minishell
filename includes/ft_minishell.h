@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 17:51:39 by sabra             #+#    #+#             */
-/*   Updated: 2021/04/06 13:36:30 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/04/07 08:49:10 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,8 @@ t_hstr			*ft_make_el(void);
 void 			ft_add_before(t_hstr **lst, t_hstr *new);
 int				ft_give_str(char **str);
 size_t			ft_strlchar(char *dst, const char src, size_t dstsize);
+void			ft_term_nl(char **s);
+void			ft_term_bs(char **s, t_hstr **el);
 
 
 /*

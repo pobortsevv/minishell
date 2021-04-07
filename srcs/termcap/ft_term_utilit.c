@@ -6,11 +6,10 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 11:53:34 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/04/06 14:04:29 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/04/07 09:29:16 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//#include "../../includes/ft_minishell.h"
 #include "ft_minishell.h"
 
 static void	ft_move_left_clear(int len)
@@ -76,8 +75,10 @@ static void	in_cycle_term(char **s, t_hstr **now, t_hstr **el)
 	else if (!ft_strcmp((*s), "\t"))
 		ft_bzero((*s), 256);
 	else if (!ft_strcmp((*s), "\n") && (*el)->cmd[0] == '\0')
-		ft_bzero((*s), 256);
-	else
+		ft_term_nl(s);
+	else if ((*s)[0] == 127)
+		ft_term_bs(s, el);
+	else if (ft_isprint((*s)[0]))
 	{
 		write(1, (*s), 1);
 		(*s)[1] = '\0';
@@ -105,6 +106,7 @@ t_hstr		*ft_read_t(t_hstr **history)
 	s[0] = '\0';
 	while (ft_strcmp(s, "\n"))
 		in_cycle_term(&s, &now, &el);
+	write(1, "\n", 1);
 	free(s);
 	return (el);
 }
