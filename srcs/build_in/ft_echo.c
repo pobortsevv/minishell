@@ -6,23 +6,31 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/24 20:06:48 by sabra             #+#    #+#             */
-/*   Updated: 2021/04/07 15:59:47 by sabra            ###   ########.fr       */
+/*   Updated: 2021/04/07 16:48:41 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_minishell.h"
 
-int check_tilda(char *arg)
+char  *check_tilda(char *arg)
 {
 	int		i;
-	//char	*new;
+	char	*new;
 
 	i = 0;
-	if (!ft_strncmp("~", arg, 1))
+	if (arg[1] && !ft_strncmp("~", arg, 1) && arg[1] == '/')
 	{
-		//if (arg[1] && arg[1] 
+		new = ft_strjoin(shell.home, &arg[1]);
+		ft_free_line(&arg);
+		return (new);
 	}
-	return (0);
+	else if (!arg[1] && !ft_strncmp("~", arg, 1))
+	{
+		new = ft_strdup(shell.home);
+		ft_free_line(&arg);
+		return (new);
+	}
+	return (arg);
 }
 
 int	check_flag(char *arg)
@@ -55,8 +63,7 @@ int	ft_echo(t_cmd *cmd)
 	{
 		if (!check_flag(cmd->args[i]))
 		{
-			//if (!ft_strncmp("~", cmd->args[i], 1))
-				
+			cmd->args[i] = check_tilda(cmd->args[i]);
 			ft_putstr_fd(cmd->args[i], cmd->out);
 			if(i != cmd->len_args - 1)
 				ft_putstr_fd(" ", cmd->out);

@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/05 20:14:30 by sabra             #+#    #+#             */
-/*   Updated: 2021/04/07 14:58:49 by sabra            ###   ########.fr       */
+/*   Updated: 2021/04/07 16:31:54 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ int			main(int argc, char **argv, char **envp)
 	shell.in_tmp = dup(0);
 	shell.out_tmp = dup(1);
 	shell.term = ft_var_find("TERM", evc);
+	shell.home = ft_var_find("HOME", evc);
 	shell.start = el;
 	while (1)
 	{
