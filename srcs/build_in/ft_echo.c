@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/24 20:06:48 by sabra             #+#    #+#             */
-/*   Updated: 2021/04/07 15:37:35 by sabra            ###   ########.fr       */
+/*   Updated: 2021/04/07 15:59:47 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 int check_tilda(char *arg)
 {
 	int		i;
-	char	*new;
+	//char	*new;
 
 	i = 0;
 	if (!ft_strncmp("~", arg, 1))
 	{
-		if (arg[1] && arg[1] 
+		//if (arg[1] && arg[1] 
 	}
 	return (0);
 }
