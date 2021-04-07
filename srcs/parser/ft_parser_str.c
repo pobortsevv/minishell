@@ -6,7 +6,7 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 12:04:21 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/04/01 11:08:46 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/04/07 11:44:19 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	*ft_dollar (char *str, int *i, char **envp)
 	temp = (char *)malloc(sizeof(char) * ft_strlen(str) + 1);
 	(*i)++;
 	while (str[*i] != '\0' && str[(*i) - 1] != 92 && str[*i] != ' '
-			&& str[*i] != 34 && str[*i] != 39 && str[*i] != '$')
+			&& str[*i] != 34 && str[*i] != 39 && str[*i] != '$' && str[*i] != '=')
 	{
 		temp[j] = str[(*i)];
 		j++;
