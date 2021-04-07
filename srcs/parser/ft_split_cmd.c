@@ -6,13 +6,13 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/16 14:02:21 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/03/29 08:59:24 by sabra            ###   ########.fr       */
+/*   Updated: 2021/04/07 12:32:05 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_minishell.h"
 
-static size_t		ft_count(char const *s, char c)
+static size_t	ft_count(char const *s, char c)
 {
 	size_t	count;
 	int		flag;
@@ -66,7 +66,7 @@ static char		*ft_create_word(char const *s, char c)
 	return (word);
 }
 
-static void	ft_skip(char const **s, int *flag, char c)
+static void		ft_skip(char const **s, int *flag, char c)
 {
 	*flag = 0;
 	while (**s && ft_isntend_split(*s, flag) && ((*s)[0] != c || ((*s)[0] == c
@@ -76,7 +76,7 @@ static void	ft_skip(char const **s, int *flag, char c)
 	return ;
 }
 
-static int	ft_check_flag(int flag)
+static int		ft_check_flag(int flag)
 {
 	int		res;
 
@@ -86,7 +86,7 @@ static int	ft_check_flag(int flag)
 	return (res);
 }
 
-char		**ft_split_cmd(char const *s, char c, size_t i, int flag)
+char			**ft_split_cmd(char const *s, char c, size_t i, int flag)
 {
 	char	**result;
 

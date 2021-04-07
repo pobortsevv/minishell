@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 17:51:39 by sabra             #+#    #+#             */
-/*   Updated: 2021/04/07 08:49:10 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/04/07 12:56:02 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,13 @@ typedef struct 	s_sh
 	int 			out_tmp;
 	t_hstr			*start;
 }				t_sh;
+
+typedef struct	s_word
+{
+	int				i;
+	int				d;
+	int				flag;
+}				t_word;
 
 extern t_sh shell;
 
@@ -134,6 +141,8 @@ int				ft_write_only(char *a, int *out);
 int				ft_read_only(char *a, int *in);
 char			*ft_strjoin_mod(char const *s1, char const *s2, size_t len);
 char			*ft_pars_name(char *str);
+char			*ft_create_word_a(char const *s, char *c);
+size_t			ft_count_a(char const *s, char *c);
 
 
 /*
