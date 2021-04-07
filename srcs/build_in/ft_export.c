@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/08 01:17:24 by sabra             #+#    #+#             */
-/*   Updated: 2021/04/01 16:41:38 by sabra            ###   ########.fr       */
+/*   Updated: 2021/04/07 15:22:24 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,13 @@ static int	arg_check(char *arg)
 	if (!ft_isalpha(arg[0]) && arg[0] != '_')
 	{
 		ft_printf("minishell: export: `%s': not a valid identifier'\n", arg);
-		return (0);
+		shell.status = 1;
+		return (1);
 	}
-	return (1);
+	return (0);
 }
 
-void	ft_print_export(char **ev)
+void	ft_print_export(char **ev, int out)
 {
 	char	**buf;
 	size_t	i;
@@ -68,30 +69,31 @@ void	ft_print_export(char **ev)
 	buf = ft_copy_envp(ev);
 	env_sort(buf);
 	if (!buf)
-		exit(0);
+		exit(1);
 	i = 0;
 	while(buf[i])
 	{
 		j = 0;
-		ft_putstr_fd("declare -x ", STDOUT);
+		ft_putstr_fd("declare -x ", out);
 		while (buf[i][j] && buf[i][j] != '=')
-			write(STDOUT, &buf[i][j++], 1);
+			write(out, &buf[i][j++], 1);
 		if (!buf[i][j])
 		{
-			write(STDOUT, "\n", 1);
+			write(out, "\n", 1);
 			i++;
 			continue;
 		}
 		else if (buf[i][j] == '=' && buf[i][j + 1] == '\0')
 		{
-			write(STDOUT, "=\"\"\n", 4);
+			write(out, "=\"\"\n", 4);
 			i++;
 			continue;
 		}
-		ft_printf("%c\"", buf[i][j++]);
+		ft_putchar_fd(buf[i][j++], out);
+		write(out, "\"", 1);
 		while (buf[i][j])
-			write(STDOUT, &buf[i][j++], 1);
-		write(1, "\"\n", 2);
+			write(out, &buf[i][j++], 1);
+		write(out, "\"\n", 2);
 		i++;
 	}
 	ft_free_mat(buf);
@@ -147,7 +149,11 @@ char		**add_value(char *var, char **ev)
 		env_count++;
 	evc = (char **)malloc(sizeof(char *) * env_count + 2);
 	if (!evc)
+	{
+		shell.status = 1;
 		return (NULL);
+	}
+
 	while (i < env_count)
 	{
 		evc[i] = ft_strdup(ev[i]);
@@ -179,14 +185,15 @@ char		**ft_export(t_cmd *cmd, char **ev)
 	int	find;
 	
 	i = 1;
-	if (cmd->len_args == 1)
+	shell.status = 0;
+	if (cmd->len_args == 1 || !cmd->args[1])
 	{
-		ft_print_export(ev);
+		ft_print_export(ev, cmd->out);
 		return (ev);
 	}
 	while(i < cmd->len_args)
 	{
-		if (!arg_check(cmd->args[i]))
+		if (arg_check(cmd->args[i]))
 		{
 			i++;
 			continue;

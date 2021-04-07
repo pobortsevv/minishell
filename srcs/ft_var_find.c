@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 21:36:31 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/29 15:37:00 by sabra            ###   ########.fr       */
+/*   Updated: 2021/04/07 15:08:14 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,17 @@ char	*ft_var_find(char *var, char **ev)
 	size_t	i;
 	char	*value;
 	char	*res;
+	int		var_len;
 
 	if (ft_strcmp(var, "?") == 0)
 		return (ft_itoa(shell.status));
 	i = 0;
+	var_len = ft_strlen(var);
 	if (!var || !ev)
 		return (NULL);
 	while (ev[i])
 	{
-		if (!ft_strncmp(var, ev[i], ft_strlen(var)))
+		if (!ft_strncmp(var, ev[i], var_len) && ev[i][var_len] == '=')
 		{
 			value =	ft_strchr(ev[i], '=');
 			if (!value)

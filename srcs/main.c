@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/05 20:14:30 by sabra             #+#    #+#             */
-/*   Updated: 2021/04/06 14:01:21 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/04/07 14:58:49 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,9 @@ int			init_command(t_cmd *cmd, char **envp)
 	//ft_putstr_fd("test", 0);
 	result = 127;
 	if ((ft_strcmp(cmd->args[0], "pwd")) == 0)
-		return (ft_pwd());
+		return (ft_pwd(cmd->out));
 	if ((ft_strcmp(cmd->args[0], "env")) == 0)
-		return (ft_env(envp));
+		return (ft_env(envp, cmd->out));
 	if ((ft_strcmp(cmd->args[0], "echo")) == 0)
 		return (ft_echo(cmd));
 	if ((ft_strcmp(cmd->args[0], "exit")) == 0)

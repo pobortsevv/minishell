@@ -6,20 +6,20 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/08 01:17:01 by sabra             #+#    #+#             */
-/*   Updated: 2021/04/01 16:42:00 by sabra            ###   ########.fr       */
+/*   Updated: 2021/04/07 14:33:37 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_minishell.h"
 
-int	ft_pwd()
+int	ft_pwd(int out)
 {
 	char *path;
 	
 	path = getcwd(NULL, 0);
 	if (!path)
 		return (1);
-	ft_putendl_fd(path, STDOUT);
+	ft_putendl_fd(path, out);
 	ft_free_line(&path);
 	return (0);
 }
