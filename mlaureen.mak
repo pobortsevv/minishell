@@ -4,6 +4,7 @@ MLAUREEN	=srcs/ft_read.c\
 			 srcs/parser/ft_split_cmd.c\
 			 srcs/parser/ft_utilit_split.c\
 			 srcs/parser/ft_split_arg.c\
+			 srcs/parser/ft_split_arg_utilit.c\
 			 srcs/parser/ft_free_shell.c\
 			 srcs/parser/ft_array.c \
 			 srcs/parser/ft_error_parser_shell.c\

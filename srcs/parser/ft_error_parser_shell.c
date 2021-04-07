@@ -6,7 +6,7 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 10:41:40 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/04/01 12:17:54 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/04/07 14:46:01 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,17 @@
 
 char	**ft_parser_er2(char *error)
 {
-	//TODO  печать в поток 2
-	ft_printf("%s\n", error);
+	ft_putstr_fd("minishell: ", shell.out_tmp);
+	ft_putstr_fd(error, shell.out_tmp);
+	ft_putstr_fd("\n", shell.out_tmp);
 	return (NULL);
 }
 
 char	*ft_parser_er1(char *error)
 {
-	ft_printf("%s\n", error);
+	ft_putstr_fd("minishell: ", shell.out_tmp);
+	ft_putstr_fd(error, shell.out_tmp);
+	ft_putstr_fd("\n", shell.out_tmp);
 	return (NULL);
 }
 
@@ -30,7 +33,9 @@ char	**ft_parser_err_free2(char *error, char **a)
 	int		i;
 
 	i = 0;
-	ft_printf("%s\n", error);
+	ft_putstr_fd("minishell: ", shell.out_tmp);
+	ft_putstr_fd(error, shell.out_tmp);
+	ft_putstr_fd("\n", shell.out_tmp);
 	while (a && a[i])
 	{
 		free(a[i]);
@@ -66,15 +71,14 @@ char	**ft_parser_free2(char **a)
 
 int		ft_parser_err_fd(char **name)
 {
-	ft_putstr_fd("minishell: ", shell.out_tmp); 
+	ft_putstr_fd("minishell: ", shell.out_tmp);
 	ft_putstr_fd(*name, shell.out_tmp);
 	ft_putstr_fd(": Permission deniedied\n", shell.out_tmp);
-	if(*name != NULL)
-		{
-			free(*name);
-			*name = NULL;
-		}
+	if (*name != NULL)
+	{
+		free(*name);
+		*name = NULL;
+	}
 	shell.status = 1;
 	return (1);
 }
-

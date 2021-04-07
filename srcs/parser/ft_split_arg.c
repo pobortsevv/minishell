@@ -6,12 +6,11 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 14:42:54 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/03/29 15:24:30 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/04/07 14:34:21 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_minishell.h"
-#include <stdio.h>
 
 size_t		ft_count_a(char const *s, char *c)
 {
@@ -40,117 +39,82 @@ size_t		ft_count_a(char const *s, char *c)
 	return (count);
 }
 
-char		*ft_create_word_a(char const *s, char *c)
+static void	in_ft_split_arg(char **s, char *c, t_word *w)
 {
-	char	*word;
-	int		i;
-	int		flag;
-	int		d;
+	(w->i)++;
+	w->flag = 0;
+	if (((*s)[0] == '>' && (*s)[1] == '>')
+			|| ((*s)[0] == '<' && (*s)[1] == '<'))
+		w->d = 2;
+	else if ((*s)[0] == '>' || (*s)[0] == '<')
+		w->d = 1;
+	if (w->d)
+		w->flag = setbit(w->flag, TAIL);
+	while (*((*s) + w->d) && ft_isntend_split(((*s) + w->d), &(w->flag))
+			&& ((!ft_strchr(c, (*s)[w->d])) || (ft_strchr(c, (*s)[w->d])
+					&& (checkbit(w->flag, SINGLE_Q) || checkbit(w->flag, TAIL)
+						|| checkbit(w->flag, DOUBLE_Q)
+						|| checkbit(w->flag, SLASH_2)))))
+	{
+		(*s)++;
+		if (w->d > 0 && (*s))
+			(w->d)--;
+		if (!(ft_strchr(c, (*s)[0])) && checkbit(w->flag, TAIL))
+			w->flag = unsetbit(w->flag, TAIL);
+	}
+	return ;
+}
 
-	i = 0;
-	flag = 0;
-	d = 0;
-	if ((s[0] == '>' && s[1] == '>') || (s[0] == '<' && s[1] == '<'))
-		d = 2;
-	else if (s[0] == '>' || s[0] == '<')
-		d = 1;
-	if (d)
-		flag = setbit(flag, TAIL);
-	while (s[i] && ft_isntend_split(&s[i + d], &flag) &&
-			((!ft_strchr(c, s[i + d])) || (ft_strchr(c, s[i + d])
-				&& (checkbit(flag, SINGLE_Q) || checkbit(flag, TAIL) ||
-					checkbit(flag, DOUBLE_Q) || checkbit(flag, SLASH_2)))))
-	{
-		i++;
-		if (d > 0)
-			d--;
-		if (!(ft_strchr(c, s[i + d])) && checkbit(flag, TAIL))
-			flag = unsetbit(flag, TAIL);
-	}
-	if (!(word = (char *)malloc(sizeof(char) * (i + 1))))
-		return (NULL);
-	i = 0;
-	flag = 0;
-	if ((s[0] == '>' && s[1] == '>') || (s[0] == '<' && s[1] == '<'))
-		d = 2;
-	else if (s[0] == '>' || s[0] == '<')
-		d = 1;
-	if (d)
-		flag = setbit(flag, TAIL);
-	while (s[i] && ft_isntend_split(&s[i + d], &flag) && ((!ft_strchr(c, s[i + d])) || (ft_strchr(c, s[i + d]) &&
-			(checkbit(flag, SINGLE_Q) || checkbit(flag, TAIL) || checkbit(flag, DOUBLE_Q) || checkbit(flag, SLASH_2)))))
-	{
-		word[i] = s[i];
-		i++;
-		if (d > 0)
-			d--;
-		if (!(ft_strchr(c, s[i + d])) && checkbit(flag, TAIL))
-			flag = unsetbit(flag, TAIL);
-	}
-	word[i] = '\0';
-	return (word);
+static void	in_ft_split_arg0(char **s, t_word *w)
+{
+	while (*(*s) && *(*s) == ' ')
+		(*s)++;
+	if ((*s)[0] == '>' && (*s)[1] == '>')
+		w->d = 2;
+	else if ((*s)[0] == '>' || (*s)[0] == '<')
+		w->d = 1;
+	if (w->d && *((*s) + w->d))
+		w->flag = setbit(w->flag, TAIL);
+	return ;
+}
+
+static int	in_ft_split_arg1(char *s, char *c, t_word *w)
+{
+	int		res;
+
+	res = (*(s + w->d) && ft_isntend_split((s + w->d), &(w->flag))
+			&& ((!ft_strchr(c, s[w->d])) || (ft_strchr(c, s[w->d])
+					&& (checkbit(w->flag, SINGLE_Q)
+						|| checkbit(w->flag, TAIL)
+						|| checkbit(w->flag, DOUBLE_Q)
+						|| checkbit(w->flag, SLASH_2)))));
+	return (res);
 }
 
 char		**ft_split_arg(char *s, char *c, size_t i, int flag)
 {
-//	size_t	i;
 	char	**result;
-//	int		flag;
-	int		d;
+	t_word	wrd;
 
-	d = 0;
-	i = 0;
-	flag = 0;
+	wrd.d = 0;
+	wrd.i = i;
+	wrd.flag = flag;
 	if (!s ||
 		!(result = (char **)malloc(sizeof(char *) * (ft_count_a(s, c)) + 1)))
 		return (NULL);
-	while (*s && *(s + d))
+	while (*s && *(s + wrd.d))
 	{
-		while (*s && *s == ' ')
-			s++;
-		if (s[0] == '>' && s[1] == '>')
-			d = 2;
-		else if (s[0] == '>' || s[0] == '<')
-			d = 1;
-		if (d && *(s + d))
-			flag = setbit(flag, TAIL);
-		if (*(s + d) && ft_isntend_split((s + d), &flag) && ((!ft_strchr(c, s[d])) || (ft_strchr(c, s[d]) &&
-			(checkbit(flag, SINGLE_Q) || checkbit(flag, TAIL) || checkbit(flag, DOUBLE_Q) || checkbit(flag, SLASH_2)))))
+		in_ft_split_arg0(&s, &wrd);
+		if (in_ft_split_arg1(s, c, &wrd) == 1)
 		{
-			if (!(result[i] = ft_create_word_a(s, c)))
+			if (!(result[wrd.i] = ft_create_word_a(s, c)))
 			{
-				ft_free_split(result, i);
+				ft_free_split(result, wrd.i);
 				return (NULL);
 			}
-			i++;
-			flag = 0;
-			if ((s[0] == '>' && s[1] == '>') || (s[0] == '<' && s[1] == '<'))
-				d = 2;
-			else if (s[0] == '>' || s[0] == '<')
-				d = 1;
-			if (d)
-				flag = setbit(flag, TAIL);
-			while (*(s + d) && ft_isntend_split((s + d), &flag) && ((!ft_strchr(c, s[d])) || (ft_strchr(c, s[d]) &&
-			(checkbit(flag, SINGLE_Q) || checkbit(flag, TAIL) || checkbit(flag, DOUBLE_Q) || checkbit(flag, SLASH_2)))))
-			{
-				s++;
-				if (d > 0 && *(s))
-					d--;
-				if (!(ft_strchr(c, s[0])) && checkbit(flag, TAIL))
-					flag = unsetbit(flag, TAIL);
-			}
+			in_ft_split_arg(&s, c, &wrd);
 		}
 	}
-	result[i] = NULL;
-	//TODO убрать тестовою печать
-/*
-	i = 0;
-	printf("result = = \n");
-	while (result[i] != NULL)
-	{
-		printf("%s\n", result[i]);
-		i++;
-	}
-	*/
+	result[wrd.i] = NULL;
 	return (result);
 }
