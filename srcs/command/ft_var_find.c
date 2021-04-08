@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 21:36:31 by sabra             #+#    #+#             */
-/*   Updated: 2021/04/08 14:11:40 by sabra            ###   ########.fr       */
+/*   Updated: 2021/04/08 18:31:39 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*ft_var_find(char *var, char **ev)
 	int		var_len;
 
 	if (ft_strcmp(var, "?") == 0)
-		return (ft_itoa(shell.status));
+		return (ft_itoa(g_shell.status));
 	i = 0;
 	var_len = ft_strlen(var);
 	if (!var || !ev)

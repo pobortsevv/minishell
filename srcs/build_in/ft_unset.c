@@ -6,13 +6,13 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/21 23:25:54 by sabra             #+#    #+#             */
-/*   Updated: 2021/04/07 14:34:01 by sabra            ###   ########.fr       */
+/*   Updated: 2021/04/08 19:39:25 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_minishell.h"
 
-int	ft_unstr(char *var, char *key)
+int		ft_unstr(char *var, char *key)
 {
 	size_t	i;
 	size_t	var_len;
@@ -21,22 +21,24 @@ int	ft_unstr(char *var, char *key)
 	i = 0;
 	var_len = 0;
 	key_len = 0;
-	if (!var || !key)
-		return(0);
+	if (!var || !var[0] || !key)
+		return (0);
 	while (var[i] && key[i] && var[i] == key[i] && var[i] != '=')
 		i++;
-	while (var[var_len] && var[var_len] != '=') var_len++; while (key[key_len] && key[key_len] != '=')
+	while (var[var_len] && var[var_len] != '=')
+		var_len++;
+	while (key[key_len] && key[key_len] != '=')
 		key_len++;
 	if (key_len == i && key_len == var_len)
 		return (1);
 	return (0);
 }
 
-char 	**ft_del_env(char **ev, size_t env_count, char *el)
+char	**ft_del_env(char **ev, size_t env_count, char *el)
 {
 	size_t	i;
 	size_t	j;
-	char 	**res;
+	char	**res;
 
 	i = 0;
 	j = 0;
@@ -78,12 +80,30 @@ size_t	unset_check(char *s)
 	return (1);
 }
 
-char 	**ft_unset(t_cmd *cmd, char **ev)
+char	**find_unset(char *arg, size_t *env_count, char **ev)
 {
-	int	i;
 	size_t	j;
-	size_t	env_count;
 
+	j = 0;
+	while (j < *env_count)
+	{
+		if (ev[j] && ft_unstr(ev[j], arg))
+		{
+			ev = ft_del_env(ev, --(*env_count), arg);
+			if (!ev)
+				return (NULL);
+			(*env_count)--;
+			break ;
+		}
+		j++;
+	}
+	return (ev);
+}
+
+char	**ft_unset(t_cmd *cmd, char **ev)
+{
+	int		i;
+	size_t	env_count;
 
 	i = 1;
 	env_count = 0;
@@ -93,24 +113,13 @@ char 	**ft_unset(t_cmd *cmd, char **ev)
 		return (ev);
 	while (i < cmd->len_args)
 	{
-		j = 0;
 		if (!unset_check(cmd->args[i]))
 		{
 			i++;
 			continue;
 		}
-		while (j < env_count)
-		{
-			if (ev[j] && ft_unstr(ev[j], cmd->args[i]))
-			{
-				ev = ft_del_env(ev, --env_count, cmd->args[i]);
-				if (!ev)
-					return (NULL);
-				env_count--;
-				break;
-			}
-			j++;
-		}
+		if (!(ev = find_unset(cmd->args[i], &env_count, ev)))
+			return (NULL);
 		i++;
 	}
 	return (ev);

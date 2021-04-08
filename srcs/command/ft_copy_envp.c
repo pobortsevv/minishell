@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 10:30:41 by sabra             #+#    #+#             */
-/*   Updated: 2021/04/08 13:58:10 by sabra            ###   ########.fr       */
+/*   Updated: 2021/04/08 19:11:53 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,11 @@ char		*ft_find_env(char *key, char **ev)
 	return (NULL);
 }
 
-char		**ft_init_envp(char **ev)
+char		**ft_init_envp(char **ev, size_t len_env)
 {
-	size_t	len_env;
 	char	*pwd_value;
 	char	*new_pwd;
 
-	len_env = 0;
 	while (ev[len_env])
 		len_env++;
 	ev = ft_del_env(ev, len_env, ft_find_env("OLDPWD", ev));
@@ -75,6 +73,7 @@ char		**ft_init_envp(char **ev)
 			return (ev);
 		new_pwd = create_var("PWD", pwd_value);
 		ev = change_value(new_pwd, ev);
+		ft_free_line(&new_pwd);
 	}
 	return (ev);
 }
