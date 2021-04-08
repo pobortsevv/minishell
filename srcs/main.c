@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/05 20:14:30 by sabra             #+#    #+#             */
-/*   Updated: 2021/04/08 13:44:17 by sabra            ###   ########.fr       */
+/*   Updated: 2021/04/08 15:01:07 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ int			init_command(t_cmd *cmd, char **envp)
 	char 	*filename;
 	int		result;
 
-	//ft_putstr_fd("test", 0);
 	result = 127;
 	if ((ft_strcmp(cmd->args[0], "pwd")) == 0)
 		return (ft_pwd(cmd->out));

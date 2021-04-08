@@ -6,16 +6,17 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 14:42:40 by sabra             #+#    #+#             */
-/*   Updated: 2021/04/03 14:43:27 by sabra            ###   ########.fr       */
+/*   Updated: 2021/04/08 13:54:56 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-
 static int		is_in_set(char s, char *set)
 {
-	int i = 0;
+	int i;
+
+	i = 0;
 	while (set[i])
 	{
 		if (set[i] == s)
@@ -38,7 +39,7 @@ static void		ft_free_split(char **result, size_t last)
 	free(result);
 }
 
-static size_t		ft_count(char const *s, char *set)
+static size_t	ft_count(char const *s, char *set)
 {
 	size_t	count;
 
@@ -57,7 +58,7 @@ static size_t		ft_count(char const *s, char *set)
 	return (count);
 }
 
-char		*ft_create_word(char const *s, char *set)
+char			*ft_create_word(char const *s, char *set)
 {
 	char	*word;
 	int		i;
@@ -77,7 +78,7 @@ char		*ft_create_word(char const *s, char *set)
 	return (word);
 }
 
-char		**ft_splitset(char const *s, char *set)
+char			**ft_splitset(char const *s, char *set)
 {
 	size_t	i;
 	char	**result;

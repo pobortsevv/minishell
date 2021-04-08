@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 21:36:31 by sabra             #+#    #+#             */
-/*   Updated: 2021/04/07 15:08:14 by sabra            ###   ########.fr       */
+/*   Updated: 2021/04/08 14:11:40 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	*ft_var_find(char *var, char **ev)
 	{
 		if (!ft_strncmp(var, ev[i], var_len) && ev[i][var_len] == '=')
 		{
-			value =	ft_strchr(ev[i], '=');
+			value = ft_strchr(ev[i], '=');
 			if (!value)
 				return (NULL);
 			value++;

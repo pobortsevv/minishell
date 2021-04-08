@@ -6,7 +6,7 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/08 12:38:35 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/04/08 13:27:48 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/04/08 15:05:02 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	ft_ar_null(char ***ar_pipe)
 	return ;
 }
 
-void	ft_parser_shel_cycle(t_cmd *ar_t_cmd, int len, char **envp, char ***cmd)
+char	**ft_parser_shel_cycle(t_cmd *ar_t_cmd, int len, char **envp, char ***cmd)
 {
 	if (ft_check_er_args(ar_t_cmd, len) == -1)
 		free_array_shell((*cmd));
@@ -54,5 +54,5 @@ void	ft_parser_shel_cycle(t_cmd *ar_t_cmd, int len, char **envp, char ***cmd)
 		free_close_fd(ar_t_cmd, len);
 		free_t_cmd(ar_t_cmd, len);
 	}
-	return ;
+	return (envp);
 }

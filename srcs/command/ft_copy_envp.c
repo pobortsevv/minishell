@@ -6,14 +6,15 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 10:30:41 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/29 15:31:11 by sabra            ###   ########.fr       */
+/*   Updated: 2021/04/08 13:58:10 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_minishell.h"
 
 char		*create_var(char *key, char *value)
-{ char *result;
+{
+	char *result;
 	char *tmp_key;
 	char *tmp;
 
@@ -52,7 +53,7 @@ char		*ft_find_env(char *key, char **ev)
 char		**ft_init_envp(char **ev)
 {
 	size_t	len_env;
-	char 	*pwd_value;
+	char	*pwd_value;
 	char	*new_pwd;
 
 	len_env = 0;

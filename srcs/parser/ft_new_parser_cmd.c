@@ -6,7 +6,7 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 12:07:24 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/04/08 13:26:22 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/04/08 15:05:38 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ char			**ft_parser_shell(char **envp, char *str)
 			continue ;
 		}
 		free_array_shell_2(ar_pipe);
-		ft_parser_shel_cycle(ar_t_cmd, len, envp, &cmd);
+		envp = ft_parser_shel_cycle(ar_t_cmd, len, envp, &cmd);
 		i++;
 	}
 	free_array_shell(cmd);

@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 17:51:39 by sabra             #+#    #+#             */
-/*   Updated: 2021/04/08 13:43:17 by sabra            ###   ########.fr       */
+/*   Updated: 2021/04/08 15:04:42 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,7 +177,7 @@ void			ft_cp_ar_sh_part(char ***r_a, int  i, int  len);
 void			*ft_free_r_a(char ***r_a);
 void			ft_free_r_a_i(char ***r_a, int i);
 void			ft_ar_null(char ***ar_pipe);
-void			ft_parser_shel_cycle(t_cmd *ar_t_cmd, int len,char **envp, char ***cmd);
+char			**ft_parser_shel_cycle(t_cmd *ar_t_cmd, int len,char **envp, char ***cmd);
 
 /*
  * Error
@@ -221,6 +221,10 @@ char 			*ft_find_bin(char *filename, char *path);
 char			**add_value(char *var, char **ev);
 char			**change_value(char *var, char **ev);
 char			**ft_del_env(char **ev, size_t env_len, char *var);
+t_cmd			*close_files(t_cmd *ar_cmd, int i, int cmd_count);
+void			dup_start(t_cmd *ar_cmd);
+void			dup_end(t_cmd *ar_cmd);
+void			exec_pipe_init(char **path, char **env);
 
 
 /*

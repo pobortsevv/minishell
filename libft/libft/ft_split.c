@@ -6,13 +6,13 @@
 /*   By: sabra <sabra@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/05 15:39:08 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/29 09:00:10 by sabra            ###   ########.fr       */
+/*   Updated: 2021/04/08 13:53:39 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static void		ft_free_split(char **result, size_t last)
+static void			ft_free_split(char **result, size_t last)
 {
 	size_t i;
 
@@ -44,7 +44,7 @@ static size_t		ft_count(char const *s, char c)
 	return (count);
 }
 
-char		*ft_create_word(char const *s, char c)
+char				*ft_create_word(char const *s, char c)
 {
 	char	*word;
 	int		i;
@@ -64,7 +64,7 @@ char		*ft_create_word(char const *s, char c)
 	return (word);
 }
 
-char		**ft_split(char const *s, char c)
+char				**ft_split(char const *s, char c)
 {
 	size_t	i;
 	char	**result;
