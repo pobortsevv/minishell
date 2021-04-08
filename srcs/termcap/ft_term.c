@@ -6,7 +6,7 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/04 07:44:59 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/04/08 08:25:15 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/04/08 18:38:39 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,13 +66,13 @@ int			ft_give_str(char **str)
 {
 	t_hstr			*el;
 
-	el = ft_read_term(&(shell.start));
+	el = ft_read_term(&(g_shell.start));
 	if (el == NULL)
 	{
 		printf("ERRER in termcap\n");
 		return (0);
 	}
-	(*str) = (char *)malloc(sizeof(char) * ft_strlen(shell.start->cmd) + 2);
-	ft_strlcpy((*str), (shell.start->cmd), ft_strlen(shell.start->cmd) + 1);
-	return (ft_strlen(shell.start->cmd));
+	(*str) = (char *)malloc(sizeof(char) * ft_strlen(g_shell.start->cmd) + 2);
+	ft_strlcpy((*str), (g_shell.start->cmd), ft_strlen(g_shell.start->cmd) + 1);
+	return (ft_strlen(g_shell.start->cmd));
 }

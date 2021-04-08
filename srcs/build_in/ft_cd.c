@@ -1,11 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */ /*   ft_cd.c                                            :+:      :+:    :+:   */
+/*                                                        :::      ::::::::   */
+/*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/09 12:55:10 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/31 15:25:44 by sabra            ###   ########.fr       */
+/*   Created: 2021/04/08 16:31:12 by sabra             #+#    #+#             */
+/*   Updated: 2021/04/08 19:06:17 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +18,16 @@ char		**change_dir_env(char *value, char **ev)
 
 	var = ft_strjoin("PWD=", value);
 	ev = change_value(var, ev);
+	ft_free_line(&var);
 	return (ev);
 }
 
-char		**ft_cd(t_cmd *cmd, char **ev)
+char		**add_oldpwd(char **ev)
 {
-	int		res;
-	char 	*tmp;
-	char 	*root;
+	char	*tmp;
 	char	*old_pwd;
 
 	tmp = ft_find_env("OLDPWD", ev);
-	res = 0;
 	if (tmp)
 	{
 		old_pwd = getcwd(NULL, 0);
@@ -48,7 +47,41 @@ char		**ft_cd(t_cmd *cmd, char **ev)
 		if (old_pwd)
 			ft_free_line(&old_pwd);
 	}
+	return (ev);
+}
+
+char		**change_arg_dir(t_cmd *cmd, char **ev)
+{
+	int		res;
+	char	*tmp;
+
+	res = 0;
+	res = chdir(cmd->args[1]);
+	if (res == -1)
+	{
+		g_shell.status = errno;
+		ft_putendl_fd(strerror(errno), STDERR);
+		return (ev);
+	}
+	if (cmd->len_args > 1)
+	{
+		tmp = getcwd(NULL, 0);
+		if (!tmp)
+			return (ev);
+		ev = change_dir_env(tmp, ev);
+		ft_free_line(&tmp);
+	}
+	return (ev);
+}
+
+char		**ft_cd(t_cmd *cmd, char **ev)
+{
+	int		res;
+	char	*root;
+
 	errno = 0;
+	res = 0;
+	ev = add_oldpwd(ev);
 	if (cmd->len_args == 1 || !ft_strcmp(cmd->args[1], "~"))
 	{
 		root = ft_var_find("HOME", ev);
@@ -62,22 +95,6 @@ char		**ft_cd(t_cmd *cmd, char **ev)
 		ft_free_line(&root);
 	}
 	else if (cmd->len_args >= 2)
-	{
-		res = chdir(cmd->args[1]);
-	}
-	if (res == -1)
-	{
-		shell.status = errno;
-		ft_putendl_fd(strerror(errno), STDERR);
-		return (ev);
-	}
-	if (cmd->len_args > 1)
-	{
-		tmp = getcwd(NULL, 0);
-		if (!tmp)
-			return (ev);
-		ev = change_dir_env(tmp, ev);
-		ft_free_line(&tmp);
-	}
+		ev = change_arg_dir(cmd, ev);
 	return (ev);
 }

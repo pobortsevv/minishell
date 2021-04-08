@@ -6,20 +6,20 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/08 01:17:53 by sabra             #+#    #+#             */
-/*   Updated: 2021/04/07 14:21:34 by sabra            ###   ########.fr       */
+/*   Updated: 2021/04/08 18:32:37 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_minishell.h"
 
-int	ft_env(char **ev, int out)
+int		ft_env(char **ev, int out)
 {
 	size_t i;
-	
+
 	i = 0;
 	if (!ev)
 		return (-1);
-	while(ev[i])
+	while (ev[i])
 	{
 		if (ft_strchr(ev[i], '='))
 			ft_putendl_fd(ev[i], out);

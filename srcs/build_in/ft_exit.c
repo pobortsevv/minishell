@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/29 15:40:57 by sabra             #+#    #+#             */
-/*   Updated: 2021/04/07 16:55:35 by sabra            ###   ########.fr       */
+/*   Updated: 2021/04/08 19:09:01 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	is_num_arg(char *str)
 	i = 0;
 	while (str[i])
 	{
-		if (!ft_isdigit(str[i]))
+		if (str[i] != '-' && !ft_isdigit(str[i]))
 		{
 			ft_printf("minishell: exit: %s: numeric argument required\n", str);
 			return (-1);
@@ -45,14 +45,12 @@ int	ft_exit(t_cmd *cmd)
 	if (len == 2)
 	{
 		if (!is_num_arg(cmd->args[1]))
-			shell.status = ft_atoi(cmd->args[1]);
+			g_shell.status = ft_atoi(cmd->args[1]);
 	}
 	if (len > 2)
 		ft_putstr_fd("minishell: exit: too many arguments\n", STDERR);
-	// TODO почистить копию массива
-	// TODO почистить полный лист
 	ft_free_mat(cmd->args);
 	ft_putstr_fd("exit\n", STDOUT);
-	exit(shell.status);
-	return (shell.status);
+	exit(g_shell.status);
+	return (g_shell.status);
 }

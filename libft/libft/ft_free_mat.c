@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/06 17:05:16 by sabra             #+#    #+#             */
-/*   Updated: 2021/03/29 08:48:00 by sabra            ###   ########.fr       */
+/*   Updated: 2021/04/08 16:20:51 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ char	**ft_free_mat(char **mat)
 	int i;
 
 	i = 0;
+	if (!mat)
+		return (NULL);
 	while (mat[i])
 	{
 		ft_free_line(&mat[i]);

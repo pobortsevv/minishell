@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 14:05:37 by sabra             #+#    #+#             */
-/*   Updated: 2021/04/08 14:44:33 by sabra            ###   ########.fr       */
+/*   Updated: 2021/04/08 18:31:15 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,15 +44,15 @@ void	child_pro(t_cmd *ar_cmd, char **env, char *path)
 {
 	char *line;
 
-	shell.status = init_cmd_pipe(ar_cmd, env);
-	if (shell.status != 127)
-		exit(shell.status);
+	g_shell.status = init_cmd_pipe(ar_cmd, env);
+	if (g_shell.status != 127)
+		exit(g_shell.status);
 	line = ft_find_bin(ar_cmd->args[0], path);
 	if (line)
-		shell.status = execve(line, &ar_cmd->args[0], env);
+		g_shell.status = execve(line, &ar_cmd->args[0], env);
 	if (line)
 		ft_free_line(&line);
-	if (shell.status == 127)
+	if (g_shell.status == 127)
 	{
 		handle_cmd_not_found(ar_cmd->args[0]);
 		exit(127);
@@ -61,7 +61,7 @@ void	child_pro(t_cmd *ar_cmd, char **env, char *path)
 
 void	wait_pros(pid_t pid)
 {
-	while (waitpid(pid, &shell.status, 0) > 0)
+	while (waitpid(pid, &g_shell.status, 0) > 0)
 		;
 	while (wait(NULL) > 0)
 		;
@@ -80,7 +80,7 @@ char	**ft_exec_pipe(t_cmd *ar_cmd, char **env, int cmd_count)
 		dup_start(&ar_cmd[i]);
 		if ((pid = fork()) == -1)
 		{
-			shell.status = errno;
+			g_shell.status = errno;
 			ft_putstr_fd(strerror(errno), ar_cmd[i].out);
 			return (env);
 		}
