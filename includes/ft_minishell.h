@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 17:51:39 by sabra             #+#    #+#             */
-/*   Updated: 2021/04/08 11:47:08 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/04/08 13:26:36 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,6 +172,11 @@ int				ft_res_arg_if0(char *str, int i, int *flag);
 int				ft_res_arg_if1(char *str, int i, int *flag);
 int				ft_res_arg_if2(char *str, int i, int *flag);
 void			ft_res_arg_part1(char *star, char **envp, t_word *w, char **res);
+void			ft_cp_ar_sh_part(char ***r_a, int  i, int  len);
+void			*ft_free_r_a(char ***r_a);
+void			ft_free_r_a_i(char ***r_a, int i);
+void			ft_ar_null(char ***ar_pipe);
+void			ft_parser_shel_cycle(t_cmd *ar_t_cmd, int len,char **envp, char ***cmd);
 
 /*
  * Error

@@ -1,5 +1,6 @@
 MLAUREEN	=srcs/ft_read.c\
 			 srcs/parser/ft_new_parser_cmd.c\
+			 srcs/parser/ft_new_parser_cmd_utilit.c\
 			 srcs/test/print_test.c\
 			 srcs/parser/ft_split_cmd.c\
 			 srcs/parser/ft_utilit_split.c\

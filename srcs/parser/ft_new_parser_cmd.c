@@ -6,39 +6,24 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 12:07:24 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/04/08 11:50:00 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/04/08 13:26:22 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_minishell.h"
-#include <stdio.h>
 
-static char		**ft_copy_array_shell(char **r_a, char **a, t_cmd  **cmd, char **envp)
+static char		**ft_cp_ar_sh(char **r_a, char **a, t_cmd **cmd, char **envp)
 {
 	int		i;
-	int		len;
 	int		res;
 	char	**norm;
 
 	i = 0;
-	len = ft_lenarray(a);
-	//printf("array a:\n");
-	//ft_print_array_2(a);
-	r_a = (char **)malloc(sizeof(char *) * len + 1);
-	//printf("r_a %p\n", r_a);
-	if (r_a == NULL)
+	if ((r_a = (char **)malloc(sizeof(char *) * ft_lenarray(a) + 1)) == NULL)
 		return (ft_parser_er2(strerror(errno)));
-	r_a[len] = NULL;
-	//printf("%p \n", &r_a[len]);
+	r_a[ft_lenarray(a)] = NULL;
 	if (!(norm = ft_make_norm(a, &((*cmd)->in), &((*cmd)->out), envp)))
-	{
-		free(r_a);
-		r_a = NULL;
-		return (NULL);
-	}
-//	printf("после нормализации\n");
-//	ft_print_array_2(norm);
-//	printf("after in=%d, out =%d\n", (*cmd)->in, (*cmd)->out);
+		return (ft_free_r_a(&r_a));
 	while (norm[i] != NULL)
 	{
 		if ((r_a[i] = (char *)malloc(ft_strlen(norm[i]) + 1)) == NULL)
@@ -46,18 +31,12 @@ static char		**ft_copy_array_shell(char **r_a, char **a, t_cmd  **cmd, char **en
 		res = ft_strlcpy(r_a[i], norm[i], ft_strlen(norm[i]) + 1);
 		if (res != (int)ft_strlen(norm[i]))
 		{
-			free(r_a[i]);
-			r_a[i] = NULL;
-			free_array_shell(r_a);
+			ft_free_r_a_i(&r_a, i);
 			return (ft_parser_er2(strerror(errno)));
 		}
 		i++;
 	}
-	while (i < len)
-	{
-		r_a[i] = NULL;
-		i++;
-	}
+	ft_cp_ar_sh_part(&r_a, i, ft_lenarray(a));
 	free_array_shell(norm);
 	return (r_a);
 }
@@ -71,11 +50,7 @@ static t_cmd	ft_make_tcmd(char **a, char **envp, int in, int out)
 	res_ad = &res;
 	res.in = in;
 	res.out = out;
-	res.args = ft_copy_array_shell(res.args, a, &res_ad, envp);
-//	if (res.out != out) 
-//		printf("парсер в пайпе встретил редирект на out\n");
-//	printf("!!after in=%d, out =%d\n", res.in, res.out);
-//	read(0,0,1);
+	res.args = ft_cp_ar_sh(res.args, a, &res_ad, envp);
 	res.len_args = ft_lenarray(a);
 	return (res);
 }
@@ -89,9 +64,8 @@ static t_cmd	*ft_make_ar_cmd(char ***arg_pipe, int len, char **envp)
 	int		out;
 
 	i = 0;
-	fd[0] = 0; //in
+	fd[0] = 0;
 	ar_cmd = (t_cmd *)malloc(sizeof(t_cmd) * len);
-	//printf("ar_cmd %p\n", ar_cmd);
 	while (i < len)
 	{
 		in = fd[0];
@@ -102,17 +76,7 @@ static t_cmd	*ft_make_ar_cmd(char ***arg_pipe, int len, char **envp)
 		}
 		else if (i == len - 1)
 			out = 1;
-
 		(ar_cmd)[i] = ft_make_tcmd(arg_pipe[i], envp, in, out);
-//		printf("!!!! in =%d, out =%d\n", ar_cmd[i].in, ar_cmd[i].out);
-		//TODO если изменился out => был редирект => меняю для следующего по цепочке pipe in на новый in
-		//if (out != 1 && out != ar_cmd[i].out)
-		//{
-			//close(fd[0]);
-			//fd[0] = 0;
-		//	fd[0] = ar_cmd[i].out;
-		//}
-		//пришла ошибка, если ar_cmd[i].args[0] == NULL
 		i++;
 	}
 	return (ar_cmd);
@@ -134,8 +98,6 @@ static char		***ft_new_parser_cmd(char *cmd, int *len)
 		arg_pipe[i] = ft_split_arg(cmd_pipe[i], SYM, 0, 0);
 		i++;
 	}
-	//printf("после сплита по pipe\n");
-	//ft_print_array_3(arg_pipe);
 	free_array_shell(cmd_pipe);
 	return (arg_pipe);
 }
@@ -147,46 +109,23 @@ char			**ft_parser_shell(char **envp, char *str)
 	int		i;
 	char	***ar_pipe;
 	int		len;
-//	char	*temp;
-	//char	*temp;
 
 	i = 0;
 	ar_t_cmd = NULL;
 	if ((cmd = ft_split_cmd(str, ';', 0, 0)) == NULL)
 		ft_putstr_error(strerror(errno), errno);
-//	printf("мфссив по ;\n");
-//	ft_print_array_2(cmd);
 	while (cmd != 0 && cmd[i] != NULL)
 	{
-		/* здесь получаем массив *** - массив аргументов по pipe*/
-		if ((ar_pipe = ft_new_parser_cmd(cmd[i], &len)) == NULL)
+		if (((ar_pipe = ft_new_parser_cmd(cmd[i], &len)) == NULL) ||
+			((ar_t_cmd = ft_make_ar_cmd(ar_pipe, len, envp)) == NULL))
 		{
-			ft_putstr_error(strerror(errno), errno);
-			continue ; // TODO или break - завершить обработку строки?
-		}
-		//printf("массив полученный pipe:\n");
-		//ft_print_array_3(ar_pipe);
-		if ((ar_t_cmd = ft_make_ar_cmd(ar_pipe, len, envp)) == NULL)
-		{
-			ft_putstr_error(strerror(errno), errno);
-			free_array_shell_2(ar_pipe);
-			continue ; // TODO или break - завершить обработку строки?
+			ft_ar_null(ar_pipe);
+			continue ;
 		}
 		free_array_shell_2(ar_pipe);
-
-		if (ft_check_er_args(ar_t_cmd, len) == -1)
-			break;
-		//в случае ошибки у нас вернеться ar_t_cmd = NULL
-		if (ar_t_cmd != NULL && ar_t_cmd[0].args != NULL)
-		{
-			//ft_print_array_t_cmd(ar_t_cmd, len);
-			envp = ft_exec_cmd(ar_t_cmd, envp, len);
-			free_close_fd(ar_t_cmd, len);
-			free_t_cmd(ar_t_cmd, len);
-		}
+		ft_parser_shel_cycle(ar_t_cmd, len, envp, &cmd);
 		i++;
 	}
-	/* free массив - массив команд разделенных ;*/
 	free_array_shell(cmd);
 	return (envp);
 }
