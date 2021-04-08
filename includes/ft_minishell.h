@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 17:51:39 by sabra             #+#    #+#             */
-/*   Updated: 2021/04/08 07:58:59 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/04/08 11:47:08 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,12 @@ char			*ft_strjoin_mod(char const *s1, char const *s2, size_t len);
 char			*ft_pars_name(char *str);
 char			*ft_create_word_a(char const *s, char *c);
 size_t			ft_count_a(char const *s, char *c);
-
+void			ft_check_cond_if1(char const *s, int *flag, int *i);
+void			ft_check_cond_if2(char const *s, int *flag, int *i);
+void			ft_check_cond_if3(char const *s, int *flag, int *i);
+void			ft_check_condition_sh(char const *s, int *flag, int *i);
+int				ft_chec_str_if(char  *str, int i, int flag);
+void			ft_check_condition(char const *s, int *flag, int *i);
 
 /*
  * Make command from t_cmd
@@ -158,7 +163,15 @@ char			*ft_res0(char *str, int *flag, char **envp);
 char			*ft_res_arg(char *str, int *flag, char **envp);
 char			*ft_dollar (char *str, int *i, char **envp);
 int				ft_is(char const *s, int *flag, int *i);
-
+int				ft_res0_if(char *str, int *flag, t_word *w);
+int				ft_res0_if1(char *str, int *flag, t_word *w);
+void			ft_res0_part1(char **res, t_word *w);
+void			ft_res0_part0(char *str, t_word *w, char ** envp, char **res);
+void			ft_in_cycle(char **res, char *temp, int *j, size_t len);
+int				ft_res_arg_if0(char *str, int i, int *flag);
+int				ft_res_arg_if1(char *str, int i, int *flag);
+int				ft_res_arg_if2(char *str, int i, int *flag);
+void			ft_res_arg_part1(char *star, char **envp, t_word *w, char **res);
 
 /*
  * Error

@@ -6,7 +6,7 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 11:53:34 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/04/08 07:58:08 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/04/08 08:13:24 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,13 +82,6 @@ static void	in_cycle_term(char **s, t_hstr **now, t_hstr **el)
 		ft_term_bs(s, el);
 	else if (ft_isprint((*s)[0]))
 		ft_term_print(s, el);
-		/*
-	{
-		write(1, (*s), 1);
-		(*s)[1] = '\0';
-		if ((*s)[0] != '\n')
-			ft_strlchar((*el)->cmd, (*s)[0], 1024);
-	}*/
 	return ;
 }
 

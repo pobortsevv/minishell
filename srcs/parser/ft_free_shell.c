@@ -6,7 +6,7 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/16 10:49:54 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/03/29 12:30:05 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/04/08 08:28:25 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ void		free_t_cmd(t_cmd *ar_t_cmd, int len)
 	while (u < len)
 	{
 		j = 0;
-	//	while (j < ar_t_cmd[u].len_args)
 		while (ar_t_cmd[u].args[j] != NULL)
 		{
 			if (ar_t_cmd[u].args[j] != NULL)
@@ -87,10 +86,8 @@ void		free_close_fd(t_cmd *ar_t_cmd, int len)
 	u = 0;
 	while (u < len)
 	{
-		//printf("close fd = %d, if fd != 0\n", ar_t_cmd[u].in);
 		if (ar_t_cmd[u].in != 0)
 			close(ar_t_cmd[u].in);
-		//printf("close fd =%d, if fd != 1\n", ar_t_cmd[u].out);
 		if (ar_t_cmd[u].out != 1)
 			close(ar_t_cmd[u].out);
 		u++;

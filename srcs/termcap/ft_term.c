@@ -6,7 +6,7 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/04 07:44:59 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/04/07 09:29:00 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/04/08 08:25:15 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ t_hstr		*ft_read_term(t_hstr **history)
 	t_hstr			*el;
 
 	el = NULL;
-//	if (tgetent(0, shell.term) < 0)
 	if (tgetent(0, "xterm-256color") < 0)
 		return (el);
 	if (tcgetattr(0, &term) < 0)

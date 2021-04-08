@@ -6,7 +6,7 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 10:32:59 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/03/30 12:30:52 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/04/08 08:26:46 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,5 @@ char	*ft_pars_name(char *str)
 	f = checkbit(f, SINGLE_Q);
 	if (str != NULL)
 		res = ft_res_arg(str, &f, NULL);
-	//printf("res =<%s>\n", res);
 	return (res);
 }

@@ -6,7 +6,7 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/24 08:00:42 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/04/07 09:42:47 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/04/08 08:29:55 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ int			ft_write_append(char *a, int *out)
 			close(*out);
 		*out = f;
 	}
-	printf("файл: %s (O_CREAT, O_WRONLY, O_APPEND), fd =%d \n", temp, f);
 	if (temp != NULL)
 		free(temp);
 	return (0);
@@ -63,7 +62,6 @@ int			ft_write_only(char *a, int *out)
 			close(*out);
 		*out = f;
 	}
-	printf("файл: %s (O_CREAT, O_WRONLY, O_TRUNC), fd =%d \n", temp, f);
 	if (temp != NULL)
 		free(temp);
 	return (0);
@@ -78,7 +76,6 @@ int			ft_read_only(char *a, int *in)
 	i = 0;
 	ft_sckip_space(a, &i);
 	temp = ft_pars_name(&a[i]);
-//	if ((f = open(temp, O_CREAT | O_RDONLY | O_TRUNC, 0666)) < 0)
 	if ((f = open(temp, O_CREAT | O_RDONLY, 0666)) < 0)
 		ft_parser_err_fd(&temp);
 	if (*in < 0)
@@ -89,7 +86,6 @@ int			ft_read_only(char *a, int *in)
 			close(*in);
 		*in = f;
 	}
-	printf("файл: %s (O_CREAT, O_RDONLY), fd =%d \n", temp, f);
 	if (temp != NULL)
 		free(temp);
 	return (0);
