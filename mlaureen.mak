@@ -20,4 +20,5 @@ MLAUREEN	=srcs/ft_read.c\
 			 srcs/termcap/ft_term.c\
 			 srcs/termcap/ft_term_utilit.c\
 			 srcs/termcap/ft_term_utilit1.c\
-			 srcs/termcap/ft_strlchar.c
+			 srcs/termcap/ft_strlchar.c\
+			 srcs/termcap/ft_term_utilit2.c

@@ -6,7 +6,7 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 11:53:34 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/04/07 09:29:16 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/04/08 07:58:08 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,9 @@ static void	in_cycle_term(char **s, t_hstr **now, t_hstr **el)
 
 	ft_bzero((*s), 256);
 	l = read(0, (*s), 100);
-	if (!ft_strcmp((*s), "\e[A"))
+	if (!ft_strcmp((*s), "\4") && (*el)->cmd[0] == '\0')
+		ft_term_exit();
+	else if (!ft_strcmp((*s), "\e[A"))
 		term_up(s, now, el);
 	else if (!ft_strcmp((*s), "\e[B"))
 		term_down(s, now, el);
@@ -79,12 +81,14 @@ static void	in_cycle_term(char **s, t_hstr **now, t_hstr **el)
 	else if ((*s)[0] == 127)
 		ft_term_bs(s, el);
 	else if (ft_isprint((*s)[0]))
+		ft_term_print(s, el);
+		/*
 	{
 		write(1, (*s), 1);
 		(*s)[1] = '\0';
 		if ((*s)[0] != '\n')
 			ft_strlchar((*el)->cmd, (*s)[0], 1024);
-	}
+	}*/
 	return ;
 }
 

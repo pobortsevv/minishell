@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 17:51:39 by sabra             #+#    #+#             */
-/*   Updated: 2021/04/07 16:40:34 by sabra            ###   ########.fr       */
+/*   Updated: 2021/04/08 07:58:59 by mlaureen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,8 @@ int				ft_give_str(char **str);
 size_t			ft_strlchar(char *dst, const char src, size_t dstsize);
 void			ft_term_nl(char **s);
 void			ft_term_bs(char **s, t_hstr **el);
+void			ft_term_exit(void);
+void			ft_term_print(char **s, t_hstr **el);
 
 
 /*
