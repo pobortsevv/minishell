@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/05 20:14:30 by sabra             #+#    #+#             */
-/*   Updated: 2021/04/07 16:31:54 by sabra            ###   ########.fr       */
+/*   Updated: 2021/04/08 13:44:17 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ int			main(int argc, char **argv, char **envp)
 	shell.term = ft_var_find("TERM", evc);
 	shell.home = ft_var_find("HOME", evc);
 	shell.start = el;
+	shell.sig_flag = 0;
 	while (1)
 	{
 		//ft_putstr_fd("\033[0;35m\033[1mminishell> \033[0m", STDOUT);
