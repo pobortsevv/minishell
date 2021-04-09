@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/08 01:17:24 by sabra             #+#    #+#             */
-/*   Updated: 2021/04/08 18:33:41 by sabra            ###   ########.fr       */
+/*   Updated: 2021/04/09 17:42:04 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ char		**change_value(char *var, char **ev)
 
 	i = 0;
 	var_len = 0;
+	if (!var)
+		return (ev);
 	while (var[var_len] && var[var_len] != '=')
 		var_len++;
 	while (ev[i])

@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/24 20:06:48 by sabra             #+#    #+#             */
-/*   Updated: 2021/04/08 18:32:27 by sabra            ###   ########.fr       */
+/*   Updated: 2021/04/09 17:29:52 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int		ft_echo(t_cmd *cmd)
 		{
 			cmd->args[i] = check_tilda(cmd->args[i]);
 			ft_putstr_fd(cmd->args[i], cmd->out);
-			if (i != cmd->len_args - 1)
+			if (i != cmd->len_args - 1 && cmd->args[i + 1])
 				ft_putstr_fd(" ", cmd->out);
 		}
 		i++;

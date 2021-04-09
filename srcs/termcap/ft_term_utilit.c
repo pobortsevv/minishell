@@ -6,7 +6,7 @@
 /*   By: mlaureen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 11:53:34 by mlaureen          #+#    #+#             */
-/*   Updated: 2021/04/08 13:50:43 by mlaureen         ###   ########.fr       */
+/*   Updated: 2021/04/09 00:50:33 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static void	term_up(char **s, t_hstr **now, t_hstr **el)
 {
 	ft_move_left_clear(ft_strlen((*el)->cmd));
 	ft_bzero((*s), 256);
-	if ((*now)->after != NULL && ((*now)->after)->cmd != '\0')
+	if ((*now)->after != NULL && ((*now)->after)->cmd != NULL)
 		(*now) = (*now)->after;
 	(*el)->cmd[0] = '\0';
 	if ((*el) != (*now))
@@ -91,7 +91,7 @@ t_hstr		*ft_read_t(t_hstr **history)
 	t_hstr	*now;
 	t_hstr	*el;
 
-	if ((*history)->cmd != '\0')
+	if ((*history)->cmd != NULL)
 	{
 		el = ft_make_el();
 		ft_add_before(history, el);

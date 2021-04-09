@@ -6,7 +6,7 @@
 /*   By: sabra <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/08 16:31:12 by sabra             #+#    #+#             */
-/*   Updated: 2021/04/08 19:06:17 by sabra            ###   ########.fr       */
+/*   Updated: 2021/04/09 17:39:55 by sabra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ char		**change_dir_env(char *value, char **ev)
 {
 	char *var;
 
+	if (!value)
+		return (ev);
 	var = ft_strjoin("PWD=", value);
 	ev = change_value(var, ev);
 	ft_free_line(&var);
